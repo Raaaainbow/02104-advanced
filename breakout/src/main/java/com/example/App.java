@@ -12,7 +12,11 @@ import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Map;
+import java.util.Scanner;
 
 public class App extends Application {
 
@@ -90,20 +94,68 @@ public class App extends Application {
         return fxmlLoader.load();
     }
 
-    public static void save(String keyword, Number value) {
-        
+    private static void makeSaveFile() {
+        String fileName = "save.dat";
+        File file = new File(fileName);
+        try {
+            // Check if the file already exists
+            if (file.exists()) {
+                System.out.println(fileName + " already exists.");
+            } else {
+                // Create a new file
+                if (file.createNewFile()) {
+                    System.out.println(fileName + " has been created.");
+                } else {
+                    System.out.println("Failed to create " + fileName);
+                }
+            }
+        } catch (IOException e) {
+            // Handle potential IOException
+            System.err.println("An error occurred while creating the file: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
-    public static void save(String keyword, String value) {
-
+    // The save functions save a value by its keyword in the save.dat file
+    public static void save(String keyword, Number value) throws IOException {
+        makeSaveFile();
     }
 
-    public static Number loadNumber(String keyword) {
-        return 69.09;
+    public static void save(String keyword, String value) throws FileNotFoundException {
+        makeSaveFile();
+        Scanner saver = new Scanner(new File("save.dat"));
+        saver.close();
     }
 
-    public static String loadString(String keyword) {
-        return "L";
+    // loads a value by its keyword
+    public static int loadNumber(String keyword) throws FileNotFoundException {
+        makeSaveFile();
+        String line = "";
+        Scanner saver = new Scanner(new File("save.dat"));
+        while (saver.hasNextLine()) {
+            line = saver.nextLine();
+            if (line.contains(keyword)) {
+                line.replace(keyword+": ", "");
+                break;
+            }
+        }
+        saver.close();
+        return Integer.parseInt(line);
+    }
+
+    public static String loadString(String keyword) throws FileNotFoundException {
+        makeSaveFile();
+        String line = "";
+        Scanner saver = new Scanner(new File("save.dat"));
+        while (saver.hasNextLine()) {
+            line = saver.nextLine();
+            if (line.contains(keyword)) {
+                line.replace(keyword+": ", "");
+                break;
+            }
+        }
+        saver.close();
+        return line;
     }
 
     public static void main(String[] args) { // Launching the game
