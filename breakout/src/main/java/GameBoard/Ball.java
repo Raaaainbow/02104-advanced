@@ -122,7 +122,7 @@ public class Ball {
             if (b.getRect().intersects(pos[0]+velo[0],pos[1],rect.getWidth(),rect.getHeight())) {
                 blocks.remove(b);
                 blockGrid.removeBlock(b);
-                controller.Addscore(b.getScore()); 
+                controller.Addscore(b.getScore_()); 
                 return true;
             }
         }
@@ -134,7 +134,7 @@ public class Ball {
             if (b.getRect().intersects(pos[0],pos[1]+velo[1],rect.getWidth(),rect.getHeight())) {
                 blocks.remove(b);
                 blockGrid.removeBlock(b);
-                controller.Addscore(b.getScore());
+                controller.Addscore(b.getScore_());
                 return true;
             }
         }

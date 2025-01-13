@@ -4,14 +4,17 @@ import GameBoard.*;
 import javafx.fxml.FXML;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.text.Text;
 
 public class PrimaryController {
     private double hSpeed = 5;
     @FXML
     private Rectangle paddle; 
+    @FXML 
+    private Text score, highscore; 
     private Paddle pad;
     private Ball ball;
-    private int score; 
+    private int score_; 
 
     private BlockGrid blocks;
 
@@ -50,6 +53,7 @@ public class PrimaryController {
             System.out.println("YOU LOST");
             System.exit(0);
         }
+        score.setText(""+score_);
     }
 
     public boolean winCondition() {
@@ -101,8 +105,8 @@ public class PrimaryController {
     private double lerp(double startValue, double endValue, double interpolationAmount) {
         return (1 - interpolationAmount) * startValue + interpolationAmount * endValue;
     }
-    public void Addscore(int score) {
-        this.score += score;
+    public void Addscore(int score_) {
+        this.score_ += score_;
     }
 
 }
