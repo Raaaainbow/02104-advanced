@@ -14,7 +14,7 @@ public class PrimaryController {
     private Text score, highscore; 
     private Paddle pad;
     private Ball ball;
-    private int score_; 
+    private int scoren; 
 
     private BlockGrid blocks;
 
@@ -23,7 +23,7 @@ public class PrimaryController {
 
     public void initialize() {
         pad = new Paddle(paddle); 
-    }
+    } 
     
     public void onStep() {
         if (create == false) { // Run once
@@ -53,7 +53,7 @@ public class PrimaryController {
             System.out.println("YOU LOST");
             System.exit(0);
         }
-        score.setText(""+score_);
+        score.setText(""+scoren);
     }
 
     public boolean winCondition() {
@@ -105,8 +105,8 @@ public class PrimaryController {
     private double lerp(double startValue, double endValue, double interpolationAmount) {
         return (1 - interpolationAmount) * startValue + interpolationAmount * endValue;
     }
-    public void Addscore(int score_) {
-        this.score_ += score_;
+    public void Addscore(int scoren) {
+        this.scoren += scoren;
     }
 
 }
