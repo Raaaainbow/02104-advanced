@@ -22,42 +22,31 @@ public class App extends Application {
 
     private static Scene scene;
     Parent root;
-    private static Pane rootPane;
+    private static Pane rootPane, menuPane;
     private double width = 672;
     private double height = 970;
     
 
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("menu.fxml"));
-        rootPane = (Pane) fxmlLoader.load();  // Initialize rootPane here
-        stage.setResizable(false);
-        PrimaryController controller = fxmlLoader.getController();
-        scene = new Scene(rootPane, width, height);
+        FXMLLoader menuLoader = new FXMLLoader(App.class.getResource("menu.fxml"));
+        menuPane = menuLoader.load();  
+        MenuController menuController = menuLoader.getController();
 
-        scene.setFill(Color.web("#000000")); // Background
-        
-        // Handle events 
-        startTimeline(controller);
-        scene.setOnKeyReleased(event -> { // Key release event
-            controller.stopHandling(event);
-        });
-        scene.setOnKeyPressed(event -> { // Key press event
-            controller.inputHandling(event);
-        });
+        FXMLLoader primaryLoader = new FXMLLoader(App.class.getResource("primary.fxml"));
+        rootPane = primaryLoader.load();
+        PrimaryController primaryController = primaryLoader.getController();
+
+        scene = new Scene(menuPane, width, height);
+
+        scene.setOnKeyPressed(primaryController::inputHandling);
+        scene.setOnKeyReleased(primaryController::stopHandling);
+
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
     }
-    
-    public void startTimeline(PrimaryController controller) {
-        Timeline timeline = new Timeline(
-            new KeyFrame(Duration.millis(10), event -> {
-                controller.onStep();  // Calls the step event stored in our controller
-            })
-        );
-        timeline.setCycleCount(Timeline.INDEFINITE); 
-        timeline.play();
-    }
+
 
     static void setRoot(String fxml) throws IOException { // Loads root from fxml
         scene.setRoot(loadFXML(fxml));

@@ -3,22 +3,14 @@ package com.example;
 import java.io.IOException;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.event.ActionEvent;
+import javafx.scene.control.Button;
 
-class MenuController {
-    
+public class MenuController {
     @FXML
-    public void startGame(ActionEvent event) throws IOException {
+    private Button startButton, LeaderBoardButton, Settings; 
+
+    @FXML
+    public void onStartButtonClicked() throws IOException {
         App.setRoot("primary");
-    }
-
-    public void leaderboard() {
-
-    }
-
-    public void settings() {
-
     }
 }

@@ -31,7 +31,7 @@
             <Font name="Press Start 2P Regular" size="25.0" />
          </font>
       </Text>
-      <Button fx:id="StartButton" layoutX="271.0" layoutY="517.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="125.0" style="-fx-background-color: transparent;" onAction="#startGame"/>
+      <Button fx:id="StartButton" layoutX="271.0" layoutY="517.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="125.0" style="-fx-background-color: transparent;" onAction="#onStartButtonClicked"/>
       <Button fx:id="LeaderBoardButton" layoutX="199.0" layoutY="592.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="275.0" style="-fx-background-color: transparent;" />
       <Button fx:id="Settings" layoutX="236.0" layoutY="676.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="200.0" style="-fx-background-color: transparent;" />
    </children>
