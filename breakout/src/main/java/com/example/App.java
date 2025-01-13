@@ -14,9 +14,12 @@ import javafx.util.Duration;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Scanner;
+
+import com.sun.org.apache.xpath.internal.operations.Variable;
 
 public class App extends Application {
 
@@ -117,8 +120,17 @@ public class App extends Application {
     }
 
     // The save functions save a value by its keyword in the save.dat file
-    public static void save(String keyword, Number value) throws IOException {
+    // check again
+    public static void save(String keyword, Variable value) throws IOException {
         makeSaveFile();
+        try {
+            FileWriter writer = new FileWriter("save.dat");
+            writer.write(keyword + ": " + value);
+            writer.close();
+        } catch (IOException e){
+            System.out.println("there was an error writing the the file \"save.dat\"");
+        }
+
     }
 
     public static void save(String keyword, String value) throws FileNotFoundException {
@@ -140,7 +152,7 @@ public class App extends Application {
             }
         }
         saver.close();
-        return Integer.parseInt(line);
+        return Double.parseDouble(line);
     }
 
     public static String loadString(String keyword) throws FileNotFoundException {
