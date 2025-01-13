@@ -19,7 +19,6 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.Scanner;
 
-import com.sun.org.apache.xpath.internal.operations.Variable;
 
 public class App extends Application {
 
@@ -110,7 +109,7 @@ public class App extends Application {
 
     // The save functions save a value by its keyword in the save.dat file
     // check again
-    public static void save(String keyword, Variable value) throws IOException {
+    public static void save(String keyword, Double value) throws IOException {
         makeSaveFile();
         try {
             FileWriter writer = new FileWriter("save.dat");
@@ -124,12 +123,17 @@ public class App extends Application {
 
     public static void save(String keyword, String value) throws FileNotFoundException {
         makeSaveFile();
-        Scanner saver = new Scanner(new File("save.dat"));
-        saver.close();
+        try {
+            FileWriter writer = new FileWriter("save.dat");
+            writer.write(keyword + ": " + value);
+            writer.close();
+        } catch (IOException e){
+            System.out.println("there was an error writing the the file \"save.dat\"");
+        }
     }
 
     // loads a value by its keyword
-    public static int loadNumber(String keyword) throws FileNotFoundException {
+    public static double loadNumber(String keyword) throws FileNotFoundException {
         makeSaveFile();
         String line = "";
         Scanner saver = new Scanner(new File("save.dat"));
