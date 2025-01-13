@@ -118,41 +118,27 @@ public class Ball {
     }
 
     public boolean collidesBlockHorizontal() {
-        boolean collisionDetected = false;
         for (Block b : blocks) {
-            boolean yCollides = (b.getPos()[1] + b.getRect().getHeight() >= getYPos() &&
-                                 b.getPos()[1] <= getYPos() + rect.getHeight());
-            boolean xCollides = (b.getPos()[0] <= getXPos() + velo[0] + rect.getWidth() &&
-                                 b.getPos()[0] + b.getRect().getWidth() >= getXPos() + velo[0]);
-    
-            if (xCollides && yCollides) {
+            if (b.getRect().intersects(pos[0]+velo[0],pos[1],rect.getWidth(),rect.getHeight())) {
                 blocks.remove(b);
                 blockGrid.removeBlock(b);
-                collisionDetected = true;
                 controller.Addscore(b.getScore()); 
-                break;
+                return true;
             }
         }
-        return collisionDetected;
+        return false;
     }
-    
+
     public boolean collidesBlockVertical() {
-        boolean collisionDetected = false;
         for (Block b : blocks) {
-            boolean yCollides = (b.getPos()[1] + b.getRect().getHeight() >= getYPos() + velo[1] &&
-                                 b.getPos()[1] <= getYPos() + rect.getHeight() + velo[1]);
-            boolean xCollides = (b.getPos()[0] <= getXPos() &&
-                                 b.getPos()[0] + b.getRect().getWidth() >= getXPos() + rect.getWidth());
-    
-            if (xCollides && yCollides) {
+            if (b.getRect().intersects(pos[0],pos[1]+velo[1],rect.getWidth(),rect.getHeight())) {
                 blocks.remove(b);
                 blockGrid.removeBlock(b);
                 controller.Addscore(b.getScore());
-                collisionDetected = true;
-                break;
+                return true;
             }
         }
-        return collisionDetected;
+        return false;
     }
     
     public boolean collidesTopPaddle() {
