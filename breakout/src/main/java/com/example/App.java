@@ -25,7 +25,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("primary.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("menu.fxml"));
         rootPane = (Pane) fxmlLoader.load();  // Initialize rootPane here
         stage.setResizable(false);
         PrimaryController controller = fxmlLoader.getController();
