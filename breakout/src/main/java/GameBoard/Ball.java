@@ -1,6 +1,8 @@
 package GameBoard;
 
 import com.example.App;
+import com.example.PrimaryController;
+
 import javafx.scene.shape.Rectangle;
 import javafx.scene.paint.Color;
 import java.util.*;
@@ -21,8 +23,9 @@ public class Ball {
     private double minWidth = 0 + sideWall;
     private double maxWidth = 672 - sideWall;
     private double minHeight = 92+34;
+    private PrimaryController controller; 
     
-    public Ball(double x, double y, Paddle pad, BlockGrid blockgrid) {
+    public Ball(double x, double y, Paddle pad, BlockGrid blockgrid, PrimaryController controller) {
         this.pad = pad;
         this.blockGrid = blockgrid;
         blocks = blockgrid.getBlockGrid();
@@ -33,6 +36,7 @@ public class Ball {
         setPos(x,y);
         rect.setFill(Color.rgb(158, 158, 158));
         App.addElement(rect);
+        this.controller = controller;
     }
 
     public void setMoving(boolean input) {
@@ -125,6 +129,7 @@ public class Ball {
                 blocks.remove(b);
                 blockGrid.removeBlock(b);
                 collisionDetected = true;
+                controller.Addscore(b.getScore()); 
                 break;
             }
         }
@@ -142,6 +147,7 @@ public class Ball {
             if (xCollides && yCollides) {
                 blocks.remove(b);
                 blockGrid.removeBlock(b);
+                controller.Addscore(b.getScore());
                 collisionDetected = true;
                 break;
             }
