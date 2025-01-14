@@ -1,4 +1,7 @@
+# Custom
 **/*.class
+breakout/src/main/resources/save.dat
+
 # Maven
 breakout/target/
 target/
