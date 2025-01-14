@@ -70,6 +70,10 @@ public class PrimaryController {
         score.setText(""+scoren);
     }
 
+    public double getVelocity() {
+        return velocity;
+    }
+
     public boolean winCondition() {
         if (blocks.getBlockGrid().size() == 0) {
             return true;
@@ -122,9 +126,10 @@ public class PrimaryController {
     }
 
     // Linear interpolation
-    private double lerp(double startValue, double endValue, double interpolationAmount) {
+    public double lerp(double startValue, double endValue, double interpolationAmount) {
         return (1 - interpolationAmount) * startValue + interpolationAmount * endValue;
     }
+
     public void Addscore(int scoren) {
         this.scoren += scoren;
     }
