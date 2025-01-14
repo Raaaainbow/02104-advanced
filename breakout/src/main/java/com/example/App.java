@@ -21,7 +21,7 @@ public class App extends Application {
     private static Pane rootPane;
     private double width = 672;
     private double height = 970;
-    private static String saveFilePath = "breakout/src/main/resources/save.dat";
+    public static String saveFilePath = "breakout/src/main/resources/save.dat";
 
     @Override
     public void start(Stage stage) throws IOException {

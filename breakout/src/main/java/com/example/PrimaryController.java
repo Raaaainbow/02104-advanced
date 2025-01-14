@@ -1,6 +1,7 @@
 package com.example;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import GameBoard.*;
 import javafx.animation.KeyFrame;
@@ -10,6 +11,10 @@ import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
+import java.util.Scanner;
+import java.util.HashMap;
+import java.io.File;
+import java.io.FileNotFoundException;
 
 public class PrimaryController {
     private double hSpeed = 5;
@@ -138,4 +143,17 @@ public class PrimaryController {
         this.scoreAmount += scoreAmount;
     }
 
+    public void readScores() throws FileNotFoundException {
+        File scores = new File(App.saveFilePath);
+        Scanner reader = new Scanner(scores);
+        HashMap<Integer, String> scoresNamesHash = new HashMap<>();
+        ArrayList<Integer> scoresList = new ArrayList<>();
+        int counter;
+
+        if (scores.exists() && scores.canRead()) {
+            while (reader.hasNextLine()) {
+                scoresNamesHash.put(reader.nextInt(), reader.;
+            }
+        }
+    }
 }
