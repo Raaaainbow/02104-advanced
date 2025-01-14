@@ -18,6 +18,7 @@ public class PrimaryController {
     private Paddle pad;
     private Ball ball;
     private int scoren; 
+    // change amount of lives user has here
     private int liv = 3; 
 
     private BlockGrid blocks;
@@ -63,10 +64,16 @@ public class PrimaryController {
             System.out.println("YOU WON");
             System.exit(0);
         } 
-
+        System.out.println(liv);
         if (loseCondition()) {
-            System.out.println("YOU LOST");
-            System.exit(0);
+            App.removeElement(ball.getShape());
+            liv--;
+            if (liv <= 0) {
+                System.out.println("YOU LOST");
+                System.exit(0);
+            } else {
+                ball = new Ball(pad.getX() + pad.getLength()/2-13/2, pad.getY() - 30,pad,blocks, this);
+            }
         }
         score.setText(""+scoren);
     }
@@ -79,17 +86,7 @@ public class PrimaryController {
     }
 
     public boolean loseCondition() {
-        if (ball.getPos()[1] >= 972) {
-            return false;
-        }
-        
-        liv--;
-        if (liv <= 0) {
-            liv = 0;
-            return true;
-        }
-        
-        return false;
+        return (ball.getPos()[1] <= 972)? false: true;
     }
 
     // Called on key pressed
