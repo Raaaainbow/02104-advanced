@@ -152,8 +152,10 @@ public class PrimaryController {
 
         if (scores.exists() && scores.canRead()) {
             while (reader.hasNextLine()) {
-                scoresNamesHash.put(reader.nextInt(), reader.;
+                scoresNamesHash.put(reader.nextInt(), // needs to get the name out;
             }
+        } else {
+            throw new FileNotFoundException(App.saveFilePath + " could not be found or read");
         }
     }
 }
