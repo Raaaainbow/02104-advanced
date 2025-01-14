@@ -145,17 +145,29 @@ public class PrimaryController {
 
     public void readScores() throws FileNotFoundException {
         File scores = new File(App.saveFilePath);
-        Scanner reader = new Scanner(scores);
-        HashMap<Integer, String> scoresNamesHash = new HashMap<>();
-        ArrayList<Integer> scoresList = new ArrayList<>();
-        int counter;
-
-        if (scores.exists() && scores.canRead()) {
-            while (reader.hasNextLine()) {
-                scoresNamesHash.put(reader.nextInt(), // needs to get the name out;
-            }
-        } else {
+        if (!scores.exists() || !scores.canRead()) {
             throw new FileNotFoundException(App.saveFilePath + " could not be found or read");
         }
+
+        HashMap<Integer, String> scoresNamesHash = new HashMap<>();
+        ArrayList<Integer> scoresList = new ArrayList<>();
+
+        Scanner reader = new Scanner(scores);
+        while(reader.hasNextLine()) {
+            String line = reader.nextLine();
+            processLine(line, scoresNamesHash, scoresList);
+        }
+        reader.close();
+
+        scoresList.sort(null);
+    }
+
+    private void processLine(String line, HashMap<Integer, String> scoresNamesHash, ArrayList<Integer> scoresList) {
+        String[] parts = line.split(":");
+        int score = Integer.parseInt(parts[0].trim());
+        String name = parts[1].trim();
+
+        scoresNamesHash.put(score, name);
+        scoresList.add(score);
     }
 }
