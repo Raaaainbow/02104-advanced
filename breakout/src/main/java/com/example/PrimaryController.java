@@ -1,8 +1,11 @@
 package com.example;
 
 import GameBoard.*;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
 
@@ -23,8 +26,19 @@ public class PrimaryController {
     double velocity, velocityGoal;
 
     public void initialize() {
-        pad = new Paddle(paddle); 
-    } 
+        pad = new Paddle(paddle);
+        startTimeline(); 
+    }
+
+    public void startTimeline() {
+        Timeline timeline = new Timeline(
+            new KeyFrame(Duration.millis(10), event -> {
+                onStep();  // Calls the step event stored in our controller
+            })
+        );
+        timeline.setCycleCount(Timeline.INDEFINITE); 
+        timeline.play();
+    }
     
     public void onStep() {
         if (create == false) { // Run once
@@ -34,7 +48,7 @@ public class PrimaryController {
             create = true;
         }
         velocity = lerp(velocity, velocityGoal, 0.25);
-        if (pad.getX() + velocity < 672 - 10 - pad.getLength() && pad.getX()  +velocity > 10) {
+        if (pad.getX() + velocity < 672 - 10 - pad.getLength() && pad.getX() + velocity > 10) {
             pad.move(velocity);
         } else {
             velocity = 0;
@@ -42,7 +56,7 @@ public class PrimaryController {
 
         ball.nextPos();
         if (ball.isMoving() == false) {
-            ball.setPos(pad.getX() + pad.getLength()/2-13/2 + velocity,ball.getPos()[1]);
+            ball.setPos(pad.getX() + pad.getLength()/2 - 13/2 + velocity,ball.getPos()[1]);
         }
 
         if (winCondition()) {
@@ -88,6 +102,9 @@ public class PrimaryController {
             case SPACE:
                 ball.setMoving(true);
                 break;
+
+            default:
+                break;
         }
     }
 
@@ -104,6 +121,9 @@ public class PrimaryController {
             if (velocityGoal < 0) {
                 velocityGoal = 0;
             }
+                break;
+
+            default:
                 break;
         }
     }
