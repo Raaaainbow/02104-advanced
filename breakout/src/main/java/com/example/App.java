@@ -1,22 +1,17 @@
 package com.example;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Map;
 import java.util.Scanner;
 
 
@@ -35,11 +30,11 @@ public class App extends Application {
         MenuController menuController = menuLoader.getController();
 
         // Set the initial scene to menuPane
-        scene = new Scene(menuPane, 672, 970);
+        scene = new Scene(menuPane, width, height);
         if (menuPane instanceof Pane) {
             rootPane = (Pane) menuPane;
         }
-        
+
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
