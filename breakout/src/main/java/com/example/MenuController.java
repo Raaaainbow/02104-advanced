@@ -23,4 +23,20 @@ public class MenuController {
 
         App.setRoot(primaryPane);
     }
+
+    public void onLeaderboardButtonClick() throws IOException {
+        FXMLLoader leaderLoader = new FXMLLoader(App.class.getResource("leaderboard.fxml"));
+        Parent leaderboardPane = leaderLoader.load();
+        LeaderController leaderController = leaderLoader.getController();
+        
+        App.setRoot(leaderboardPane);
+   }
+
+   public void onSettingsButtonClick() throws IOException {
+       FXMLLoader settingsLoader = new FXMLLoader(App.class.getResource("settings.fxml"));
+       Parent settingsPane = settingsLoader.load();
+       SettingsController settingsController = settingsLoader.getController();
+
+       App.setRoot(settingsPane);
+   }
 }
