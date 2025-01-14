@@ -15,6 +15,7 @@ public class PrimaryController {
     private Paddle pad;
     private Ball ball;
     private int scoren; 
+    private int liv; 
 
     private BlockGrid blocks;
 
@@ -64,7 +65,13 @@ public class PrimaryController {
     }
 
     public boolean loseCondition() {
-        return (ball.getPos()[1] >= 972)? true: false;
+        if (ball.getPos()[1] < 972) {
+            liv--;
+            if (liv < 0) {
+                liv = 0;
+            }
+        }
+        return (ball.getPos()[1] < 972) ? false : liv == 0;
     }
 
     // Called on key pressed
