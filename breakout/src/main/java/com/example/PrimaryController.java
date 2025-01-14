@@ -19,7 +19,7 @@ public class PrimaryController {
     private Ball ball;
     private int scoren; 
     // change amount of lives user has here
-    private int liv = 3; 
+    private int lives = 3; 
 
     private BlockGrid blocks;
 
@@ -64,11 +64,10 @@ public class PrimaryController {
             System.out.println("YOU WON");
             System.exit(0);
         } 
-        System.out.println(liv);
         if (loseCondition()) {
             App.removeElement(ball.getShape());
-            liv--;
-            if (liv <= 0) {
+            lives--;
+            if (lives <= 0) {
                 System.out.println("YOU LOST");
                 System.exit(0);
             } else {
