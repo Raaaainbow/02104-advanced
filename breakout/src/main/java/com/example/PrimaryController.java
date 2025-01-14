@@ -1,5 +1,7 @@
 package com.example;
 
+import java.io.IOException;
+
 import GameBoard.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -17,7 +19,7 @@ public class PrimaryController {
     private Text score, highscore; 
     private Paddle pad;
     private Ball ball;
-    private int scoren; 
+    private int scoreAmount; 
 
     private BlockGrid blocks;
 
@@ -32,14 +34,18 @@ public class PrimaryController {
     public void startTimeline() {
         Timeline timeline = new Timeline(
             new KeyFrame(Duration.millis(10), event -> {
-                onStep();  // Calls the step event stored in our controller
+                try {
+                    onStep();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             })
         );
         timeline.setCycleCount(Timeline.INDEFINITE); 
         timeline.play();
     }
     
-    public void onStep() {
+    public void onStep() throws IOException {
         if (create == false) { // Run once
             blocks = new BlockGrid();
             ball = new Ball(pad.getX() + pad.getLength()/2-13/2, pad.getY() - 30,pad,blocks, this);
@@ -60,16 +66,16 @@ public class PrimaryController {
 
         if (winCondition()) {
             System.out.println("YOU WON");
-            App.makeSaveFile();
+            App.save("Score", (double) scoreAmount);
             System.exit(0);
         } 
 
         if (loseCondition()) {
             System.out.println("YOU LOST");
-            App.makeSaveFile();
+            App.save("Score", (double) scoreAmount);
             System.exit(0);
         }
-        score.setText(""+scoren);
+        score.setText(""+ scoreAmount);
     }
 
     public boolean winCondition() {
@@ -128,8 +134,8 @@ public class PrimaryController {
         return (1 - interpolationAmount) * startValue + interpolationAmount * endValue;
     }
 
-    public void Addscore(int scoren) {
-        this.scoren += scoren;
+    public void Addscore(int scoreAmount) {
+        this.scoreAmount += scoreAmount;
     }
 
 }
