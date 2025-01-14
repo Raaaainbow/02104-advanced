@@ -7,13 +7,17 @@ import javafx.fxml.FXML;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.text.Text;
 
 public class PrimaryController {
     private double hSpeed = 5;
     @FXML
     private Rectangle paddle; 
+    @FXML 
+    private Text score, highscore; 
     private Paddle pad;
     private Ball ball;
+    private int scoren; 
 
     private BlockGrid blocks;
 
@@ -38,7 +42,7 @@ public class PrimaryController {
     public void onStep() {
         if (create == false) { // Run once
             blocks = new BlockGrid();
-            ball = new Ball(pad.getX() + pad.getLength()/2-13/2, pad.getY() - 30, pad, blocks);
+            ball = new Ball(pad.getX() + pad.getLength()/2-13/2, pad.getY() - 30,pad,blocks, this);
             // Everything that needs to be ran once (and not run in initialize()), you can add here
             create = true;
         }
@@ -63,6 +67,7 @@ public class PrimaryController {
             System.out.println("YOU LOST");
             System.exit(0);
         }
+        score.setText(""+scoren);
     }
 
     public boolean winCondition() {
@@ -120,5 +125,8 @@ public class PrimaryController {
     private double lerp(double startValue, double endValue, double interpolationAmount) {
         return (1 - interpolationAmount) * startValue + interpolationAmount * endValue;
     }
-}
+    public void Addscore(int scoren) {
+        this.scoren += scoren;
+    }
 
+}

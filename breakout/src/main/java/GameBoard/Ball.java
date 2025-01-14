@@ -1,6 +1,8 @@
 package GameBoard;
 
 import com.example.App;
+import com.example.PrimaryController;
+
 import javafx.scene.shape.Rectangle;
 import javafx.scene.paint.Color;
 import java.util.*;
@@ -21,8 +23,9 @@ public class Ball {
     private double minWidth = 0 + sideWall;
     private double maxWidth = 672 - sideWall;
     private double minHeight = 92+34;
+    private PrimaryController controller; 
     
-    public Ball(double x, double y, Paddle pad, BlockGrid blockgrid) {
+    public Ball(double x, double y, Paddle pad, BlockGrid blockgrid, PrimaryController controller) {
         this.pad = pad;
         this.blockGrid = blockgrid;
         blocks = blockgrid.getBlockGrid();
@@ -33,6 +36,7 @@ public class Ball {
         setPos(x,y);
         rect.setFill(Color.rgb(158, 158, 158));
         App.addElement(rect);
+        this.controller = controller;
     }
 
     public void setMoving(boolean input) {
@@ -114,39 +118,27 @@ public class Ball {
     }
 
     public boolean collidesBlockHorizontal() {
-        boolean collisionDetected = false;
         for (Block b : blocks) {
-            boolean yCollides = (b.getPos()[1] + b.getRect().getHeight() >= getYPos() &&
-                                 b.getPos()[1] <= getYPos() + rect.getHeight());
-            boolean xCollides = (b.getPos()[0] <= getXPos() + velo[0] + rect.getWidth() &&
-                                 b.getPos()[0] + b.getRect().getWidth() >= getXPos() + velo[0]);
-    
-            if (xCollides && yCollides) {
+            if (b.getRect().intersects(pos[0]+velo[0],pos[1],rect.getWidth(),rect.getHeight())) {
                 blocks.remove(b);
                 blockGrid.removeBlock(b);
-                collisionDetected = true;
-                break;
+                controller.Addscore(b.getScoren()); 
+                return true;
             }
         }
-        return collisionDetected;
+        return false;
     }
-    
+
     public boolean collidesBlockVertical() {
-        boolean collisionDetected = false;
         for (Block b : blocks) {
-            boolean yCollides = (b.getPos()[1] + b.getRect().getHeight() >= getYPos() + velo[1] &&
-                                 b.getPos()[1] <= getYPos() + rect.getHeight() + velo[1]);
-            boolean xCollides = (b.getPos()[0] <= getXPos() &&
-                                 b.getPos()[0] + b.getRect().getWidth() >= getXPos() + rect.getWidth());
-    
-            if (xCollides && yCollides) {
+            if (b.getRect().intersects(pos[0],pos[1]+velo[1],rect.getWidth(),rect.getHeight())) {
                 blocks.remove(b);
                 blockGrid.removeBlock(b);
-                collisionDetected = true;
-                break;
+                controller.Addscore(b.getScoren());
+                return true;
             }
         }
-        return collisionDetected;
+        return false;
     }
     
     public boolean collidesTopPaddle() {
