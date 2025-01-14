@@ -101,6 +101,11 @@ public class Ball {
         }
     }
 
+    public void resetPosition() { // When lost a life the ball will reset and you press space again to start 
+        this.setPos(pad.getX() + pad.getLength() / 2 - 13 / 2, pad.getY() - 30); 
+        this.setMoving(false); 
+    }
+
     public void wallBounce() {
         velo[0] *= -1;
     }

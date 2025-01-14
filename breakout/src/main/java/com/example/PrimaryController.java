@@ -78,19 +78,22 @@ public class PrimaryController {
         return false;
     }
 
-    public boolean loseCondition() {
-        if (ball.getPos()[1] >= 972) {
-            return false;
+    public boolean loseCondition() { // You have 3 lives and each time one life is taken the ball is reset
+        if (ball.getPos()[1] >= 972) { 
+            liv--; 
+
+            if (liv <= 0) {
+                liv = 0; 
+                return true; 
+            }
+    
+            ball.resetPosition(); 
+            return false;  
         }
-        
-        liv--;
-        if (liv <= 0) {
-            liv = 0;
-            return true;
-        }
-        
-        return false;
+    
+        return false; 
     }
+    
 
     // Called on key pressed
     public void inputHandling(KeyEvent event) {
