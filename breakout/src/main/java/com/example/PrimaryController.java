@@ -60,13 +60,11 @@ public class PrimaryController {
 
         if (winCondition()) {
             System.out.println("YOU WON");
-            App.makeSaveFile();
             System.exit(0);
         } 
 
         if (loseCondition()) {
             System.out.println("YOU LOST");
-            App.makeSaveFile();
             System.exit(0);
         }
         score.setText(""+scoren);
