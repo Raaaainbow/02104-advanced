@@ -23,32 +23,27 @@ import java.util.Scanner;
 public class App extends Application {
 
     private static Scene scene;
-    Parent root;
-    private static Pane rootPane, menuPane;
+    private static Pane rootPane;
     private double width = 672;
     private double height = 970;
-    
 
     @Override
     public void start(Stage stage) throws IOException {
+        // Load menu.fxml and get its controller
         FXMLLoader menuLoader = new FXMLLoader(App.class.getResource("menu.fxml"));
-        menuPane = menuLoader.load();  
+        Parent menuPane = menuLoader.load();
         MenuController menuController = menuLoader.getController();
 
-        FXMLLoader primaryLoader = new FXMLLoader(App.class.getResource("primary.fxml"));
-        rootPane = primaryLoader.load();
-        PrimaryController primaryController = primaryLoader.getController();
-
-        scene = new Scene(menuPane, width, height);
-
-        scene.setOnKeyPressed(primaryController::inputHandling);
-        scene.setOnKeyReleased(primaryController::stopHandling);
-
+        // Set the initial scene to menuPane
+        scene = new Scene(menuPane, 672, 970);
+        if (menuPane instanceof Pane) {
+            rootPane = (Pane) menuPane;
+        }
+        
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
     }
-
 
     static void setRoot(String fxml) throws IOException { // Loads root from fxml
         scene.setRoot(loadFXML(fxml));
@@ -62,8 +57,17 @@ public class App extends Application {
         return width;
     }
 
-    public Parent getRoot() {
-        return root;
+    public static Scene getScene() {
+        return scene;
+    }
+
+    static void setRoot(Parent root) {
+        scene.setRoot(root);
+        if (root instanceof Pane) {
+            rootPane = (Pane) root;
+        } else {
+            rootPane = null;
+        }
     }
 
     public static void addElement(Shape shape) {
@@ -77,12 +81,14 @@ public class App extends Application {
     public static void removeElement(Shape shape) {
         rootPane.getChildren().remove(shape);
     }
-    
-    
 
     private static Parent loadFXML(String fxml) throws IOException { // FXML loader from the vscode javafx project template
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
         return fxmlLoader.load();
+    }
+
+    public static void main(String[] args) { // Launching the game
+        launch(args);
     }
 
     private static void makeSaveFile() {
@@ -147,7 +153,6 @@ public class App extends Application {
         saver.close();
         return Double.parseDouble(line);
     }
-
     public static String loadString(String keyword) throws FileNotFoundException {
         makeSaveFile();
         String line = "";
@@ -161,9 +166,5 @@ public class App extends Application {
         }
         saver.close();
         return line;
-    }
-
-    public static void main(String[] args) { // Launching the game
-        launch(args);
     }
 }
