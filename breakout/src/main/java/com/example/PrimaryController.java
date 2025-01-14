@@ -60,11 +60,13 @@ public class PrimaryController {
 
         if (winCondition()) {
             System.out.println("YOU WON");
+            App.makeSaveFile();
             System.exit(0);
         } 
 
         if (loseCondition()) {
             System.out.println("YOU LOST");
+            App.makeSaveFile();
             System.exit(0);
         }
         score.setText(""+scoren);
@@ -125,6 +127,7 @@ public class PrimaryController {
     private double lerp(double startValue, double endValue, double interpolationAmount) {
         return (1 - interpolationAmount) * startValue + interpolationAmount * endValue;
     }
+
     public void Addscore(int scoren) {
         this.scoren += scoren;
     }
