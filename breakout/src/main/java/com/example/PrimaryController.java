@@ -64,6 +64,7 @@ public class PrimaryController {
             System.out.println("YOU WON");
             System.exit(0);
         } 
+
         if (loseCondition()) {
             App.removeElement(ball.getShape());
             lives--;
