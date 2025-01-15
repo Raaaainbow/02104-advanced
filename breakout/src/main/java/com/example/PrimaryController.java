@@ -18,8 +18,7 @@ public class PrimaryController {
     private Paddle pad;
     private Ball ball;
     private int scoren; 
-    // change amount of lives user has here
-    private int lives = 3; 
+    private int liv = 3; 
 
     private BlockGrid blocks;
 
@@ -66,16 +65,11 @@ public class PrimaryController {
         } 
 
         if (loseCondition()) {
-            App.removeElement(ball.getShape());
-            lives--;
-            if (lives <= 0) {
-                System.out.println("YOU LOST");
-                System.exit(0);
-            } else {
-                ball = new Ball(pad.getX() + pad.getLength()/2-13/2, pad.getY() - 30,pad,blocks, this);
-            }
+            System.out.println("YOU LOST");
+            System.exit(0);
         }
         score.setText(""+scoren);
+
     }
 
     public boolean winCondition() {
@@ -85,7 +79,6 @@ public class PrimaryController {
         return false;
     }
 
-<<<<<<< HEAD
     public boolean loseCondition() { // You have 3 lives and each time one life is taken the ball is reset
         if (ball.getPos()[1] >= 972) { 
             liv--; 
@@ -100,10 +93,6 @@ public class PrimaryController {
         }
     
         return false; 
-=======
-    public boolean loseCondition() {
-        return (ball.getPos()[1] <= 972)? false: true;
->>>>>>> a46fa4727d845835341972d304a49d6660423947
     }
     
 
