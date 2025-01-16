@@ -6,13 +6,14 @@ import com.example.App;
 
 import javafx.scene.paint.Color;
 
-public class Powerups {
+public class Powerups extends Block {
     private double[] pos = new double[2]; 
     private double[] velo = new double[2]; 
     private Rectangle rect;
     private String type; // Type of powerup 
     
     public Powerups(double x, double y, String type) {
+        super(x, y, 20, 20, Color.GREEN); // Powerup size
         this.pos[0] = x;
         this.pos[1] = y;
         this.type = type;
