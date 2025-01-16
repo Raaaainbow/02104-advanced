@@ -81,9 +81,9 @@ public class PrimaryController {
         }
 
         if (winCondition()) {
-            System.out.println("YOU WON");
-            App.save(username, scoreAmount);
-            System.exit(0);
+            blocks = new BlockGrid(difficulty);
+            App.removeElement(ball.getShape());
+            ball = new Ball(pad.getX() + pad.getLength()/2-13/2, pad.getY() - 30,pad,blocks, this);
         } 
 
         if (loseCondition()) {
