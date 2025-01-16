@@ -1,52 +1,129 @@
 package com.example;
 
-import java.io.IOException;
-
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.OutputStream;
+import javafx.scene.text.Text;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-import java.util.Set;
 
 public class LeaderController {
 
-    private String databaseUrl = "https://breakout-52014-default-rtdb.europe-west1.firebasedatabase.app/";
-    private String path = "/userData.json";
-    
+    public static String databaseUrl = "https://breakout-52014-default-rtdb.europe-west1.firebasedatabase.app/";
+    public static String path = "/userData.json";
+    @FXML
+    private Text name1, name2, name3, name4, name5, name6, name7, name8, name9, name10;
+    @FXML   
+    private Text score1, score2, score3, score4, score5, score6, score7, score8, score9, score10;
+    @FXML
+    private Text myscore, myplacement, myname;
+    private Text[] nameTexts;
+    private Text[] scoreTexts;
+    private Text[] userTexts;
+
     public void initialize() throws Exception {
-    System.out.println(Arrays.toString(readDatabaseScore()));
+        nameTexts = new Text[] {name1, name2, name3, name4, name5, name6, name7, name8, name9, name10};
+        scoreTexts = new Text[] {score1, score2, score3, score4, score5, score6, score7, score8, score9, score10};
+        userTexts = new Text[] {myplacement, myname, myscore};
+        populateLeaderBoard(readDatabase());
     }
 
 
-    public void writeToDatabase(String user, int score) throws Exception {
-        URL url = new URL(databaseUrl + path);
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        connection.setRequestMethod("POST");
-        connection.setRequestProperty("Content-Type", "application/json; utf-8");
-        connection.setDoOutput(true);
-        String jsonInput = "{\"name\":\""+user+"\", \"score\": "+score+"}"; // Data to send
-        try (OutputStream os = connection.getOutputStream()) {
-            byte[] input = jsonInput.getBytes("utf-8");
-            os.write(input, 0, input.length);
+    public void populateLeaderBoard(String[] leaderboard) throws FileNotFoundException {
+        String[] names = new String[leaderboard.length];
+        int[] scores = new int[leaderboard.length];
+
+        // Populate the leaderboard arrays
+        for (int i = 0; i < leaderboard.length; i++) {
+            names[i] = leaderboard[i].split("[:\\s]")[0].toUpperCase();
+            scores[i] = Integer.parseInt(leaderboard[i].split("[:\\s]")[2]);
+        }
+
+        // Sort the leaderboard by scores (descending)
+        sortLeaderboard(names, scores);
+
+        // Populate the Text arrays with top 10 entries
+        for (int i = 0; i < names.length; i++) {
+            if (i < 10) {
+                nameTexts[i].setText(names[i]);
+                scoreTexts[i].setText("" + scores[i]);
+            }
+        }
+
+        // Load local scores and names
+        String[] localNames = App.loadName();
+        int[] localScores = App.loadScore();
+
+        // Validate local names and scores
+        List<String> validNames = new ArrayList<>();
+        List<Integer> validScores = new ArrayList<>();
+        for (int i = 0; i < localNames.length; i++) {
+            if (!localNames[i].isEmpty() && i < localScores.length) {
+                validNames.add(localNames[i]);
+                validScores.add(localScores[i]);
+            }
+        }
+        localNames = validNames.toArray(new String[0]);
+        localScores = validScores.stream().mapToInt(Integer::intValue).toArray();
+
+        // Sort local scores (descending)
+        sortLeaderboard(localNames, localScores);
+
+        // Match local scores with leaderboard
+        boolean matchFound = false;
+        for (int i = 0; i < names.length; i++) {
+            for (int j = 0; j < localNames.length; j++) {
+                if (names[i].equalsIgnoreCase(localNames[j]) && scores[i] == localScores[j] && !matchFound) {
+                    myname.setText(localNames[j].toUpperCase());
+                    myplacement.setText("#" + (i + 1));
+                    myscore.setText("" + localScores[j]);
+                    matchFound = true;
+                }
+            }
+        }
+
+        // If no match found, display the highest local score
+        if (!matchFound && localNames.length > 0) {
+            myname.setText(localNames[0].toUpperCase());
+            myscore.setText("" + localScores[0]);
         }
     }
 
-    public String[] readDatabaseScore() throws Exception {
+    public static void sortLeaderboard(String[] names, int[] scores) {
+        boolean swapped;
+        int tempScore;
+        String tempName;
+        for (int i = 0; i < scores.length - 1; i++) {
+            swapped = false;
+            for (int j = 0; j < scores.length - i - 1; j++) {
+                if (scores[j] < scores[j + 1]) {
+                    // Swap scores
+                    tempScore = scores[j];
+                    scores[j] = scores[j + 1];
+                    scores[j + 1] = tempScore;
+
+                    // Swap names
+                    tempName = names[j];
+                    names[j] = names[j + 1];
+                    names[j + 1] = tempName;
+
+                    swapped = true;
+                }
+            }
+            if (!swapped) break;
+        }
+    }
+
+    public String[] readDatabase() throws Exception {
         URL url = new URL(databaseUrl + path);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
-    
         String response;
         try (Scanner scanner = new Scanner(connection.getInputStream())) {
             StringBuilder responseBuilder = new StringBuilder();
@@ -97,16 +174,9 @@ public class LeaderController {
     
         return scores.toArray(new String[0]);
     }
-    
 
-
-    /*
-    public void populateLeaderBoard() {
-        // populates leaderboard based on array
-    }
-    */
-
-    public void onBackButtonClicked() throws IOException{
+    @FXML
+    public void onBackButtonClicked() throws IOException {
         FXMLLoader menuLoader = new FXMLLoader(App.class.getResource("menu.fxml"));
         Parent menuPane = menuLoader.load();
         App.setRoot(menuPane);

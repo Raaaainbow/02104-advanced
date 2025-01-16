@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 
@@ -35,9 +36,12 @@ public class App extends Application {
         if (menuPane instanceof Pane) {
             rootPane = (Pane) menuPane;
         }
+        
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
+
+        scene.getRoot().requestFocus();
     }
 
     static void setRoot(String fxml) throws IOException { // Loads root from fxml
@@ -109,7 +113,7 @@ public class App extends Application {
 
     // The save functions save a value by its keyword in the save.dat file
     // check again
-    public static void save(String keyword, Double value) throws IOException {
+    public static void save(String keyword, int value) throws IOException {
         makeSaveFile();
         try {
             FileWriter writer = new FileWriter(saveFilePath, true);
@@ -132,33 +136,37 @@ public class App extends Application {
         }
     }
 
-    // loads a value by its keyword
-    public static double loadNumber(String keyword) throws FileNotFoundException {
+    public static String[] loadName() throws FileNotFoundException {
         makeSaveFile();
-        String line = "";
+        ArrayList<String> list = new ArrayList<String>();
         Scanner saver = new Scanner(new File(saveFilePath));
         while (saver.hasNextLine()) {
-            line = saver.nextLine();
-            if (line.contains(keyword)) {
-                line.replace(keyword+": ", "");
-                break;
-            }
+            list.add(saver.nextLine());
         }
         saver.close();
-        return Double.parseDouble(line);
+        String[] result = new String[list.size()];
+        for (int i = 0 ; i < list.size() ; i++) {
+            result[i] = list.get(i).split("[:\\s]")[0];
+        }
+        return result;
     }
-    public static String loadString(String keyword) throws FileNotFoundException {
+
+    public static int[] loadScore() throws FileNotFoundException {
         makeSaveFile();
-        String line = "";
+        ArrayList<String> list = new ArrayList<String>();
         Scanner saver = new Scanner(new File(saveFilePath));
         while (saver.hasNextLine()) {
-            line = saver.nextLine();
-            if (line.contains(keyword)) {
-                line.replace(keyword+": ", "");
-                break;
-            }
+            list.add(saver.nextLine());
         }
         saver.close();
-        return line;
+        int[] result = new int[list.size()];
+        for (int i = 0 ; i < list.size() ; i++) {
+            try {
+                result[i] = Integer.parseInt(list.get(i).split("[:\\s]")[2]);
+            } catch (NumberFormatException e) {
+                result[i] = 0; // Default to 0 if parsing fails
+            }
+        }
+        return result;
     }
 }
