@@ -28,6 +28,8 @@ public class PrimaryController {
     private Paddle pad;
     private Ball ball;
     private int scoreAmount; 
+    // change amount of lives user has here
+    private int lives = 3; 
 
     private String username;
     private int difficulty;
@@ -79,12 +81,17 @@ public class PrimaryController {
             App.save(username, (double) scoreAmount);
             System.exit(0);
         } 
-
         if (loseCondition()) {
-            System.out.println("YOU LOST");
-            App.save(username, (double) scoreAmount);
-            writeToDatabase(username, scoreAmount);
-            System.exit(0);
+            App.removeElement(ball.getShape());
+            lives--;
+            if (lives <= 0) {
+                System.out.println("YOU LOST");
+                App.save(username, (double) scoreAmount);
+                writeToDatabase(username, scoreAmount);
+                System.exit(0);
+            } else {
+                ball = new Ball(pad.getX() + pad.getLength()/2-13/2, pad.getY() - 30,pad,blocks, this);
+            }
         }
         score.setText(""+ scoreAmount);
     }
@@ -105,7 +112,7 @@ public class PrimaryController {
     }
 
     public boolean loseCondition() {
-        return (ball.getPos()[1] >= 972)? true: false;
+        return (ball.getPos()[1] <= 972)? false: true;
     }
 
     // Called on key pressed
