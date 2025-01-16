@@ -137,7 +137,7 @@
             <Font name="Press Start 2P Regular" size="25.0" />
          </font>
       </Text>
-      <Text fx:id="myplacement" fill="#cccccc" layoutX="28.0" layoutY="798.0" strokeType="OUTSIDE" strokeWidth="0.0" text="#????" textAlignment="JUSTIFY" wrappingWidth="125.0">
+      <Text fx:id="myplacement" fill="#cccccc" layoutX="28.0" layoutY="798.0" strokeType="OUTSIDE" strokeWidth="0.0" text="#??" textAlignment="RIGHT" wrappingWidth="125.0">
          <font>
             <Font name="Press Start 2P Regular" size="25.0" />
          </font>

@@ -1,25 +1,16 @@
 package com.example;
 
-import java.io.IOException;
-
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.OutputStream;
+import java.io.FileNotFoundException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-import java.util.Set;
 
 public class LeaderController {
 
@@ -43,51 +34,89 @@ public class LeaderController {
     }
 
 
-    public void populateLeaderBoard(String[] leaderboard) {
-        // populates leaderboard based on array
+    public void populateLeaderBoard(String[] leaderboard) throws FileNotFoundException {
         String[] names = new String[leaderboard.length];
         int[] scores = new int[leaderboard.length];
-        
 
-
-        // Populate the lists
-        for (int i = 0 ; i < leaderboard.length ; i++) {
+        // Populate the leaderboard arrays
+        for (int i = 0; i < leaderboard.length; i++) {
             names[i] = leaderboard[i].split("[:\\s]")[0].toUpperCase();
             scores[i] = Integer.parseInt(leaderboard[i].split("[:\\s]")[2]);
         }
 
-        // Sorting
-        int temp;
-        String temp2;
+        // Sort the leaderboard by scores (descending)
+        sortLeaderboard(names, scores);
+
+        // Populate the Text arrays with top 10 entries
+        for (int i = 0; i < names.length; i++) {
+            if (i < 10) {
+                nameTexts[i].setText(names[i]);
+                scoreTexts[i].setText("" + scores[i]);
+            }
+        }
+
+        // Load local scores and names
+        String[] localNames = App.loadName();
+        int[] localScores = App.loadScore();
+
+        // Validate local names and scores
+        List<String> validNames = new ArrayList<>();
+        List<Integer> validScores = new ArrayList<>();
+        for (int i = 0; i < localNames.length; i++) {
+            if (!localNames[i].isEmpty() && i < localScores.length) {
+                validNames.add(localNames[i]);
+                validScores.add(localScores[i]);
+            }
+        }
+        localNames = validNames.toArray(new String[0]);
+        localScores = validScores.stream().mapToInt(Integer::intValue).toArray();
+
+        // Sort local scores (descending)
+        sortLeaderboard(localNames, localScores);
+
+        // Match local scores with leaderboard
+        boolean matchFound = false;
+        for (int i = 0; i < names.length; i++) {
+            for (int j = 0; j < localNames.length; j++) {
+                if (names[i].equalsIgnoreCase(localNames[j]) && scores[i] == localScores[j] && !matchFound) {
+                    myname.setText(localNames[j].toUpperCase());
+                    myplacement.setText("#" + (i + 1));
+                    myscore.setText("" + localScores[j]);
+                    matchFound = true;
+                }
+            }
+        }
+
+        // If no match found, display the highest local score
+        if (!matchFound && localNames.length > 0) {
+            myname.setText(localNames[0].toUpperCase());
+            myscore.setText("" + localScores[0]);
+        }
+    }
+
+    private void sortLeaderboard(String[] names, int[] scores) {
         boolean swapped;
+        int tempScore;
+        String tempName;
         for (int i = 0; i < scores.length - 1; i++) {
             swapped = false;
             for (int j = 0; j < scores.length - i - 1; j++) {
                 if (scores[j] < scores[j + 1]) {
-                    
-                    // Swap
-                    temp = scores[j];
-                    temp2 = names[j];
+                    // Swap scores
+                    tempScore = scores[j];
                     scores[j] = scores[j + 1];
-                    scores[j + 1] = temp;
-                    names[j] = names[j+1];
-                    names[j + 1] = temp2;
+                    scores[j + 1] = tempScore;
+
+                    // Swap names
+                    tempName = names[j];
+                    names[j] = names[j + 1];
+                    names[j + 1] = tempName;
+
                     swapped = true;
                 }
             }
-            if (swapped == false) // To save time, we will go out of the loop if there's nothing left to sort
-                break;
+            if (!swapped) break;
         }
-        
-        // Populating the Text arrays
-        for (int i = 0 ; i < names.length ; i++) {
-            if (i < 10) {
-                nameTexts[i].setText(names[i]);
-                scoreTexts[i].setText(""+scores[i]);
-            }
-            
-        }
-
     }
 
     public String[] readDatabase() throws Exception {

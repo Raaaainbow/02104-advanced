@@ -82,7 +82,7 @@ public class PrimaryController {
 
         if (winCondition()) {
             System.out.println("YOU WON");
-            App.save(username, (double) scoreAmount);
+            App.save(username, scoreAmount);
             System.exit(0);
         } 
 
@@ -91,7 +91,7 @@ public class PrimaryController {
             lives--;
             if (lives <= 0) {
                 System.out.println("YOU LOST");
-                App.save(username, (double) scoreAmount);
+                App.save(username, scoreAmount);
                 writeToDatabase(username, scoreAmount);
                 System.exit(0);
             } else {
@@ -230,26 +230,6 @@ public class PrimaryController {
 
     public void Addlivtal(int lives) {
         this.lives += lives;
-    }
-
-
-    public void readScores() throws FileNotFoundException {
-        File scores = new File(App.saveFilePath);
-        if (!scores.exists() || !scores.canRead()) {
-            throw new FileNotFoundException(App.saveFilePath + " could not be found or read");
-        }
-
-        HashMap<Integer, String> scoresNamesHash = new HashMap<>();
-        ArrayList<Integer> scoresList = new ArrayList<>();
-
-        Scanner reader = new Scanner(scores);
-        while(reader.hasNextLine()) {
-            String line = reader.nextLine();
-            processLine(line, scoresNamesHash, scoresList);
-        }
-        reader.close();
-
-        scoresList.sort(null);
     }
 
     public void writeToDatabase(String user, int score) {
