@@ -64,11 +64,11 @@
             <Font name="Press Start 2P Regular" size="30.0" />
          </font>
       </Text>
-      <Text fx:id="winLoseScore" fill="#cccccc" layoutX="259.0" layoutY="496.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SCORE:" textAlignment="CENTER" visible="false" AnchorPane.leftAnchor="201.0" AnchorPane.rightAnchor="173.0">
+      <Text fx:id="winLoseScore" fill="#cccccc" layoutY="456.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SCORE:" textAlignment="CENTER" visible="false" wrappingWidth="670.0">
          <font>
             <Font name="Press Start 2P Regular" size="40.0" />
          </font>
       </Text>
-      <Button fx:id="backButton" layoutX="197.0" layoutY="667.0" mnemonicParsing="false" prefHeight="78.0" prefWidth="272.0" style="-fx-background-color: transparent;" text="Button" onAction="#onBackButtonClicked" />
+      <Button fx:id="backButton" layoutX="197.0" layoutY="667.0" mnemonicParsing="false" onAction="#onBackButtonClicked" prefHeight="78.0" prefWidth="272.0" style="-fx-background-color: transparent;" text="Button" />
    </children>
 </AnchorPane>

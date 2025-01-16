@@ -23,45 +23,22 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 
 public class PrimaryController {
-    private double hSpeed = 5;
-    @FXML
-    private Rectangle paddle; 
-    @FXML
-    private Text score, highscore; 
+    private double hSpeed = 5, velocity, velocityGoal;
+    private int scoreAmount, lives = 3, difficulty;
+    private boolean create = false;
     private Paddle pad;
     private Ball ball;
-    private int scoreAmount; 
-    private int lives = 3; 
-    @FXML
-    private Text livesnumber;
-    @FXML
-    private Text livesdisplay;
-
     private String username;
-    private int difficulty;
     private BlockGrid blocks;
-
     @FXML
-    private Text gamePause;
-    @FXML
-    private Text pressEscape;
-    @FXML
-    private Rectangle gamePauseBackground;
+    private Text gamePause, pressEscape, gameOver, returnTo, mainMenu, winLoseScore, score, highscore, livesnumber, livesdisplay;
     @FXML
     private Timeline timeline;
-    @FXML
-    private Text gameOver;
-    @FXML 
-    private Text returnTo;
-    @FXML 
-    private Text mainMenu;
     @FXML 
     private Button backButton;
     @FXML
-    private Text winLoseScore; 
+    private Rectangle paddle, gamePauseBackground; 
 
-    private boolean create = false;
-    double velocity, velocityGoal;
 
     public void initialize() throws Exception {
         pad = new Paddle(paddle);
@@ -120,6 +97,7 @@ public class PrimaryController {
             if (lives <= 0) {
                 App.save("Score",(double) scoreAmount);
                 toggleGameOverScreen();
+                winLoseScore.setText("Score: " + scoreAmount);
                 timeline.pause();
 
                 writeToDatabase(username, scoreAmount);
@@ -173,15 +151,18 @@ public class PrimaryController {
     public void inputHandling(KeyEvent event) {
         switch (event.getCode()) {
             case ESCAPE:
+                System.out.println("ESCAPE has been pressed");
                 if (timeline.getStatus() == Timeline.Status.RUNNING) {
+                    System.out.println("TIMELINE IS RUNNING");
                     timeline.pause();  
                     togglePauseScreen();
-                    break;
                 } else {
+                    System.out.println("TIMELINE IS NOT RUNNING");
                     timeline.play();
                     togglePauseScreen();
-                    break;
                 }
+                event.consume();
+                break;
 
             case L:
             case D:
@@ -218,10 +199,12 @@ public class PrimaryController {
             case H:
             case A:
             case LEFT:
-            if (velocityGoal < 0) {
-                velocityGoal = 0;
-            }
-            break;
+                if (velocityGoal < 0) {
+                    velocityGoal = 0;
+                }
+                break;
+            case ESCAPE:
+                break;
 
             default:
                 break;
@@ -324,7 +307,9 @@ public class PrimaryController {
     }
 
     private void togglePauseScreen () {
-        if (gamePauseBackground.isVisible() && pressEscape.isVisible() && gamePause.isVisible()) {
+        System.out.println("TOGGLE PAUSE SCREEN CALLED");
+        if (gamePauseBackground.isVisible() || pressEscape.isVisible() || gamePause.isVisible()) {
+            System.out.println("HIDING PAUSE SCREEN");
             gamePauseBackground.setVisible(false);
             gamePauseBackground.setManaged(false);
             pressEscape.setVisible(false);
@@ -332,6 +317,7 @@ public class PrimaryController {
             gamePause.setVisible(false);
             gamePause.setManaged(false); 
         } else {
+            System.out.println("SHOWING PAUSE SCREEN");
             gamePauseBackground.setVisible(true);
             gamePauseBackground.setManaged(true);
             pressEscape.setVisible(true);
@@ -371,7 +357,7 @@ public class PrimaryController {
     }
     
     @FXML
-    public void onBackButtonClicked() throws Exception{
+    public void onBackButtonClicked() throws IOException {
         FXMLLoader menuLoader = new FXMLLoader(App.class.getResource("menu.fxml"));
         Parent menuPane = menuLoader.load();
         App.setRoot(menuPane);
