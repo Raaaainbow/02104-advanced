@@ -48,4 +48,18 @@ public class Powerups {
         pos[0] = x;
         pos[1] = y;
     }
+    // Større paddle 
+// stjerne fra mario 
+// Ekstra point 
+// Usynlig væg
+// Ekstra liv 
+// Langsommere bold
+// Ekstra bolde 
+
+
+// Power downs: 
+// Score bliver nulstillet 
+// Paddle bliver mindre
+// Mister et liv 
 }
+
