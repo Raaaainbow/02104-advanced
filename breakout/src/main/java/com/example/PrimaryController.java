@@ -12,6 +12,7 @@ import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
+import javafx.scene.control.Button;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
 import java.util.Scanner;
@@ -19,6 +20,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.io.File;
 import java.io.FileNotFoundException;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 
 public class PrimaryController {
     private double hSpeed = 5;
@@ -37,6 +40,25 @@ public class PrimaryController {
     private int difficulty;
     private BlockGrid blocks;
 
+    @FXML
+    private Text gamePause;
+    @FXML
+    private Text pressEscape;
+    @FXML
+    private Rectangle gamePauseBackground;
+    @FXML
+    private Timeline timeline;
+    @FXML
+    private Text gameOver;
+    @FXML 
+    private Text returnTo;
+    @FXML 
+    private Text mainMenu;
+    @FXML 
+    private Button backButton;
+    @FXML
+    private Text winLoseScore; 
+
     private boolean create = false;
     double velocity, velocityGoal;
 
@@ -44,10 +66,15 @@ public class PrimaryController {
         pad = new Paddle(paddle);
         livesnumber.setText(lives + " lives");
         startTimeline(); 
+
+        backButton.setDisable(true);
+
+        App.getScene().addEventFilter(KeyEvent.KEY_PRESSED, this::inputHandling);
+        App.getScene().addEventFilter(KeyEvent.KEY_RELEASED, this::stopHandling);
     }
 
-    public void startTimeline() throws Exception{
-        Timeline timeline = new Timeline(
+    public void startTimeline() {
+        timeline = new Timeline(
             new KeyFrame(Duration.millis(10), event -> {
                 try {
                     onStep();
@@ -114,6 +141,7 @@ public class PrimaryController {
             ball.setPos(pad.getX() + pad.getLength()/2 - 13/2 + velocity,ball.getPos()[1]);
         }
 
+        // remove winCondition and replace you died with GAME OVER
         if (winCondition()) {
             blocks = new BlockGrid(difficulty);
             App.removeElement(ball.getShape());
@@ -124,8 +152,12 @@ public class PrimaryController {
             if (lives <= 0) {
                 System.out.println("YOU LOST");
                 App.save(username, scoreAmount);
+                toggleGameOverScreen();
+                timeline.pause();
                 writeToDatabase(username, scoreAmount);
                 System.exit(0);
+            } else {
+                ball = new Ball(pad.getX() + pad.getLength()/2-13/2, pad.getY() - 30,pad,blocks, this);
             }
         }
         score.setText(""+ scoreAmount);
@@ -168,26 +200,25 @@ public class PrimaryController {
     // Called on key pressed
     public void inputHandling(KeyEvent event) {
         switch (event.getCode()) {
+            case ESCAPE:
+                if (timeline.getStatus() == Timeline.Status.RUNNING) {
+                    timeline.pause();  
+                    togglePauseScreen();
+                    break;
+                } else {
+                    timeline.play();
+                    togglePauseScreen();
+                    break;
+                }
+
             case L:
-                velocityGoal = hSpeed;
-                break;
-
             case D:
-                velocityGoal = hSpeed;
-                break;
-
             case RIGHT:
                 velocityGoal = hSpeed;
                 break;
                 
             case H:
-                velocityGoal = -hSpeed;
-                break;
-
             case A:
-                velocityGoal =-hSpeed;
-                break;
-            
             case LEFT:
                 velocityGoal =-hSpeed;
                 break;
@@ -205,17 +236,7 @@ public class PrimaryController {
     public void stopHandling(KeyEvent event) {
         switch (event.getCode()) {
             case L:
-                if (velocityGoal > 0) {
-                    velocityGoal = 0;
-                }
-                break;
-            
             case D:
-                if (velocityGoal > 0) {
-                    velocityGoal = 0;
-                }
-                break;
-
             case RIGHT:
                 if (velocityGoal > 0) {
                     velocityGoal = 0;
@@ -223,22 +244,12 @@ public class PrimaryController {
                 break;
 
             case H:
-            if (velocityGoal < 0) {
-                velocityGoal = 0;
-            }
-                break;
-
             case A:
-            if (velocityGoal < 0) {
-                velocityGoal = 0;
-            }
-                break;
-
             case LEFT:
             if (velocityGoal < 0) {
                 velocityGoal = 0;
             }
-                break;
+            break;
 
             default:
                 break;
@@ -319,5 +330,58 @@ public class PrimaryController {
         scoresNamesHash.put(score, name);
         scoresList.add(score);
     }
-}
 
+    private void togglePauseScreen () {
+        if (gamePauseBackground.isVisible() && pressEscape.isVisible() && gamePause.isVisible()) {
+            gamePauseBackground.setVisible(false);
+            gamePauseBackground.setManaged(false);
+            pressEscape.setVisible(false);
+            pressEscape.setManaged(false);
+            gamePause.setVisible(false);
+            gamePause.setManaged(false); 
+        } else {
+            gamePauseBackground.setVisible(true);
+            gamePauseBackground.setManaged(true);
+            pressEscape.setVisible(true);
+            pressEscape.setManaged(true);
+            gamePause.setVisible(true);
+            gamePause.setManaged(true); 
+
+            gamePauseBackground.toFront();
+            pressEscape.toFront();
+            gamePause.toFront();
+        }
+    }
+
+    private void toggleGameOverScreen() {
+        if (!(gameOver.isVisible() && returnTo.isVisible() && mainMenu.isVisible() && gamePauseBackground.isVisible() && winLoseScore.isVisible() && backButton.isVisible())) {
+            gamePauseBackground.setVisible(true);
+            gamePauseBackground.setManaged(true);
+            gameOver.setVisible(true);
+            gameOver.setManaged(true);
+            returnTo.setVisible(true);
+            returnTo.setManaged(true);
+            mainMenu.setVisible(true);
+            mainMenu.setManaged(true);
+            winLoseScore.setVisible(true);
+            winLoseScore.setManaged(true);
+            backButton.setDisable(true);
+
+            gamePauseBackground.toFront();
+            gameOver.toFront();
+            returnTo.toFront();
+            mainMenu.toFront();
+            winLoseScore.toFront();
+            backButton.toFront();
+
+            backButton.setDisable(false);
+        }
+    }
+    
+    @FXML
+    public void onBackButtonClicked() throws Exception{
+        FXMLLoader menuLoader = new FXMLLoader(App.class.getResource("menu.fxml"));
+        Parent menuPane = menuLoader.load();
+        App.setRoot(menuPane);
+    }
+}
