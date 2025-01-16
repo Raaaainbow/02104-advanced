@@ -18,8 +18,8 @@ public class PrimaryController {
     private Paddle pad;
     private Ball ball;
     private int scoren; 
-    private int liv = 3; 
-    private Text livtal; 
+    private int lives = 3; 
+    //private Text livtal; 
 
     private BlockGrid blocks;
 
@@ -28,7 +28,7 @@ public class PrimaryController {
 
     public void initialize() {
         pad = new Paddle(paddle);
-        livtal.setText(""+liv);
+        //livtal.setText(""+lives);
         startTimeline(); 
     }
 
@@ -83,12 +83,12 @@ public class PrimaryController {
 
     public boolean loseCondition() { // You have 3 lives and each time one life is taken the ball is reset
         if (ball.getPos()[1] >= 972) { 
-            liv--; 
+            lives--; 
 
-            livtal.setText("Lives: " + liv);
+            //livtal.setText("" + lives);
 
-            if (liv <= 0) {
-                liv = 0; 
+            if (lives <= 0) {
+                lives = 0; 
                 return true; 
             }
     
@@ -147,5 +147,9 @@ public class PrimaryController {
     public void Addscore(int scoren) {
         this.scoren += scoren;
     }
+
+    //public void Addlivtal(int lives) {
+      //  this.lives += lives;
+    //}
 
 }
