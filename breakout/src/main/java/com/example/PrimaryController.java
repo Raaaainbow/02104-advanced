@@ -19,6 +19,8 @@ import java.util.Scanner;
 import java.util.HashMap;
 import java.io.File;
 import java.io.FileNotFoundException;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 
 public class PrimaryController {
     private double hSpeed = 5;
@@ -65,6 +67,11 @@ public class PrimaryController {
         pad = new Paddle(paddle);
         livesnumber.setText(""+lives);
         startTimeline(); 
+
+        backButton.setDisable(true);
+
+        App.getScene().addEventFilter(KeyEvent.KEY_PRESSED, this::inputHandling);
+        App.getScene().addEventFilter(KeyEvent.KEY_RELEASED, this::stopHandling);
     }
 
     public void startTimeline() {
@@ -113,6 +120,7 @@ public class PrimaryController {
             if (lives <= 0) {
                 App.save("Score",(double) scoreAmount);
                 toggleGameOverScreen();
+                timeline.pause();
 
                 writeToDatabase(username, scoreAmount);
 
@@ -176,25 +184,13 @@ public class PrimaryController {
                 }
 
             case L:
-                velocityGoal = hSpeed;
-                break;
-
             case D:
-                velocityGoal = hSpeed;
-                break;
-
             case RIGHT:
                 velocityGoal = hSpeed;
                 break;
                 
             case H:
-                velocityGoal = -hSpeed;
-                break;
-
             case A:
-                velocityGoal =-hSpeed;
-                break;
-            
             case LEFT:
                 velocityGoal =-hSpeed;
                 break;
@@ -212,17 +208,7 @@ public class PrimaryController {
     public void stopHandling(KeyEvent event) {
         switch (event.getCode()) {
             case L:
-                if (velocityGoal > 0) {
-                    velocityGoal = 0;
-                }
-                break;
-            
             case D:
-                if (velocityGoal > 0) {
-                    velocityGoal = 0;
-                }
-                break;
-
             case RIGHT:
                 if (velocityGoal > 0) {
                     velocityGoal = 0;
@@ -230,22 +216,12 @@ public class PrimaryController {
                 break;
 
             case H:
-            if (velocityGoal < 0) {
-                velocityGoal = 0;
-            }
-                break;
-
             case A:
-            if (velocityGoal < 0) {
-                velocityGoal = 0;
-            }
-                break;
-
             case LEFT:
             if (velocityGoal < 0) {
                 velocityGoal = 0;
             }
-                break;
+            break;
 
             default:
                 break;
@@ -370,19 +346,7 @@ public class PrimaryController {
     }
 
     private void toggleGameOverScreen() {
-        if (gameOver.isVisible() && returnTo.isVisible() && mainMenu.isVisible() && gamePauseBackground.isVisible() && winLoseScore.isVisible() && backButton.isVisible()) {
-            gamePauseBackground.setVisible(false);
-            gamePauseBackground.setManaged(false);
-            gameOver.setVisible(false);
-            gameOver.setManaged(false);
-            returnTo.setVisible(false);
-            returnTo.setManaged(false);
-            mainMenu.setVisible(false);
-            mainMenu.setManaged(false);
-            winLoseScore.setVisible(false);
-            winLoseScore.setManaged(false);
-            backButton.setDisable(false);
-    } else {
+        if (!(gameOver.isVisible() && returnTo.isVisible() && mainMenu.isVisible() && gamePauseBackground.isVisible() && winLoseScore.isVisible() && backButton.isVisible())) {
             gamePauseBackground.setVisible(true);
             gamePauseBackground.setManaged(true);
             gameOver.setVisible(true);
@@ -394,7 +358,22 @@ public class PrimaryController {
             winLoseScore.setVisible(true);
             winLoseScore.setManaged(true);
             backButton.setDisable(true);
+
+            gamePauseBackground.toFront();
+            gameOver.toFront();
+            returnTo.toFront();
+            mainMenu.toFront();
+            winLoseScore.toFront();
+            backButton.toFront();
+
+            backButton.setDisable(false);
         }
     }
+    
+    @FXML
+    public void onBackButtonClicked() throws Exception{
+        FXMLLoader menuLoader = new FXMLLoader(App.class.getResource("menu.fxml"));
+        Parent menuPane = menuLoader.load();
+        App.setRoot(menuPane);
+    }
 }
-

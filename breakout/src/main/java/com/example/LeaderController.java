@@ -145,7 +145,8 @@ public class LeaderController {
         return scores.toArray(new String[0]);
     }
 
-    public void onBackButtonClicked() throws Exception{
+    @FXML
+    public void onBackButtonClicked() throws IOException {
         FXMLLoader menuLoader = new FXMLLoader(App.class.getResource("menu.fxml"));
         Parent menuPane = menuLoader.load();
         App.setRoot(menuPane);

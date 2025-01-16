@@ -69,6 +69,6 @@
             <Font name="Press Start 2P Regular" size="40.0" />
          </font>
       </Text>
-      <Button fx:id="backButton" layoutX="197.0" layoutY="667.0" mnemonicParsing="false" prefHeight="78.0" prefWidth="272.0" style="-fx-background-color: transparent;" text="Button" />
+      <Button fx:id="backButton" layoutX="197.0" layoutY="667.0" mnemonicParsing="false" prefHeight="78.0" prefWidth="272.0" style="-fx-background-color: transparent;" text="Button" onAction="#onBackButtonClicked" />
    </children>
 </AnchorPane>

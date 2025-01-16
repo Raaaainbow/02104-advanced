@@ -40,6 +40,8 @@ public class App extends Application {
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
+
+        scene.getRoot().requestFocus();
     }
 
     static void setRoot(String fxml) throws IOException { // Loads root from fxml
