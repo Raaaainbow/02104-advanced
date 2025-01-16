@@ -33,6 +33,7 @@ public class PrimaryController {
 
     public void initialize() {
         pad = new Paddle(paddle);
+        livesnumber.setText(""+lives);
         startTimeline(); 
     }
 
@@ -90,9 +91,24 @@ public class PrimaryController {
         return false;
     }
 
-    public boolean loseCondition() {
-        return (ball.getPos()[1] >= 972)? true: false;
+    public boolean loseCondition() { // You have 3 lives and each time one life is taken the ball is reset
+        if (ball.getPos()[1] >= 972) { 
+            lives--; 
+
+            livesnumber.setText("" + lives);
+
+            if (lives <= 0) {
+                lives = 0; 
+                return true; 
+            }
+    
+            ball.resetPosition(); 
+            return false;  
+        }
+    
+        return false; 
     }
+    
 
     // Called on key pressed
     public void inputHandling(KeyEvent event) {
