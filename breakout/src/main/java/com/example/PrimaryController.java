@@ -28,6 +28,15 @@ public class PrimaryController {
 
     private BlockGrid blocks;
 
+    @FXML
+    private Text gamePause;
+    @FXML
+    private Text pressEscape;
+    @FXML
+    private Rectangle gamePauseBackground;
+    @FXML
+    private Timeline timeline;
+
     private boolean create = false;
     double velocity, velocityGoal;
 
@@ -37,7 +46,7 @@ public class PrimaryController {
     }
 
     public void startTimeline() {
-        Timeline timeline = new Timeline(
+        timeline = new Timeline(
             new KeyFrame(Duration.millis(10), event -> {
                 try {
                     onStep();
@@ -69,6 +78,7 @@ public class PrimaryController {
             ball.setPos(pad.getX() + pad.getLength()/2 - 13/2 + velocity,ball.getPos()[1]);
         }
 
+        // remove winCondition and replace you died with GAME OVER
         if (winCondition()) {
             System.out.println("YOU WON");
             App.save("Score", (double) scoreAmount);
@@ -97,6 +107,17 @@ public class PrimaryController {
     // Called on key pressed
     public void inputHandling(KeyEvent event) {
         switch (event.getCode()) {
+            case ESCAPE:
+                if (timeline.getStatus() == Timeline.Status.RUNNING) {
+                    timeline.pause();  
+                    togglePauseScreen();
+                    break;
+                } else {
+                    timeline.play();
+                    togglePauseScreen();
+                    break;
+                }
+
             case L:
                 velocityGoal = hSpeed;
                 break;
@@ -210,5 +231,26 @@ public class PrimaryController {
         scoresNamesHash.put(score, name);
         scoresList.add(score);
     }
-}
 
+    private void togglePauseScreen () {
+        if (gamePauseBackground.isVisible() || pressEscape.isVisible() || gamePause.isVisible()) {
+            gamePauseBackground.setVisible(false);
+            gamePauseBackground.setManaged(false);
+            pressEscape.setVisible(false);
+            pressEscape.setManaged(false);
+            gamePause.setVisible(false);
+            gamePause.setManaged(false); 
+        } else {
+            gamePauseBackground.setVisible(true);
+            gamePauseBackground.setManaged(true);
+            pressEscape.setVisible(true);
+            pressEscape.setManaged(true);
+            gamePause.setVisible(true);
+            gamePause.setManaged(true); 
+
+            gamePauseBackground.toFront();
+            pressEscape.toFront();
+            gamePause.toFront();
+        }
+    }
+}
