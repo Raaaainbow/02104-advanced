@@ -126,7 +126,31 @@ public class PrimaryController {
                 }
                 break;
             
+            case D:
+                if (velocityGoal > 0) {
+                    velocityGoal = 0;
+                }
+                break;
+
+            case RIGHT:
+                if (velocityGoal > 0) {
+                    velocityGoal = 0;
+                }
+                break;
+
             case H:
+            if (velocityGoal < 0) {
+                velocityGoal = 0;
+            }
+                break;
+
+            case A:
+            if (velocityGoal < 0) {
+                velocityGoal = 0;
+            }
+                break;
+
+            case LEFT:
             if (velocityGoal < 0) {
                 velocityGoal = 0;
             }
