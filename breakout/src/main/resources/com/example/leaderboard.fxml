@@ -192,12 +192,12 @@
             <Font name="Press Start 2P Regular" size="25.0" />
          </font>
       </Text>
-      <Text fx:id="myname" fill="#cccccc" layoutX="186.0" layoutY="796.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ABCDEFGH">
+      <Text fx:id="myname" fill="#cccccc" layoutX="186.0" layoutY="796.0" strokeType="OUTSIDE" strokeWidth="0.0">
          <font>
             <Font name="Press Start 2P Regular" size="25.0" />
          </font>
       </Text>
-      <Text fx:id="myscore" fill="#cccccc" layoutX="408.0" layoutY="796.0" strokeType="OUTSIDE" strokeWidth="0.0" text="12345678">
+      <Text fx:id="myscore" fill="#cccccc" layoutX="408.0" layoutY="796.0" strokeType="OUTSIDE" strokeWidth="0.0">
          <font>
             <Font name="Press Start 2P Regular" size="25.0" />
          </font>
