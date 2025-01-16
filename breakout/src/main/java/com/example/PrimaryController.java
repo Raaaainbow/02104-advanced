@@ -19,7 +19,11 @@ public class PrimaryController {
     private Ball ball;
     private int scoren; 
     private int lives = 3; 
-    //private Text livtal; 
+    @FXML
+    private Text livesnumber;
+    @FXML
+    private Text livesdisplay;
+
 
     private BlockGrid blocks;
 
@@ -28,7 +32,7 @@ public class PrimaryController {
 
     public void initialize() {
         pad = new Paddle(paddle);
-        //livtal.setText(""+lives);
+        livesnumber.setText(""+lives);
         startTimeline(); 
     }
 
@@ -85,7 +89,7 @@ public class PrimaryController {
         if (ball.getPos()[1] >= 972) { 
             lives--; 
 
-            //livtal.setText("" + lives);
+            livesnumber.setText("" + lives);
 
             if (lives <= 0) {
                 lives = 0; 
@@ -148,8 +152,8 @@ public class PrimaryController {
         this.scoren += scoren;
     }
 
-    //public void Addlivtal(int lives) {
-      //  this.lives += lives;
-    //}
+    public void Addlivtal(int lives) {
+        this.lives += lives;
+    }
 
 }
