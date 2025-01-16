@@ -16,6 +16,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
 import java.util.Scanner;
 import java.util.HashMap;
+import java.util.List;
 import java.io.File;
 import java.io.FileNotFoundException;
 
@@ -30,9 +31,7 @@ public class PrimaryController {
     private int scoreAmount; 
     private int lives = 3; 
     @FXML
-    private Text livesnumber;
-    @FXML
-    private Text livesdisplay;
+    private Text livesnumber, combocounter;
 
     private String username;
     private int difficulty;
@@ -43,7 +42,7 @@ public class PrimaryController {
 
     public void initialize() throws Exception {
         pad = new Paddle(paddle);
-        livesnumber.setText(""+lives);
+        livesnumber.setText(lives + " lives");
         startTimeline(); 
     }
 
@@ -65,9 +64,44 @@ public class PrimaryController {
         if (create == false) { // Run once
             blocks = new BlockGrid(difficulty);
             ball = new Ball(pad.getX() + pad.getLength()/2-13/2, pad.getY() - 30,pad,blocks, this);
+            // Load local scores and names
+            String[] localNames = App.loadName();
+            int[] localScores = App.loadScore();
+
+            // Validate local names and scores
+            List<String> validNames = new ArrayList<>();
+            List<Integer> validScores = new ArrayList<>();
+            for (int i = 0; i < localNames.length; i++) {
+                if (!localNames[i].isEmpty() && i < localScores.length) {
+                    validNames.add(localNames[i]);
+                    validScores.add(localScores[i]);
+                }
+            }
+            localNames = validNames.toArray(new String[0]);
+            localScores = validScores.stream().mapToInt(Integer::intValue).toArray();
+
+            // Sort local scores (descending)
+            LeaderController.sortLeaderboard(localNames, localScores);
+
+            // Match local scores with username
+            boolean matchFound = false;
+            for (int i = 0; i < localNames.length; i++) {
+                if (username.equalsIgnoreCase(localNames[i]) && !matchFound) {
+                    highscore.setText((""+localScores[i]).toUpperCase());
+                    matchFound = true;
+                }
+            }
+
+            // If no match found, display the highest local score
+            if (!matchFound && localNames.length > 0) {
+                highscore.setText("" + localScores[0]);
+            }
             // Everything that needs to be ran once (and not run in initialize()), you can add here
             create = true;
         }
+
+        combocounter.setText(""+(int)ball.getCombo()+ " Combo");
+
         velocity = lerp(velocity, velocityGoal, 0.25);
         if (pad.getX() + velocity < 672 - 10 - pad.getLength() && pad.getX() + velocity > 10) {
             pad.move(velocity);
@@ -87,15 +121,11 @@ public class PrimaryController {
         } 
 
         if (loseCondition()) {
-            App.removeElement(ball.getShape());
-            lives--;
             if (lives <= 0) {
                 System.out.println("YOU LOST");
                 App.save(username, scoreAmount);
                 writeToDatabase(username, scoreAmount);
                 System.exit(0);
-            } else {
-                ball = new Ball(pad.getX() + pad.getLength()/2-13/2, pad.getY() - 30,pad,blocks, this);
             }
         }
         score.setText(""+ scoreAmount);
@@ -119,19 +149,15 @@ public class PrimaryController {
 
     public boolean loseCondition() { // You have 3 lives and each time one life is taken the ball is reset
         if (ball.getPos()[1] >= 972) { 
+            App.removeElement(ball.getShape());
             lives--; 
-
-            livesnumber.setText("" + lives);
-
-            if (lives <= 0) {
-                lives = 0; 
-                return true; 
-            }
-    
-            ball.resetPosition(); 
-            return false;  
+            livesnumber.setText(lives + " lives");
+            ball = new Ball(pad.getX() + pad.getLength()/2-13/2, pad.getY() - 30,pad,blocks, this);
         }
-    
+
+        if (lives <= 0) {
+            return true; 
+        }
         return false; 
     }
     

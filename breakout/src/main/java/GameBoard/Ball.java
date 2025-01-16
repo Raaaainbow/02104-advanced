@@ -88,8 +88,8 @@ public class Ball {
 
     public void nextPos() {
         if (moving) {
-            double comboMultiplierY = Math.signum(velo[1])*((combo/comboBlockAmount)*comboSpeed), 
-            comboMultiplierX = Math.signum(velo[0])*((combo/comboBlockAmount)*comboSpeed);
+            double comboMultiplierY = Math.signum(velo[1])*((combo/comboBlockAmount > 1 ? 1 : combo/comboBlockAmount)*comboSpeed), 
+            comboMultiplierX = Math.signum(velo[0])*((combo/comboBlockAmount > 1 ? 1 : combo/comboBlockAmount)*comboSpeed);
             pos = new double[] {pos[0]+velo[0]+comboMultiplierX,pos[1]+velo[1]+comboMultiplierY};
         if (collidesWall() || collidesBlockHorizontal() || collidesSidePaddle()) {
             wallBounce();
@@ -117,6 +117,10 @@ public class Ball {
         velo[1] *= -1;
     }
 
+    public double getCombo() {
+        return combo;
+    }
+
     public Rectangle getShape() {
         return rect;
     }
@@ -135,7 +139,7 @@ public class Ball {
                 blocks.remove(b);
                 blockGrid.removeBlock(b);
                 controller.Addscore(b.getScoren()); 
-                combo = combo < comboBlockAmount ? combo+1 : combo;
+                combo++;
                 return true;
             }
         }
@@ -148,7 +152,7 @@ public class Ball {
                 blocks.remove(b);
                 blockGrid.removeBlock(b);
                 controller.Addscore(b.getScoren());
-                combo = combo < comboBlockAmount ? combo+1 : combo;
+                combo++;
                 return true;
             }
         }
@@ -164,7 +168,7 @@ public class Ball {
         boolean collides = pos[0] + rect.getWidth() > paddleX && pos[0] < paddleX + paddleWidth &&
                            pos[1] + rect.getHeight() > paddleY && pos[1] < paddleY + paddleHeight;
         if (collides) {
-            combo = combo-2 >= 0 ? combo-2 : 0;
+            combo = combo-3 >= 0 ? combo-3 : 0;
             pos[1] = paddleY - rect.getHeight();
             if (pos[0] + rect.getWidth()/2 <= paddleX + paddleWidth/2) {
                 velo[0] = velo[0] > 0 ? -velo[0] : velo[0];

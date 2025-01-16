@@ -94,7 +94,7 @@ public class LeaderController {
         }
     }
 
-    private void sortLeaderboard(String[] names, int[] scores) {
+    public static void sortLeaderboard(String[] names, int[] scores) {
         boolean swapped;
         int tempScore;
         String tempName;
