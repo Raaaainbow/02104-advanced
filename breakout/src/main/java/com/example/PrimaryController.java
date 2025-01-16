@@ -135,6 +135,9 @@ public class PrimaryController {
         return false; 
     }
     
+    public double getVelocity() {
+        return velocity;
+    }
 
     // Called on key pressed
     public void inputHandling(KeyEvent event) {

@@ -17,6 +17,7 @@ public class Ball {
     private Paddle pad;
     private BlockGrid blockGrid;
     private HashSet<Block> blocks;
+    private double comboBlockAmount = 5, comboSpeed = 1.5, combo = 0;
 
     // temp variables move to App.java
     private double sideWall = 10;
@@ -87,7 +88,9 @@ public class Ball {
 
     public void nextPos() {
         if (moving) {
-        pos = new double[] {pos[0]+velo[0],pos[1]+velo[1]};
+            double comboMultiplierY = Math.signum(velo[1])*((combo/comboBlockAmount)*comboSpeed), 
+            comboMultiplierX = Math.signum(velo[0])*((combo/comboBlockAmount)*comboSpeed);
+            pos = new double[] {pos[0]+velo[0]+comboMultiplierX,pos[1]+velo[1]+comboMultiplierY};
         if (collidesWall() || collidesBlockHorizontal() || collidesSidePaddle()) {
             wallBounce();
         } else if (collidesRoof() || collidesBlockVertical() || collidesTopPaddle()) {
@@ -132,6 +135,7 @@ public class Ball {
                 blocks.remove(b);
                 blockGrid.removeBlock(b);
                 controller.Addscore(b.getScoren()); 
+                combo = combo < comboBlockAmount ? combo+1 : combo;
                 return true;
             }
         }
@@ -144,6 +148,7 @@ public class Ball {
                 blocks.remove(b);
                 blockGrid.removeBlock(b);
                 controller.Addscore(b.getScoren());
+                combo = combo < comboBlockAmount ? combo+1 : combo;
                 return true;
             }
         }
@@ -151,23 +156,36 @@ public class Ball {
     }
     
     public boolean collidesTopPaddle() {
-        // Check if the ball is within the paddle's bounds horizontally and vertically
-        boolean withinPaddleX = pad.getX() <= getXPos() + rect.getWidth() &&
-                                getXPos() <= pad.getX() + pad.getLength();
-        boolean yCollides = pad.getY() <= getYPos() + velo[1] + rect.getHeight() &&
-                            pad.getY() + pad.getHeight() >= getYPos() + velo[1];
+        double paddleX = pad.getX();
+        double paddleY = pad.getY();
+        double paddleWidth = pad.getObject().getWidth();
+        double paddleHeight = pad.getObject().getHeight();
     
-        return withinPaddleX && yCollides;
+        boolean collides = pos[0] + rect.getWidth() > paddleX && pos[0] < paddleX + paddleWidth &&
+                           pos[1] + rect.getHeight() > paddleY && pos[1] < paddleY + paddleHeight;
+        if (collides) {
+            combo = combo-2 >= 0 ? combo-2 : 0;
+            pos[1] = paddleY - rect.getHeight();
+            if (pos[0] + rect.getWidth()/2 <= paddleX + paddleWidth/2) {
+                velo[0] = velo[0] > 0 ? -velo[0] : velo[0];
+            } else {
+                velo[0] = velo[0] < 0 ? -velo[0] : velo[0];
+            }
+        }
+        return collides;
     }
     
     public boolean collidesSidePaddle() {
-        // Check if the ball is within the paddle's bounds vertically and horizontally
-        boolean withinPaddleY = pad.getY() <= getYPos() + rect.getHeight() &&
-                                getYPos() <= pad.getY() + pad.getHeight();
-        boolean xCollides = pad.getX() <= getXPos() + velo[0] + rect.getWidth() &&
-                            pad.getX() + pad.getLength() >= getXPos() + velo[0];
-    
-        return withinPaddleY && xCollides;
+        boolean collides = pad.getObject().intersects(pos[0] + velo[0], pos[1], rect.getWidth(), rect.getHeight());
+        if (collides) {
+            combo = 0;
+            if (pos[0] + velo[0] < pad.getX()) {
+                pos[0] = pad.getX() - rect.getWidth();
+            } else {
+                pos[0] = pad.getX() + pad.getLength();
+            }
+        }
+        return collides;
     }
     
 }
