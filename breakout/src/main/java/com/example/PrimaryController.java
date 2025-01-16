@@ -87,11 +87,27 @@ public class PrimaryController {
             case L:
                 velocityGoal = hSpeed;
                 break;
+
+            case D:
+                velocityGoal = hSpeed;
+                break;
+
+            case RIGHT:
+                velocityGoal = hSpeed;
+                break;
                 
             case H:
                 velocityGoal = -hSpeed;
                 break;
+
+            case A:
+                velocityGoal =-hSpeed;
+                break;
             
+            case LEFT:
+                velocityGoal =-hSpeed;
+                break;
+
             case SPACE:
                 ball.setMoving(true);
                 break;
