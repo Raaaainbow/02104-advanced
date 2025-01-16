@@ -9,6 +9,7 @@ import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
+import javafx.scene.control.Button;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
 import java.util.Scanner;
@@ -36,6 +37,14 @@ public class PrimaryController {
     private Rectangle gamePauseBackground;
     @FXML
     private Timeline timeline;
+    @FXML
+    private Text gameOver;
+    @FXML 
+    private Text returnTo;
+    @FXML 
+    private Text mainMenu;
+    @FXML 
+    private Button backButton;
 
     private boolean create = false;
     double velocity, velocityGoal;
