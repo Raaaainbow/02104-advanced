@@ -160,4 +160,8 @@ public class Ball {
     
         return withinPaddleY && xCollides;
     }
+
+    public Rectangle getShape() {
+        return rect;
+    }
 }
