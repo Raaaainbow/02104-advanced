@@ -1,5 +1,8 @@
 package com.example;
 
+import java.io.IOException;
+import java.util.ArrayList;
+
 import GameBoard.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -8,6 +11,10 @@ import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
+import java.util.Scanner;
+import java.util.HashMap;
+import java.io.File;
+import java.io.FileNotFoundException;
 
 public class PrimaryController {
     private double hSpeed = 5;
@@ -17,7 +24,7 @@ public class PrimaryController {
     private Text score, highscore; 
     private Paddle pad;
     private Ball ball;
-    private int scoren; 
+    private int scoreAmount; 
 
     private BlockGrid blocks;
 
@@ -32,14 +39,18 @@ public class PrimaryController {
     public void startTimeline() {
         Timeline timeline = new Timeline(
             new KeyFrame(Duration.millis(10), event -> {
-                onStep();  // Calls the step event stored in our controller
+                try {
+                    onStep();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             })
         );
         timeline.setCycleCount(Timeline.INDEFINITE); 
         timeline.play();
     }
     
-    public void onStep() {
+    public void onStep() throws IOException {
         if (create == false) { // Run once
             blocks = new BlockGrid();
             ball = new Ball(pad.getX() + pad.getLength()/2-13/2, pad.getY() - 30,pad,blocks, this);
@@ -60,16 +71,16 @@ public class PrimaryController {
 
         if (winCondition()) {
             System.out.println("YOU WON");
-            App.makeSaveFile();
+            App.save("Score", (double) scoreAmount);
             System.exit(0);
         } 
 
         if (loseCondition()) {
             System.out.println("YOU LOST");
-            App.makeSaveFile();
+            App.save("Score", (double) scoreAmount);
             System.exit(0);
         }
-        score.setText(""+scoren);
+        score.setText(""+ scoreAmount);
     }
 
     public boolean winCondition() {
@@ -128,8 +139,35 @@ public class PrimaryController {
         return (1 - interpolationAmount) * startValue + interpolationAmount * endValue;
     }
 
-    public void Addscore(int scoren) {
-        this.scoren += scoren;
+    public void Addscore(int scoreAmount) {
+        this.scoreAmount += scoreAmount;
     }
 
+    public void readScores() throws FileNotFoundException {
+        File scores = new File(App.saveFilePath);
+        if (!scores.exists() || !scores.canRead()) {
+            throw new FileNotFoundException(App.saveFilePath + " could not be found or read");
+        }
+
+        HashMap<Integer, String> scoresNamesHash = new HashMap<>();
+        ArrayList<Integer> scoresList = new ArrayList<>();
+
+        Scanner reader = new Scanner(scores);
+        while(reader.hasNextLine()) {
+            String line = reader.nextLine();
+            processLine(line, scoresNamesHash, scoresList);
+        }
+        reader.close();
+
+        scoresList.sort(null);
+    }
+
+    private void processLine(String line, HashMap<Integer, String> scoresNamesHash, ArrayList<Integer> scoresList) {
+        String[] parts = line.split(":");
+        int score = Integer.parseInt(parts[0].trim());
+        String name = parts[1].trim();
+
+        scoresNamesHash.put(score, name);
+        scoresList.add(score);
+    }
 }

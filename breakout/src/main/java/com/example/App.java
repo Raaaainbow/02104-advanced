@@ -21,6 +21,7 @@ public class App extends Application {
     private static Pane rootPane;
     private double width = 672;
     private double height = 970;
+    public static String saveFilePath = "breakout/src/main/resources/save.dat";
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -85,19 +86,18 @@ public class App extends Application {
         launch(args);
     }
 
-    private static void makeSaveFile() {
-        String fileName = "save.dat";
-        File file = new File(fileName);
+    public static void makeSaveFile() {
+        File file = new File(saveFilePath);
         try {
             // Check if the file already exists
             if (file.exists()) {
-                System.out.println(fileName + " already exists.");
+                System.out.println(saveFilePath + " already exists.");
             } else {
                 // Create a new file
                 if (file.createNewFile()) {
-                    System.out.println(fileName + " has been created.");
+                    System.out.println(saveFilePath + " has been created.");
                 } else {
-                    System.out.println("Failed to create " + fileName);
+                    System.out.println("Failed to create " + saveFilePath);
                 }
             }
         } catch (IOException e) {
@@ -112,8 +112,8 @@ public class App extends Application {
     public static void save(String keyword, Double value) throws IOException {
         makeSaveFile();
         try {
-            FileWriter writer = new FileWriter("save.dat");
-            writer.write(keyword + ": " + value);
+            FileWriter writer = new FileWriter(saveFilePath, true);
+            writer.append(keyword + ": " + value + "\n");
             writer.close();
         } catch (IOException e){
             System.out.println("there was an error writing the the file \"save.dat\"");
@@ -124,7 +124,7 @@ public class App extends Application {
     public static void save(String keyword, String value) throws FileNotFoundException {
         makeSaveFile();
         try {
-            FileWriter writer = new FileWriter("save.dat");
+            FileWriter writer = new FileWriter(saveFilePath);
             writer.write(keyword + ": " + value);
             writer.close();
         } catch (IOException e){
@@ -136,7 +136,7 @@ public class App extends Application {
     public static double loadNumber(String keyword) throws FileNotFoundException {
         makeSaveFile();
         String line = "";
-        Scanner saver = new Scanner(new File("save.dat"));
+        Scanner saver = new Scanner(new File(saveFilePath));
         while (saver.hasNextLine()) {
             line = saver.nextLine();
             if (line.contains(keyword)) {
@@ -150,7 +150,7 @@ public class App extends Application {
     public static String loadString(String keyword) throws FileNotFoundException {
         makeSaveFile();
         String line = "";
-        Scanner saver = new Scanner(new File("save.dat"));
+        Scanner saver = new Scanner(new File(saveFilePath));
         while (saver.hasNextLine()) {
             line = saver.nextLine();
             if (line.contains(keyword)) {
