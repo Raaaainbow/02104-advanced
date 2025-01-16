@@ -1,6 +1,9 @@
 package com.example;
 
 import java.io.IOException;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 
 import GameBoard.*;
@@ -31,23 +34,25 @@ public class PrimaryController {
     @FXML
     private Text livesdisplay;
 
+    private String username;
+    private int difficulty;
     private BlockGrid blocks;
 
     private boolean create = false;
     double velocity, velocityGoal;
 
-    public void initialize() {
+    public void initialize() throws Exception {
         pad = new Paddle(paddle);
         livesnumber.setText(""+lives);
         startTimeline(); 
     }
 
-    public void startTimeline() {
+    public void startTimeline() throws Exception{
         Timeline timeline = new Timeline(
             new KeyFrame(Duration.millis(10), event -> {
                 try {
                     onStep();
-                } catch (IOException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             })
@@ -56,9 +61,9 @@ public class PrimaryController {
         timeline.play();
     }
     
-    public void onStep() throws IOException {
+    public void onStep() throws Exception {
         if (create == false) { // Run once
-            blocks = new BlockGrid();
+            blocks = new BlockGrid(difficulty);
             ball = new Ball(pad.getX() + pad.getLength()/2-13/2, pad.getY() - 30,pad,blocks, this);
             // Everything that needs to be ran once (and not run in initialize()), you can add here
             create = true;
@@ -77,14 +82,21 @@ public class PrimaryController {
 
         if (winCondition()) {
             System.out.println("YOU WON");
-            App.save("Score", (double) scoreAmount);
+            App.save(username, (double) scoreAmount);
             System.exit(0);
         } 
 
         if (loseCondition()) {
-            System.out.println("YOU LOST");
-            App.save("Score", (double) scoreAmount);
-            System.exit(0);
+            App.removeElement(ball.getShape());
+            lives--;
+            if (lives <= 0) {
+                System.out.println("YOU LOST");
+                App.save(username, (double) scoreAmount);
+                writeToDatabase(username, scoreAmount);
+                System.exit(0);
+            } else {
+                ball = new Ball(pad.getX() + pad.getLength()/2-13/2, pad.getY() - 30,pad,blocks, this);
+            }
         }
         score.setText(""+ scoreAmount);
     }
@@ -94,6 +106,15 @@ public class PrimaryController {
             return true;
         }
         return false;
+    }
+
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setDifficulty(int difficulty) {
+        this.difficulty = difficulty;
     }
 
     public boolean loseCondition() { // You have 3 lives and each time one life is taken the ball is reset
@@ -227,6 +248,59 @@ public class PrimaryController {
 
         scoresList.sort(null);
     }
+
+    public void writeToDatabase(String user, int score) {
+        int maxRetries = 15; // Set a limit for retries
+        int attempt = 0;
+        boolean success = false;
+    
+        while (attempt < maxRetries && !success) {
+            try {
+                attempt++;
+                String databaseUrl = "https://breakout-52014-default-rtdb.europe-west1.firebasedatabase.app/";
+                String path = "/userData.json";
+    
+                // JSON data to send
+                String jsonInput = "{\"name\":\"" + user + "\", \"score\": " + score + "}";
+    
+                // Create a URL object
+                URL url = new URL(databaseUrl + path);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("POST");
+                connection.setRequestProperty("Content-Type", "application/json; utf-8");
+                connection.setDoOutput(true);
+    
+                // Write JSON data to the output stream
+                try (OutputStream os = connection.getOutputStream()) {
+                    byte[] input = jsonInput.getBytes("utf-8");
+                    os.write(input, 0, input.length);
+                }
+    
+                // Get the response code to verify success
+                int responseCode = connection.getResponseCode();
+                if (responseCode == HttpURLConnection.HTTP_OK || responseCode == HttpURLConnection.HTTP_NO_CONTENT) {
+                    success = true;
+                    System.out.println("Data posted successfully. Response Code: " + responseCode);
+                } else {
+                    System.out.println("Failed to post data. Response Code: " + responseCode);
+                }
+    
+                connection.disconnect();
+    
+            } catch (Exception e) {
+                System.err.println("Attempt " + attempt + " failed: " + e.getMessage());
+            }
+    
+            if (!success && attempt < maxRetries) {
+                System.out.println("Retrying...");
+            }
+        }
+    
+        if (!success) {
+            System.err.println("Failed to write to database after " + maxRetries + " attempts.");
+        }
+    }
+    
 
     private void processLine(String line, HashMap<Integer, String> scoresNamesHash, ArrayList<Integer> scoresList) {
         String[] parts = line.split(":");

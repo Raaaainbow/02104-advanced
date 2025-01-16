@@ -13,15 +13,9 @@ public class MenuController {
 
     @FXML
     public void onStartButtonClicked() throws IOException {
-        FXMLLoader primaryLoader = new FXMLLoader(App.class.getResource("primary.fxml"));
-        Parent primaryPane = primaryLoader.load();
-        PrimaryController primaryController = primaryLoader.getController();
-
-        // Set key event handlers for the primary controller
-        App.getScene().setOnKeyPressed(primaryController::inputHandling);
-        App.getScene().setOnKeyReleased(primaryController::stopHandling);
-
-        App.setRoot(primaryPane);
+        FXMLLoader levelSelectLoader = new FXMLLoader(App.class.getResource("levelselect.fxml"));
+        Parent levelselectPane = levelSelectLoader.load();
+        App.setRoot(levelselectPane);
     }
 
     public void onLeaderboardButtonClick() throws IOException {

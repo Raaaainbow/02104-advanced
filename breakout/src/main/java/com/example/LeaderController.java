@@ -6,6 +6,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.text.Text;
+
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -21,32 +23,77 @@ import java.util.Set;
 
 public class LeaderController {
 
-    private String databaseUrl = "https://breakout-52014-default-rtdb.europe-west1.firebasedatabase.app/";
-    private String path = "/userData.json";
-    
+    public static String databaseUrl = "https://breakout-52014-default-rtdb.europe-west1.firebasedatabase.app/";
+    public static String path = "/userData.json";
+    @FXML
+    private Text name1, name2, name3, name4, name5, name6, name7, name8, name9, name10;
+    @FXML   
+    private Text score1, score2, score3, score4, score5, score6, score7, score8, score9, score10;
+    @FXML
+    private Text myscore, myplacement, myname;
+    private Text[] nameTexts;
+    private Text[] scoreTexts;
+    private Text[] userTexts;
+
     public void initialize() throws Exception {
-    System.out.println(Arrays.toString(readDatabaseScore()));
+        nameTexts = new Text[] {name1, name2, name3, name4, name5, name6, name7, name8, name9, name10};
+        scoreTexts = new Text[] {score1, score2, score3, score4, score5, score6, score7, score8, score9, score10};
+        userTexts = new Text[] {myplacement, myname, myscore};
+        populateLeaderBoard(readDatabase());
     }
 
 
-    public void writeToDatabase(String user, int score) throws Exception {
-        URL url = new URL(databaseUrl + path);
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        connection.setRequestMethod("POST");
-        connection.setRequestProperty("Content-Type", "application/json; utf-8");
-        connection.setDoOutput(true);
-        String jsonInput = "{\"name\":\""+user+"\", \"score\": "+score+"}"; // Data to send
-        try (OutputStream os = connection.getOutputStream()) {
-            byte[] input = jsonInput.getBytes("utf-8");
-            os.write(input, 0, input.length);
+    public void populateLeaderBoard(String[] leaderboard) {
+        // populates leaderboard based on array
+        String[] names = new String[leaderboard.length];
+        int[] scores = new int[leaderboard.length];
+        
+
+
+        // Populate the lists
+        for (int i = 0 ; i < leaderboard.length ; i++) {
+            names[i] = leaderboard[i].split("[:\\s]")[0].toUpperCase();
+            scores[i] = Integer.parseInt(leaderboard[i].split("[:\\s]")[2]);
         }
+
+        // Sorting
+        int temp;
+        String temp2;
+        boolean swapped;
+        for (int i = 0; i < scores.length - 1; i++) {
+            swapped = false;
+            for (int j = 0; j < scores.length - i - 1; j++) {
+                if (scores[j] < scores[j + 1]) {
+                    
+                    // Swap
+                    temp = scores[j];
+                    temp2 = names[j];
+                    scores[j] = scores[j + 1];
+                    scores[j + 1] = temp;
+                    names[j] = names[j+1];
+                    names[j + 1] = temp2;
+                    swapped = true;
+                }
+            }
+            if (swapped == false) // To save time, we will go out of the loop if there's nothing left to sort
+                break;
+        }
+        
+        // Populating the Text arrays
+        for (int i = 0 ; i < names.length ; i++) {
+            if (i < 10) {
+                nameTexts[i].setText(names[i]);
+                scoreTexts[i].setText(""+scores[i]);
+            }
+            
+        }
+
     }
 
-    public String[] readDatabaseScore() throws Exception {
+    public String[] readDatabase() throws Exception {
         URL url = new URL(databaseUrl + path);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
-    
         String response;
         try (Scanner scanner = new Scanner(connection.getInputStream())) {
             StringBuilder responseBuilder = new StringBuilder();
@@ -97,16 +144,8 @@ public class LeaderController {
     
         return scores.toArray(new String[0]);
     }
-    
 
-
-    /*
-    public void populateLeaderBoard() {
-        // populates leaderboard based on array
-    }
-    */
-
-    public void onBackButtonClicked() throws IOException{
+    public void onBackButtonClicked() throws Exception{
         FXMLLoader menuLoader = new FXMLLoader(App.class.getResource("menu.fxml"));
         Parent menuPane = menuLoader.load();
         App.setRoot(menuPane);
