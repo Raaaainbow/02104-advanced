@@ -114,6 +114,10 @@ public class Ball {
         velo[1] *= -1;
     }
 
+    public Rectangle getShape() {
+        return rect;
+    }
+
     public boolean collidesWall() {
         return (minWidth <= getXPos() && getXPos()+rect.getWidth() <= maxWidth)? false: true; 
     }
