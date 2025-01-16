@@ -27,12 +27,10 @@
             <Font name="Press Start 2P Regular" size="35.0" />
          </font>
       </Text>
-      </Text>
       <Text fx:id="livesnumber" fill="#cccccc" layoutX="566.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="85.98307228088379">
          <font>
             <Font name="Comic Sans MS" size="35.0" />
          </font>
-      </Text>
       </Text>
       <Text fx:id="livesdisplay" fill="#cccccc" layoutX="481.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lives: " textAlignment="CENTER" wrappingWidth="133.9830722808838">
          <font>
