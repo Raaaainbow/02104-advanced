@@ -10,20 +10,18 @@ public class Powerups extends Block {
     private double[] pos = new double[2]; 
     private double[] velo = new double[2]; 
     private Rectangle rect;
-    private String type; // Type of powerup 
+    private int type; // Type of powerup 
     
-    public Powerups(double x, double y, String type) {
-        super(x, y, 20, 20, Color.GREEN); // Powerup size
+    public Powerups(double x, double y, double width, double height, int type) {
+        super(x, y, width, height, Color.GREEN); // Powerup size
         this.pos[0] = x;
         this.pos[1] = y;
         this.type = type;
-        this.velo[0] = 0; // No horizontal movement
-        this.velo[1] = 1.5; // Falling speed
         
-        rect = new Rectangle(x, y, 20, 20); // Powerup size
+        rect = new Rectangle(x, y, width, height); // Powerup size
         rect.setFill(Color.GREEN); 
         
-        App.addElement(rect); 
+        App.addElement(rect);
     }
 
     public void move() {
@@ -37,7 +35,7 @@ public class Powerups extends Block {
         return rect;
     }
 
-    public String getType() {
+    public int getType() {
         return type;
     }
     
@@ -49,7 +47,8 @@ public class Powerups extends Block {
         pos[0] = x;
         pos[1] = y;
     }
-    // Større paddle 
+
+// Større paddle 
 // stjerne fra mario 
 // Ekstra point 
 // Usynlig væg
