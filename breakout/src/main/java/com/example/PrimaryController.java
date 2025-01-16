@@ -204,6 +204,11 @@ public class PrimaryController {
         this.scoreAmount += scoreAmount;
     }
 
+    public void Addlivtal(int lives) {
+        this.lives += lives;
+    }
+
+
     public void readScores() throws FileNotFoundException {
         File scores = new File(App.saveFilePath);
         if (!scores.exists() || !scores.canRead()) {
