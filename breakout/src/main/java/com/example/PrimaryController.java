@@ -46,7 +46,7 @@ public class PrimaryController {
             new KeyFrame(Duration.millis(10), event -> {
                 try {
                     onStep();
-                } catch (IOException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             })
@@ -83,7 +83,7 @@ public class PrimaryController {
         if (loseCondition()) {
             System.out.println("YOU LOST");
             App.save(username, (double) scoreAmount);
-            writeToDatabase(username, (int)scoreAmount);
+            writeToDatabase(username, scoreAmount);
             System.exit(0);
         }
         score.setText(""+ scoreAmount);
@@ -176,18 +176,58 @@ public class PrimaryController {
         scoresList.sort(null);
     }
 
-    public void writeToDatabase(String user, int score) throws Exception {
-        URL url = new URL(LeaderController.databaseUrl + LeaderController.path);
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        connection.setRequestMethod("POST");
-        connection.setRequestProperty("Content-Type", "application/json; utf-8");
-        connection.setDoOutput(true);
-        String jsonInput = "{\"name\":\""+user+"\", \"score\": " + score + "}"; // Data to send
-        try (OutputStream os = connection.getOutputStream()) {
-            byte[] input = jsonInput.getBytes("utf-8");
-            os.write(input, 0, input.length);
+    public void writeToDatabase(String user, int score) {
+        int maxRetries = 15; // Set a limit for retries
+        int attempt = 0;
+        boolean success = false;
+    
+        while (attempt < maxRetries && !success) {
+            try {
+                attempt++;
+                String databaseUrl = "https://breakout-52014-default-rtdb.europe-west1.firebasedatabase.app/";
+                String path = "/userData.json";
+    
+                // JSON data to send
+                String jsonInput = "{\"name\":\"" + user + "\", \"score\": " + score + "}";
+    
+                // Create a URL object
+                URL url = new URL(databaseUrl + path);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("POST");
+                connection.setRequestProperty("Content-Type", "application/json; utf-8");
+                connection.setDoOutput(true);
+    
+                // Write JSON data to the output stream
+                try (OutputStream os = connection.getOutputStream()) {
+                    byte[] input = jsonInput.getBytes("utf-8");
+                    os.write(input, 0, input.length);
+                }
+    
+                // Get the response code to verify success
+                int responseCode = connection.getResponseCode();
+                if (responseCode == HttpURLConnection.HTTP_OK || responseCode == HttpURLConnection.HTTP_NO_CONTENT) {
+                    success = true;
+                    System.out.println("Data posted successfully. Response Code: " + responseCode);
+                } else {
+                    System.out.println("Failed to post data. Response Code: " + responseCode);
+                }
+    
+                connection.disconnect();
+    
+            } catch (Exception e) {
+                System.err.println("Attempt " + attempt + " failed: " + e.getMessage());
+            }
+    
+            if (!success && attempt < maxRetries) {
+                System.out.println("Retrying...");
+            }
+        }
+    
+        if (!success) {
+            System.err.println("Failed to write to database after " + maxRetries + " attempts.");
         }
     }
+    
 
     private void processLine(String line, HashMap<Integer, String> scoresNamesHash, ArrayList<Integer> scoresList) {
         String[] parts = line.split(":");

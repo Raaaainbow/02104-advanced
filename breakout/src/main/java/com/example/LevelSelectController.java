@@ -53,7 +53,7 @@ public class LevelSelectController {
 
     @FXML
 public void onPlayButtonClicked() throws IOException {
-    if (userInput.getText().length() > 0 && userInput.getText().length() <= 12) {
+    if (userInput.getText().length() > 0 && userInput.getText().length() <= 10) {
         FXMLLoader primaryLoader = new FXMLLoader(App.class.getResource("primary.fxml"));
         Parent primaryPane = primaryLoader.load();
         PrimaryController primaryController = primaryLoader.getController();
@@ -69,7 +69,7 @@ public void onPlayButtonClicked() throws IOException {
         userInput.setPromptText("least 1 char");
     } else {
         userInput.setText("");
-        userInput.setPromptText("max 12 chars");
+        userInput.setPromptText("max 10 chars");
     }
 }
 

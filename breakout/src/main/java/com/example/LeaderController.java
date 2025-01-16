@@ -81,8 +81,11 @@ public class LeaderController {
         
         // Populating the Text arrays
         for (int i = 0 ; i < names.length ; i++) {
-            nameTexts[i].setText(names[i]);
-            scoreTexts[i].setText(""+scores[i]);
+            if (i < 10) {
+                nameTexts[i].setText(names[i]);
+                scoreTexts[i].setText(""+scores[i]);
+            }
+            
         }
 
     }
@@ -141,9 +144,8 @@ public class LeaderController {
     
         return scores.toArray(new String[0]);
     }
-    
 
-    public void onBackButtonClicked() throws IOException{
+    public void onBackButtonClicked() throws Exception{
         FXMLLoader menuLoader = new FXMLLoader(App.class.getResource("menu.fxml"));
         Parent menuPane = menuLoader.load();
         App.setRoot(menuPane);
