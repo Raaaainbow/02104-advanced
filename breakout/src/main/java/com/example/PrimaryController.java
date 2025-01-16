@@ -30,9 +30,7 @@ public class PrimaryController {
     private Text livesnumber;
     @FXML
     private Text livesdisplay;
-
     private BlockGrid blocks;
-
     private boolean create = false;
     double velocity, velocityGoal;
 
