@@ -20,11 +20,16 @@ public class PrimaryController {
     private double hSpeed = 5;
     @FXML
     private Rectangle paddle; 
-    @FXML 
+    @FXML
     private Text score, highscore; 
     private Paddle pad;
     private Ball ball;
     private int scoreAmount; 
+    private int lives = 3; 
+    @FXML
+    private Text livesnumber;
+    @FXML
+    private Text livesdisplay;
 
     private BlockGrid blocks;
 

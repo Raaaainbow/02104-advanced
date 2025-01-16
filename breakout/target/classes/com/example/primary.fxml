@@ -6,7 +6,6 @@
 <?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="970.0" maxWidth="672.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="970.0" prefWidth="672.0" style="-fx-background-color: #333333;" xmlns="http://javafx.com/javafx/22.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.PrimaryController">
-<AnchorPane maxHeight="970.0" maxWidth="672.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="970.0" prefWidth="672.0" style="-fx-background-color: #333333;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.PrimaryController">
    <children>
       <Rectangle fill="#cccccc" height="859.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="11.0" />
       <Rectangle fill="#cccccc" height="865.0" layoutX="662.0" layoutY="-6.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="11.0" />
@@ -26,16 +25,6 @@
       <Text fx:id="highscore" fill="#cccccc" layoutX="430.0" layoutY="221.0" strokeType="OUTSIDE" strokeWidth="0.0" text="000" textAlignment="CENTER" wrappingWidth="114.98307228088379">
          <font>
             <Font name="Press Start 2P Regular" size="35.0" />
-         </font>
-      </Text>
-      <Text fx:id="livesnumber" fill="#cccccc" layoutX="566.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="85.98307228088379">
-         <font>
-            <Font name="Comic Sans MS" size="45.0" />
-         </font>
-      </Text>
-      <Text fx:id="livesdisplay" fill="#cccccc" layoutX="458.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lives: " textAlignment="CENTER" wrappingWidth="133.9830722808838">
-         <font>
-            <Font name="Comic Sans MS" size="45.0" />
          </font>
       </Text>
    </children>
