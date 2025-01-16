@@ -116,11 +116,27 @@ public class PrimaryController {
             case L:
                 velocityGoal = hSpeed;
                 break;
+
+            case D:
+                velocityGoal = hSpeed;
+                break;
+
+            case RIGHT:
+                velocityGoal = hSpeed;
+                break;
                 
             case H:
                 velocityGoal = -hSpeed;
                 break;
+
+            case A:
+                velocityGoal =-hSpeed;
+                break;
             
+            case LEFT:
+                velocityGoal =-hSpeed;
+                break;
+
             case SPACE:
                 ball.setMoving(true);
                 break;
@@ -139,7 +155,31 @@ public class PrimaryController {
                 }
                 break;
             
+            case D:
+                if (velocityGoal > 0) {
+                    velocityGoal = 0;
+                }
+                break;
+
+            case RIGHT:
+                if (velocityGoal > 0) {
+                    velocityGoal = 0;
+                }
+                break;
+
             case H:
+            if (velocityGoal < 0) {
+                velocityGoal = 0;
+            }
+                break;
+
+            case A:
+            if (velocityGoal < 0) {
+                velocityGoal = 0;
+            }
+                break;
+
+            case LEFT:
             if (velocityGoal < 0) {
                 velocityGoal = 0;
             }
@@ -187,3 +227,4 @@ public class PrimaryController {
         scoresList.add(score);
     }
 }
+
