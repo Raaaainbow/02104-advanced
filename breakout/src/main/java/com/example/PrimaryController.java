@@ -1,6 +1,9 @@
 package com.example;
 
 import java.io.IOException;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 
 import GameBoard.*;
@@ -26,17 +29,19 @@ public class PrimaryController {
     private Ball ball;
     private int scoreAmount; 
 
+    private String username;
+    private int difficulty;
     private BlockGrid blocks;
 
     private boolean create = false;
     double velocity, velocityGoal;
 
-    public void initialize() {
+    public void initialize() throws Exception {
         pad = new Paddle(paddle);
         startTimeline(); 
     }
 
-    public void startTimeline() {
+    public void startTimeline() throws Exception{
         Timeline timeline = new Timeline(
             new KeyFrame(Duration.millis(10), event -> {
                 try {
@@ -50,9 +55,9 @@ public class PrimaryController {
         timeline.play();
     }
     
-    public void onStep() throws IOException {
+    public void onStep() throws Exception {
         if (create == false) { // Run once
-            blocks = new BlockGrid();
+            blocks = new BlockGrid(difficulty);
             ball = new Ball(pad.getX() + pad.getLength()/2-13/2, pad.getY() - 30,pad,blocks, this);
             // Everything that needs to be ran once (and not run in initialize()), you can add here
             create = true;
@@ -71,13 +76,14 @@ public class PrimaryController {
 
         if (winCondition()) {
             System.out.println("YOU WON");
-            App.save("Score", (double) scoreAmount);
+            App.save(username, (double) scoreAmount);
             System.exit(0);
         } 
 
         if (loseCondition()) {
             System.out.println("YOU LOST");
-            App.save("Score", (double) scoreAmount);
+            App.save(username, (double) scoreAmount);
+            writeToDatabase(username, (int)scoreAmount);
             System.exit(0);
         }
         score.setText(""+ scoreAmount);
@@ -88,6 +94,14 @@ public class PrimaryController {
             return true;
         }
         return false;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setDifficulty(int difficulty) {
+        this.difficulty = difficulty;
     }
 
     public boolean loseCondition() {
@@ -160,6 +174,19 @@ public class PrimaryController {
         reader.close();
 
         scoresList.sort(null);
+    }
+
+    public void writeToDatabase(String user, int score) throws Exception {
+        URL url = new URL(LeaderController.databaseUrl + LeaderController.path);
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("POST");
+        connection.setRequestProperty("Content-Type", "application/json; utf-8");
+        connection.setDoOutput(true);
+        String jsonInput = "{\"name\":\""+user+"\", \"score\": " + score + "}"; // Data to send
+        try (OutputStream os = connection.getOutputStream()) {
+            byte[] input = jsonInput.getBytes("utf-8");
+            os.write(input, 0, input.length);
+        }
     }
 
     private void processLine(String line, HashMap<Integer, String> scoresNamesHash, ArrayList<Integer> scoresList) {

@@ -10,9 +10,24 @@ public class BlockGrid {
     private int m; // width
     private int n; // height
 
-    public BlockGrid() {
-        n = 10;
-        m = 20;
+    public BlockGrid(int difficulty) {
+        switch(difficulty) {
+            case 0:
+                n = 5;
+                m = 5;
+                break;
+
+            case 1:
+                n = 7;
+                m = 10;
+                break;
+            
+            case 2:
+                n = 10;
+                m = 20;
+                break;
+        }
+        
         createField();
     }
 

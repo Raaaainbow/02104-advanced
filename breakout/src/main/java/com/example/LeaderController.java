@@ -23,11 +23,11 @@ import java.util.Set;
 
 public class LeaderController {
 
-    private String databaseUrl = "https://breakout-52014-default-rtdb.europe-west1.firebasedatabase.app/";
-    private String path = "/userData.json";
+    public static String databaseUrl = "https://breakout-52014-default-rtdb.europe-west1.firebasedatabase.app/";
+    public static String path = "/userData.json";
     @FXML
     private Text name1, name2, name3, name4, name5, name6, name7, name8, name9, name10;
-    @FXML
+    @FXML   
     private Text score1, score2, score3, score4, score5, score6, score7, score8, score9, score10;
     @FXML
     private Text myscore, myplacement, myname;
@@ -87,19 +87,6 @@ public class LeaderController {
 
     }
 
-    public void writeToDatabase(String user, int score) throws Exception {
-        URL url = new URL(databaseUrl + path);
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        connection.setRequestMethod("POST");
-        connection.setRequestProperty("Content-Type", "application/json; utf-8");
-        connection.setDoOutput(true);
-        String jsonInput = "{\"name\":\""+user+"\", \"score\": " + score + "}"; // Data to send
-        try (OutputStream os = connection.getOutputStream()) {
-            byte[] input = jsonInput.getBytes("utf-8");
-            os.write(input, 0, input.length);
-        }
-    }
-
     public String[] readDatabase() throws Exception {
         URL url = new URL(databaseUrl + path);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -154,11 +141,6 @@ public class LeaderController {
     
         return scores.toArray(new String[0]);
     }
-    
-
-
-    
-    
     
 
     public void onBackButtonClicked() throws IOException{

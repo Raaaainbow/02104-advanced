@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="970.0" maxWidth="672.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="970.0" prefWidth="672.0" style="-fx-background-color: #333333;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.LevelSelectController">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#52bd55" height="50.0" layoutX="210.0" layoutY="329.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="250.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f87b41" height="50.0" layoutX="210.0" layoutY="400.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="250.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fc4f51" height="50.0" layoutX="210.0" layoutY="473.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="250.0" />
+      <Text fill="#cccccc" layoutX="36.0" layoutY="235.0" strokeType="OUTSIDE" strokeWidth="0.0" text="LEVEL SELECT">
+         <font>
+            <Font name="Press Start 2P Regular" size="50.0" />
+         </font>
+      </Text>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#cccccc" height="972.0" stroke="BLACK" strokeType="INSIDE" width="11.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#cccccc" height="972.0" layoutX="665.0" stroke="BLACK" strokeType="INSIDE" width="11.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#cccccc" height="34.0" layoutX="4.0" layoutY="92.0" stroke="TRANSPARENT" strokeType="INSIDE" width="664.0" />
+      <Text fill="#cccccc" layoutX="196.0" layoutY="907.0" strokeType="OUTSIDE" strokeWidth="0.0" text="GO BACK">
+         <font>
+            <Font name="Press Start 2P Regular" size="40.0" />
+         </font>
+      </Text>
+      <Button fx:id="backButton" layoutX="195.0" layoutY="859.0" mnemonicParsing="false" onAction="#onBackButtonClicked" prefHeight="50.0" prefWidth="280.0" style="-fx-background-color: transparent;" />
+      <Text fill="#cccccc" layoutX="123.0" layoutY="300.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CHOOSE DIFFICULTY">
+         <font>
+            <Font name="Press Start 2P Regular" size="25.0" />
+         </font>
+      </Text>
+      <Text fx:id="ez" fill="WHITE" layoutX="310.0" layoutY="367.0" strokeType="OUTSIDE" strokeWidth="0.0" text="EZ">
+         <font>
+            <Font name="Press Start 2P Regular" size="25.0" />
+         </font>
+      </Text>
+      <Text fx:id="mid" fill="#cccccc" layoutX="298.0" layoutY="439.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MID">
+         <font>
+            <Font name="Press Start 2P Regular" size="25.0" />
+         </font>
+      </Text>
+      <Text fx:id="hardcore" fill="#cccccc" layoutX="236.0" layoutY="511.0" strokeType="OUTSIDE" strokeWidth="0.0" text="HARDCORE">
+         <font>
+            <Font name="Press Start 2P Regular" size="25.0" />
+         </font>
+      </Text>
+      <Text fill="#cccccc" layoutX="235.0" layoutY="608.0" strokeType="OUTSIDE" strokeWidth="0.0" text="USERNAME">
+         <font>
+            <Font name="Press Start 2P Regular" size="25.0" />
+         </font>
+      </Text>
+      <TextField fx:id="userInput" alignment="CENTER" layoutX="202.0" layoutY="623.0" prefHeight="40.0" prefWidth="268.0" promptText="USERNAME">
+         <font>
+            <Font name="Press Start 2P Regular" size="20.0" />
+         </font>
+      </TextField>
+      <Text layoutX="216.0" layoutY="799.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PLAY">
+         <font>
+            <Font name="Press Start 2P Regular" size="60.0" />
+         </font>
+         <fill>
+            <LinearGradient endX="1.0" endY="1.0">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color red="1.0" />
+                     </color>
+                  </Stop>
+                  <Stop offset="0.1798780487804878">
+                     <color>
+                        <Color red="0.9833333492279053" green="1.0" />
+                     </color>
+                  </Stop>
+                  <Stop offset="0.36890243902439024">
+                     <color>
+                        <Color green="1.0" blue="0.11428571492433548" />
+                     </color>
+                  </Stop>
+                  <Stop offset="0.5274390243902439">
+                     <color>
+                        <Color green="0.8761904835700989" blue="1.0" />
+                     </color>
+                  </Stop>
+                  <Stop offset="0.673780487804878">
+                     <color>
+                        <Color red="0.07619047909975052" blue="1.0" />
+                     </color>
+                  </Stop>
+                  <Stop offset="0.7957317073170732">
+                     <color>
+                        <Color red="1.0" blue="0.9714285731315613" />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="1.0" />
+                     </color>
+                  </Stop>
+               </stops>
+            </LinearGradient>
+         </fill>
+      </Text>
+      <Button fx:id="hardcoreButton" layoutX="212.0" layoutY="473.0" mnemonicParsing="false" onAction="#onHardcoreButtonClicked" prefHeight="50.0" prefWidth="250.0" style="-fx-background-color: transparent;" />
+      <Button fx:id="midButton" layoutX="212.0" layoutY="400.0" mnemonicParsing="false" onAction="#onMidButtonClicked" prefHeight="50.0" prefWidth="250.0" style="-fx-background-color: transparent;" />
+      <Button fx:id="ezButton" layoutX="212.0" layoutY="329.0" mnemonicParsing="false" onAction="#onEzButtonClicked" prefHeight="50.0" prefWidth="250.0" style="-fx-background-color: transparent;" />
+      <Button fx:id="playButton" layoutX="211.0" layoutY="729.0" mnemonicParsing="false" onAction="#onPlayButtonClicked" prefHeight="73.0" prefWidth="250.0" style="-fx-background-color: transparent;" />
+   </children>
+</AnchorPane>
