@@ -17,12 +17,12 @@
       <Rectangle arcWidth="5.0" fill="#cccccc" height="80.0" layoutX="662.0" layoutY="890.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="11.0" />
       <Rectangle arcWidth="5.0" fill="#cccccc" height="56.0" layoutX="41.0" layoutY="126.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="12.0" />
       <Rectangle arcWidth="5.0" fill="#cccccc" height="56.0" layoutX="418.0" layoutY="126.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="12.0" />
-      <Text fx:id="score" fill="#cccccc" layoutX="53.0" layoutY="221.0" strokeType="OUTSIDE" strokeWidth="0.0" text="000" textAlignment="CENTER" wrappingWidth="106.98307228088379">
+      <Text fx:id="score" fill="#cccccc" layoutX="53.0" layoutY="221.0" strokeType="OUTSIDE" strokeWidth="0.0" text="000" wrappingWidth="359.9830722808838">
          <font>
             <Font name="Press Start 2P Regular" size="35.0" />
          </font>
       </Text>
-      <Text fx:id="highscore" fill="#cccccc" layoutX="430.0" layoutY="221.0" strokeType="OUTSIDE" strokeWidth="0.0" text="000" textAlignment="CENTER" wrappingWidth="114.98307228088379">
+      <Text fx:id="highscore" fill="#cccccc" layoutX="435.0" layoutY="221.0" strokeType="OUTSIDE" strokeWidth="0.0" text="000" wrappingWidth="222.9830722808838">
          <font>
             <Font name="Press Start 2P Regular" size="35.0" />
          </font>
@@ -35,6 +35,16 @@
       <Text fx:id="combocounter" fill="#cccccc" layoutX="383.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0 Combo" textAlignment="RIGHT" wrappingWidth="260.9830722808838">
          <font>
             <Font name="Press Start 2P Regular" size="25.0" />
+         </font>
+      </Text>
+      <Text fill="#cccccc" layoutX="435.0" layoutY="176.0" strokeType="OUTSIDE" strokeWidth="0.0" text="HIGH" wrappingWidth="222.9830722808838">
+         <font>
+            <Font name="Press Start 2P Regular" size="35.0" />
+         </font>
+      </Text>
+      <Text fill="#cccccc" layoutX="59.0" layoutY="176.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SCORE" wrappingWidth="222.9830722808838">
+         <font>
+            <Font name="Press Start 2P Regular" size="35.0" />
          </font>
       </Text>
    </children>

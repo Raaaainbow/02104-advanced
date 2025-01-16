@@ -202,5 +202,10 @@
             <Font name="Press Start 2P Regular" size="25.0" />
          </font>
       </Text>
+      <Text fill="#cccccc" layoutX="195.0" layoutY="746.0" strokeType="OUTSIDE" strokeWidth="0.0" text="YOUR SCORE" textAlignment="CENTER">
+         <font>
+            <Font name="Press Start 2P Regular" size="25.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>
