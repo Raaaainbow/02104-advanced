@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URL;
 import java.util.Scanner;
 
 
@@ -35,6 +36,7 @@ public class App extends Application {
         if (menuPane instanceof Pane) {
             rootPane = (Pane) menuPane;
         }
+
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();

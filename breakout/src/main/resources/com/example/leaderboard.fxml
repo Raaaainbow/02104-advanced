@@ -6,7 +6,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="970.0" maxWidth="672.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="970.0" prefWidth="672.0" style="-fx-background-color: #333333;" xmlns="http://javafx.com/javafx/22.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.LeaderController">
+<AnchorPane maxHeight="970.0" maxWidth="672.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="970.0" prefWidth="672.0" style="-fx-background-color: #333333;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.LeaderController">
    <children>
       <Text fill="#cccccc" layoutX="62.0" layoutY="236.0" strokeType="OUTSIDE" strokeWidth="0.0" text="LEADERBOARD">
          <font>
@@ -66,12 +66,12 @@
             <Font name="Press Start 2P Regular" size="25.0" />
          </font>
       </Text>
-      <Text fill="#cccccc" layoutX="186.0" layoutY="326.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name">
+      <Text fill="#cccccc" layoutX="186.0" layoutY="326.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NAME">
          <font>
             <Font name="Press Start 2P Regular" size="25.0" />
          </font>
       </Text>
-      <Text fill="#cccccc" layoutX="377.0" layoutY="326.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Score">
+      <Text fill="#cccccc" layoutX="439.0" layoutY="326.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SCORE">
          <font>
             <Font name="Press Start 2P Regular" size="25.0" />
          </font>
@@ -86,6 +86,121 @@
             <Font name="Press Start 2P Regular" size="40.0" />
          </font>
       </Text>
-      <Button fx:id="backButton" layoutX="195.0" layoutY="859.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="280.0" style="-fx-background-color: transparent;" onAction="#onBackButtonClicked"/>
+      <Button fx:id="backButton" layoutX="195.0" layoutY="859.0" mnemonicParsing="false" onAction="#onBackButtonClicked" prefHeight="50.0" prefWidth="280.0" style="-fx-background-color: transparent;" />
+      <Text fx:id="name1" fill="#cccccc" layoutX="186.0" layoutY="368.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" ">
+         <font>
+            <Font name="Press Start 2P Regular" size="25.0" />
+         </font>
+      </Text>
+      <Text fx:id="name2" fill="#cccccc" layoutX="186.0" layoutY="403.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" ">
+         <font>
+            <Font name="Press Start 2P Regular" size="25.0" />
+         </font>
+      </Text>
+      <Text fx:id="name4" fill="#cccccc" layoutX="186.0" layoutY="473.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" ">
+         <font>
+            <Font name="Press Start 2P Regular" size="25.0" />
+         </font>
+      </Text>
+      <Text fx:id="name3" fill="#cccccc" layoutX="186.0" layoutY="438.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" ">
+         <font>
+            <Font name="Press Start 2P Regular" size="25.0" />
+         </font>
+      </Text>
+      <Text fx:id="name5" fill="#cccccc" layoutX="186.0" layoutY="508.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" ">
+         <font>
+            <Font name="Press Start 2P Regular" size="25.0" />
+         </font>
+      </Text>
+      <Text fx:id="name6" fill="#cccccc" layoutX="186.0" layoutY="543.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" ">
+         <font>
+            <Font name="Press Start 2P Regular" size="25.0" />
+         </font>
+      </Text>
+      <Text fx:id="name7" fill="#cccccc" layoutX="186.0" layoutY="578.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" ">
+         <font>
+            <Font name="Press Start 2P Regular" size="25.0" />
+         </font>
+      </Text>
+      <Text fx:id="name8" fill="#cccccc" layoutX="186.0" layoutY="613.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" ">
+         <font>
+            <Font name="Press Start 2P Regular" size="25.0" />
+         </font>
+      </Text>
+      <Text fx:id="name9" fill="#cccccc" layoutX="186.0" layoutY="648.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" ">
+         <font>
+            <Font name="Press Start 2P Regular" size="25.0" />
+         </font>
+      </Text>
+      <Text fx:id="name10" fill="#cccccc" layoutX="186.0" layoutY="684.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" ">
+         <font>
+            <Font name="Press Start 2P Regular" size="25.0" />
+         </font>
+      </Text>
+      <Text fx:id="myplacement" fill="#cccccc" layoutX="28.0" layoutY="798.0" strokeType="OUTSIDE" strokeWidth="0.0" text="#????" textAlignment="JUSTIFY" wrappingWidth="125.0">
+         <font>
+            <Font name="Press Start 2P Regular" size="25.0" />
+         </font>
+      </Text>
+      <Text fx:id="score1" fill="#cccccc" layoutX="439.0" layoutY="368.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" ">
+         <font>
+            <Font name="Press Start 2P Regular" size="25.0" />
+         </font>
+      </Text>
+      <Text fx:id="score2" fill="#cccccc" layoutX="439.0" layoutY="403.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" ">
+         <font>
+            <Font name="Press Start 2P Regular" size="25.0" />
+         </font>
+      </Text>
+      <Text fx:id="score3" fill="#cccccc" layoutX="439.0" layoutY="438.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" ">
+         <font>
+            <Font name="Press Start 2P Regular" size="25.0" />
+         </font>
+      </Text>
+      <Text fx:id="score4" fill="#cccccc" layoutX="439.0" layoutY="473.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" ">
+         <font>
+            <Font name="Press Start 2P Regular" size="25.0" />
+         </font>
+      </Text>
+      <Text fx:id="score5" fill="#cccccc" layoutX="439.0" layoutY="508.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" ">
+         <font>
+            <Font name="Press Start 2P Regular" size="25.0" />
+         </font>
+      </Text>
+      <Text fx:id="score6" fill="#cccccc" layoutX="439.0" layoutY="543.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" ">
+         <font>
+            <Font name="Press Start 2P Regular" size="25.0" />
+         </font>
+      </Text>
+      <Text fx:id="score7" fill="#cccccc" layoutX="439.0" layoutY="578.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" ">
+         <font>
+            <Font name="Press Start 2P Regular" size="25.0" />
+         </font>
+      </Text>
+      <Text fx:id="score8" fill="#cccccc" layoutX="439.0" layoutY="613.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" ">
+         <font>
+            <Font name="Press Start 2P Regular" size="25.0" />
+         </font>
+      </Text>
+      <Text fx:id="score9" fill="#cccccc" layoutX="439.0" layoutY="648.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" ">
+         <font>
+            <Font name="Press Start 2P Regular" size="25.0" />
+         </font>
+      </Text>
+      <Text fx:id="score10" fill="#cccccc" layoutX="439.0" layoutY="684.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" ">
+         <font>
+            <Font name="Press Start 2P Regular" size="25.0" />
+         </font>
+      </Text>
+      <Text fx:id="myname" fill="#cccccc" layoutX="186.0" layoutY="796.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ABCDEFGH">
+         <font>
+            <Font name="Press Start 2P Regular" size="25.0" />
+         </font>
+      </Text>
+      <Text fx:id="myscore" fill="#cccccc" layoutX="408.0" layoutY="796.0" strokeType="OUTSIDE" strokeWidth="0.0" text="12345678">
+         <font>
+            <Font name="Press Start 2P Regular" size="25.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>
