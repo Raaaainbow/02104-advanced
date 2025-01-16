@@ -34,7 +34,6 @@ public class App extends Application {
         if (menuPane instanceof Pane) {
             rootPane = (Pane) menuPane;
         }
-
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
