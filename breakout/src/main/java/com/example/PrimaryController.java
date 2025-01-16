@@ -47,6 +47,8 @@ public class PrimaryController {
     private Text mainMenu;
     @FXML 
     private Button backButton;
+    @FXML
+    private Text winLoseScore; 
 
     private boolean create = false;
     double velocity, velocityGoal;
@@ -100,9 +102,13 @@ public class PrimaryController {
             App.removeElement(ball.getShape());
             lives--;
             if (lives <= 0) {
+                App.save("Score",(double) scoreAmount);
+                toggleGameOverScreen();
+                /*
                 System.out.println("YOU LOST");
                 App.save("Score", (double) scoreAmount);
                 System.exit(0);
+                */
             } else {
                 ball = new Ball(pad.getX() + pad.getLength()/2-13/2, pad.getY() - 30,pad,blocks, this);
             }
@@ -250,7 +256,7 @@ public class PrimaryController {
     }
 
     private void togglePauseScreen () {
-        if (gamePauseBackground.isVisible() || pressEscape.isVisible() || gamePause.isVisible()) {
+        if (gamePauseBackground.isVisible() && pressEscape.isVisible() && gamePause.isVisible()) {
             gamePauseBackground.setVisible(false);
             gamePauseBackground.setManaged(false);
             pressEscape.setVisible(false);
@@ -270,4 +276,33 @@ public class PrimaryController {
             gamePause.toFront();
         }
     }
+
+    private void toggleGameOverScreen() {
+        if (gameOver.isVisible() && returnTo.isVisible() && mainMenu.isVisible() && gamePauseBackground.isVisible() && winLoseScore.isVisible() && backButton.isVisible()) {
+            gamePauseBackground.setVisible(false);
+            gamePauseBackground.setManaged(false);
+            gameOver.setVisible(false);
+            gameOver.setManaged(false);
+            returnTo.setVisible(false);
+            returnTo.setManaged(false);
+            mainMenu.setVisible(false);
+            mainMenu.setManaged(false);
+            winLoseScore.setVisible(false);
+            winLoseScore.setManaged(false);
+            backButton.setDisable(false);
+    } else {
+            gamePauseBackground.setVisible(true);
+            gamePauseBackground.setManaged(true);
+            gameOver.setVisible(true);
+            gameOver.setManaged(true);
+            returnTo.setVisible(true);
+            returnTo.setManaged(true);
+            mainMenu.setVisible(true);
+            mainMenu.setManaged(true);
+            winLoseScore.setVisible(true);
+            winLoseScore.setManaged(true);
+            backButton.setDisable(true);
+        }
+    }
 }
+
