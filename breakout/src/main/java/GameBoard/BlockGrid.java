@@ -9,6 +9,7 @@ public class BlockGrid {
     private HashSet<Block> blockGrid = new HashSet<Block>();
     private int m; // width
     private int n; // height
+    private Random rand = new Random();
 
     public BlockGrid(int difficulty) {
         switch(difficulty) {
@@ -29,16 +30,6 @@ public class BlockGrid {
         }
         
         createField();
-    }
-
-    int takeInput(Scanner console, int lower, int higher) {
-        int temp = console.nextInt();
-        if (temp <= higher && temp >= lower) {
-            return temp;
-        } else {
-            System.out.print("Please enter a value within the bounds: {" + lower + ",...," + higher + "} ");
-            return takeInput(console, lower, higher);
-        }
     }
 
     private void createField() {
@@ -89,8 +80,12 @@ public class BlockGrid {
             for (int j = 0; j < m; j++) {
                 double x = margin + offset * (j + 1) + blockWidth * j;
                 double y = 970 / 4 + offset * (i + 1) + blockHeight * i;
+                if (rand.nextInt(100) < 5) {
+                    blockGrid.add(new Powerup(x, y, blockWidth, blockHeight, rand.nextInt(5)));
+                } else {
+                    blockGrid.add(new Block(x, y, blockWidth, blockHeight, col));
+                }
                 
-                blockGrid.add(new Block(x, y, blockWidth, blockHeight, col));
             }
         }
     }

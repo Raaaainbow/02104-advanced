@@ -17,7 +17,7 @@ public class Ball {
     private Paddle pad;
     private BlockGrid blockGrid;
     private HashSet<Block> blocks;
-    private double comboBlockAmount = 5, comboSpeed = 1.5/10, combo = 0;
+    private double comboBlockAmount = 5, comboSpeed = 1.5, combo = 0;
 
     // temp variables move to App.java
     private double sideWall = 10;
