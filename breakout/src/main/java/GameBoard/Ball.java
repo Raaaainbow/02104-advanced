@@ -9,21 +9,17 @@ import java.util.*;
 
 // Change int to double
 public class Ball {
-    private double[] velo = new double[2];    //change inital velocity when program works
-    private double[] pos = new double[2];
-    private double speed = 3.5;   // change value to increase or decrease ball speed
+    private double[] velo = new double[2], pos = new double[2];    //change inital velocity when program works
+    private double speed = 3.5, comboBlockAmount = 5, comboSpeed = 1.5, combo = 0;   // change value to increase or decrease ball speed
     private Rectangle rect;
     private boolean moving = false;
     private Paddle pad;
     private BlockGrid blockGrid;
     private HashSet<Block> blocks;
-    private double comboBlockAmount = 5, comboSpeed = 1.5, combo = 0;
 
-    // temp variables move to App.java
-    private double sideWall = 10;
-    private double minWidth = 0 + sideWall;
-    private double maxWidth = 672 - sideWall;
-    private double minHeight = 92+34;
+    // Variables for wall collision
+    private double sideWall = 10, minWidth = 0 + sideWall, maxWidth = 672 - sideWall, minHeight = 92+34;
+
     private PrimaryController controller; 
     
     public Ball(double x, double y, Paddle pad, BlockGrid blockgrid, PrimaryController controller) {
