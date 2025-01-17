@@ -22,32 +22,42 @@
          </font>
       </Text>
       <Button fx:id="backButton" layoutX="195.0" layoutY="859.0" mnemonicParsing="false" onAction="#onBackButtonClicked" prefHeight="50.0" prefWidth="280.0" style="-fx-background-color: transparent;" />
-      <Text fill="#cccccc" layoutX="200.0" layoutY="400.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MOVE LEFT">
+      <Text fill="#cccccc" layoutX="200.0" layoutY="350.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MOVE LEFT">
          <font>
             <Font name="Press Start 2P Regular" size="30.0" />
          </font>
       </Text>
-      <Text fill="#cccccc" layoutX="195.0" layoutY="450.0" strokeType="OUTSIDE" strokeWidth="0.0" text="A H LEFT-ARROW">
+      <Text fill="#cccccc" layoutX="195.0" layoutY="390.0" strokeType="OUTSIDE" strokeWidth="0.0" text="A H LEFT-ARROW">
          <font>
             <Font name="Press Start 2P Regular" size="20.0" />
          </font>
       </Text>
-      <Text fill="#cccccc" layoutX="186.0" layoutY="550.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MOVE RIGHT">
+      <Text fill="#cccccc" layoutX="186.0" layoutY="460.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MOVE RIGHT">
          <font>
             <Font name="Press Start 2P Regular" size="30.0" />
          </font>
       </Text>
-      <Text fill="#cccccc" layoutX="149.0" layoutY="600.0" strokeType="OUTSIDE" strokeWidth="0.0" text="D L RIGHT-ARROW">
+      <Text fill="#cccccc" layoutX="149.0" layoutY="500.0" strokeType="OUTSIDE" strokeWidth="0.0" text="D L RIGHT-ARROW">
          <font>
             <Font name="Press Start 2P Regular" size="25.0" />
          </font>
       </Text>
-      <Text fill="#cccccc" layoutX="185.0" layoutY="700.0" strokeType="OUTSIDE" strokeWidth="0.0" text="THROW BALL">
+      <Text fill="#cccccc" layoutX="185.0" layoutY="570.0" strokeType="OUTSIDE" strokeWidth="0.0" text="THROW BALL">
          <font>
             <Font name="Press Start 2P Regular" size="30.0" />
          </font>
       </Text>
-      <Text fill="#cccccc" layoutX="273.0" layoutY="750.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SPACE">
+      <Text fill="#cccccc" layoutX="273.0" layoutY="610.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SPACE">
+         <font>
+            <Font name="Press Start 2P Regular" size="25.0" />
+         </font>
+      </Text>
+      <Text fill="#cccccc" layoutX="185.0" layoutY="680.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PAUSE GAME">
+         <font>
+            <Font name="Press Start 2P Regular" size="30.0" />
+         </font>
+      </Text>
+      <Text fill="#cccccc" layoutX="260.0" layoutY="720.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ESCAPE">
          <font>
             <Font name="Press Start 2P Regular" size="25.0" />
          </font>
