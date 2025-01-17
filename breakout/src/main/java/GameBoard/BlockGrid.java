@@ -10,8 +10,9 @@ public class BlockGrid {
     private int m; // width
     private int n; // height
     private Random rand = new Random();
+    private Paddle pad;
 
-    public BlockGrid(int difficulty) {
+    public BlockGrid(int difficulty,Paddle pad) {
         switch(difficulty) {
             case 0:
                 n = 5;
@@ -28,7 +29,7 @@ public class BlockGrid {
                 m = 20;
                 break;
         }
-        
+        this.pad = pad;
         createField();
     }
 
@@ -81,7 +82,7 @@ public class BlockGrid {
                 double x = margin + offset * (j + 1) + blockWidth * j;
                 double y = 970 / 4 + offset * (i + 1) + blockHeight * i;
                 if (rand.nextInt(100) < 5) {
-                    blockGrid.add(new Powerup(x, y, blockWidth, blockHeight, rand.nextInt(5)));
+                    blockGrid.add(new Powerup(x, y, blockWidth, blockHeight, rand.nextInt(5),pad));
                 } else {
                     blockGrid.add(new Block(x, y, blockWidth, blockHeight, col));
                 }

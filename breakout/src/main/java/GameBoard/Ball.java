@@ -11,7 +11,7 @@ import java.util.*;
 public class Ball {
     private double[] velo = new double[2];    //change inital velocity when program works
     private double[] pos = new double[2];
-    private double speed = 3.5;   // change value to increase or decrease ball speed
+    private double speed = 3.5, normalSpeed = speed;   // change value to increase or decrease ball speed
     private Rectangle rect;
     private boolean moving = false;
     private Paddle pad;
@@ -38,6 +38,14 @@ public class Ball {
         rect.setFill(Color.rgb(158, 158, 158));
         App.addElement(rect);
         this.controller = controller;
+    }
+
+    public void setSpeed(double speed) {
+        this.speed = speed;
+    }
+
+    public double getNormalSpeed() {
+        return normalSpeed;
     }
 
     public void setMoving(boolean input) {

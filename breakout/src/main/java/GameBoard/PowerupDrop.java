@@ -6,6 +6,7 @@ import javafx.util.Duration;
 import java.util.Random;
 
 import com.example.App;
+import com.example.PrimaryController;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -15,51 +16,67 @@ import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
 
-public class Powerup extends Block {
+public class PowerupDrop {
     private double[] pos = new double[2]; 
     private Rectangle rect;
-    private int type; // Type of powerup 
     private Random rand = new Random();
     private double hue = rand.nextInt(256);
+    private double velocity = 0, speed = 4;
     private Paddle pad;
 
     @FXML
     private Timeline timeline;
     LinearGradient linearGradient;
-    public Powerup(double x, double y, double width, double height, int type, Paddle pad) {
-        super(x, y, width, height, Color.rgb(0, 0, 0, 0)); 
+    public PowerupDrop(double x, double y, Powerup powerup, Paddle pad) {
         this.pos[0] = x;
         this.pos[1] = y;
-        this.type = type;
         this.pad = pad;
-        
-        rect = new Rectangle(x, y, width, height); 
+        rect = new Rectangle(powerup.getRect().getWidth()/2,powerup.getRect().getHeight()/2); 
+        rect.setLayoutX(x);
+        rect.setLayoutY(y);
         App.addElement(rect);
         startTimeline();
     }
-
+    
     public void startTimeline() {
         timeline = new Timeline(
             new KeyFrame(Duration.millis(10), event -> {
+                rect.setLayoutX(pos[0]);
+                velocity = PrimaryController.lerp(velocity, speed, 0.005);
+                pos[1]+=speed;
+                rect.setLayoutY(pos[1]);
                 hue = hue > 255 ? hue-255 : hue+1;
                 rect.setFill(Color.hsb(hue, 0.7f, 1.0f));
+                if (collidesTopPaddle()) {
+                    kill();
+                }
             })
         );
         timeline.setCycleCount(Timeline.INDEFINITE); 
         timeline.play();
     }
+
+    public boolean collidesTopPaddle() {
+        double paddleX = pad.getX();
+        double paddleY = pad.getY();
+        double paddleWidth = pad.getObject().getWidth();
+        double paddleHeight = pad.getObject().getHeight();
     
+        boolean collides = pos[0] + rect.getWidth() > paddleX && pos[0] < paddleX + paddleWidth &&
+                           pos[1] + rect.getHeight() > paddleY && pos[1] < paddleY + paddleHeight;
+        if (collides) {
+            pos[1] = paddleY - rect.getHeight();
+        }
+        return collides;
+    }
+
     public Rectangle getRect() {
         return rect;
     }
 
     public void kill() {
-        new PowerupDrop(rect.getX(), rect.getY(), this, pad);
+        pad.powerupEffect(0);
         App.removeElement(rect);
-    }
-
-    public int getType() {
-        return type;
     }
     
     public double[] getPos() {
@@ -79,7 +96,6 @@ public class Powerup extends Block {
 
 
 // Power downs: 
-// Score bliver nulstillet 
 // Paddle bliver mindre
 // Mister et liv 
 // Langsommere bold

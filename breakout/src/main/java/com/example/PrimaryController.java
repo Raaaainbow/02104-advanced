@@ -60,10 +60,10 @@ public class PrimaryController {
     private Text winLoseScore; 
 
     private boolean create = false;
-    double velocity, velocityGoal;
+    public double velocity, velocityGoal, sppedMultiplier ;
 
     public void initialize() throws Exception {
-        pad = new Paddle(paddle);
+        pad = new Paddle(paddle,this);
         livesnumber.setText(lives + " lives");
         startTimeline(); 
 
@@ -89,7 +89,7 @@ public class PrimaryController {
     
     public void onStep() throws Exception {
         if (create == false) { // Run once
-            blocks = new BlockGrid(difficulty);
+            blocks = new BlockGrid(difficulty,pad);
             ball = new Ball(pad.getX() + pad.getLength()/2-13/2, pad.getY() - 30,pad,blocks, this);
             // Load local scores and names
             String[] localNames = App.loadName();
@@ -143,7 +143,7 @@ public class PrimaryController {
 
         // remove winCondition and replace you died with GAME OVER
         if (winCondition()) {
-            blocks = new BlockGrid(difficulty);
+            blocks = new BlockGrid(difficulty,pad);
             App.removeElement(ball.getShape());
             ball = new Ball(pad.getX() + pad.getLength()/2-13/2, pad.getY() - 30,pad,blocks, this);
         } 
@@ -161,6 +161,10 @@ public class PrimaryController {
             }
         }
         score.setText(""+ scoreAmount);
+    }
+
+    public Ball getBall() {
+        return ball;
     }
 
     public boolean winCondition() {
@@ -257,7 +261,7 @@ public class PrimaryController {
     }
 
     // Linear interpolation
-    private double lerp(double startValue, double endValue, double interpolationAmount) {
+    public static double lerp(double startValue, double endValue, double interpolationAmount) {
         return (1 - interpolationAmount) * startValue + interpolationAmount * endValue;
     }
 
