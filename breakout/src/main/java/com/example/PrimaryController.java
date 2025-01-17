@@ -138,7 +138,7 @@ public class PrimaryController {
                 winLoseScore.setText("Score: " + scoreAmount);
                 timeline.pause();
                 writeToDatabase(username, scoreAmount);
-                System.exit(0);
+                toggleGameOverScreen();
             } else {
                 ball = new Ball(pad.getX() + pad.getLength()/2-13/2, pad.getY() - 30,pad,blocks, this);
             }
