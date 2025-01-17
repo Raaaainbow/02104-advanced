@@ -182,5 +182,3 @@ public class LeaderController {
         App.setRoot(menuPane);
     }
 }
-
-// when leaderboard array is made, read the leaderboard and add the first 10 along with the highest score on the current username
