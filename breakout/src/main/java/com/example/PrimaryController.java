@@ -29,10 +29,8 @@ public class PrimaryController {
     private boolean create = false;
     private Paddle pad;
     private Ball ball;
-    private int scoreAmount; 
-    private int lives = 3; 
     @FXML
-    private Text livesnumber, combocounter;
+    private Text combocounter;
 
     private String username;
     private BlockGrid blocks;
