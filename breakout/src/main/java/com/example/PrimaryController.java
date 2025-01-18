@@ -58,9 +58,15 @@ public class PrimaryController {
     private Button backButton;
     @FXML
     private Text winLoseScore; 
+    @FXML
+    private Rectangle backgroundpress;
+    @FXML 
+    private Text pressspacetext; 
 
     private boolean create = false;
     public double velocity, velocityGoal, sppedMultiplier, velocityInterpolation = 0.25;
+
+    
 
     public void initialize() throws Exception {
         pad = new Paddle(paddle,this);
@@ -68,9 +74,12 @@ public class PrimaryController {
         startTimeline(); 
 
         backButton.setDisable(true);
+        backgroundpress.setVisible(true);
+        pressspacetext.setVisible(true);
 
         App.getScene().addEventFilter(KeyEvent.KEY_PRESSED, this::inputHandling);
-        App.getScene().addEventFilter(KeyEvent.KEY_RELEASED, this::stopHandling);
+        App.getScene().addEventFilter(KeyEvent.KEY_RELEASED, this::stopHandling); 
+        App.getScene().addEventFilter(KeyEvent.KEY_PRESSED, this::inputHandling);
     }
 
     public void startTimeline() {
@@ -237,6 +246,8 @@ public class PrimaryController {
 
             case SPACE:
                 ball.setMoving(true);
+                backgroundpress.setVisible(false);
+                pressspacetext.setVisible(false);
                 break;
 
             default:
