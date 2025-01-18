@@ -13,7 +13,7 @@ git clone https://github.com/Raaaainbow/02104-advanced
 3. Git - for installation
 
 ## Usage
-To run the program, simply double click the .jar file, if this does not work, you can run the following command from the terminal in your directory
+To run the program, simply double click the .jar file. If that does not work, you can run the following command from the terminal in your directory
 ```bash
 java -jar 02104.jar
 ```
