@@ -14,7 +14,7 @@ import javafx.scene.text.Text;
 
 public class MenuController {
     @FXML
-    private Text start, settings, leaderboard, splash;
+    private Text start, settings, leaderboard, quit, splash;
     private static HashMap<Integer, String> splashHash = new HashMap<>();
     private static int counter;
 
@@ -40,6 +40,11 @@ public class MenuController {
     }
 
     @FXML
+    public void onQuitButtonClick() throws IOException {
+        System.exit(0);
+    }
+
+    @FXML
     public void handleMouseOver() {
         if (start.isHover()) {
             start.setStyle("-fx-fill: white;");
@@ -47,6 +52,8 @@ public class MenuController {
             settings.setStyle("-fx-fill: white;");
         } else if (leaderboard.isHover()) {
             leaderboard.setStyle("-fx-fill: white;");
+        } else if (quit.isHover()) {
+            quit.setStyle("-fx-fill: white;");
         }
     }
 
@@ -55,7 +62,9 @@ public class MenuController {
         start.setStyle("");
         settings.setStyle("");
         leaderboard.setStyle("");
+        quit.setStyle("");
     }
+
 
     @FXML
     public void setSplashText() throws FileNotFoundException {

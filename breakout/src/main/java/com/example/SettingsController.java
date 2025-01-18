@@ -17,17 +17,17 @@ public class SettingsController {
         FXMLLoader menuLoader = new FXMLLoader(App.class.getResource("menu.fxml"));
         Parent menuPane = menuLoader.load();
         App.setRoot(menuPane);
+        MenuController menuController = menuLoader.getController();
+        menuController.setSplashText();
     }
 
     @FXML
     public void handleMouseOver() {
-        System.out.println("MOUSE OVER");
         goBack.setStyle("-fx-fill: white;");
     }
 
     @FXML
     public void handleMouseExit() {
-        System.out.println("MOUSE LEFT");
         goBack.setStyle("");
     }
 }

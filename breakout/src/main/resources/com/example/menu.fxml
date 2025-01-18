@@ -29,5 +29,10 @@
             <Font name="Press Start 2P Regular" size="15.0" />
          </font>
       </Text>
+      <Text fx:id="quit" fill="#cccccc" layoutY="820.0" onMouseClicked="#onQuitButtonClick" onMouseEntered="#handleMouseOver" onMouseExited="#handleMouseExit" strokeType="OUTSIDE" strokeWidth="0.0" text="QUIT" textAlignment="CENTER" wrappingWidth="672.0">
+         <font>
+            <Font name="Press Start 2P Regular" size="25.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

@@ -74,10 +74,12 @@ public void onPlayButtonClicked() throws IOException {
 }
 
     @FXML
-    public void onBackButtonClicked() throws IOException{
+    public void onBackButtonClicked() throws IOException {
         FXMLLoader menuLoader = new FXMLLoader(App.class.getResource("menu.fxml"));
         Parent menuPane = menuLoader.load();
         App.setRoot(menuPane);
+        MenuController menuController = menuLoader.getController();
+        menuController.setSplashText();
     }
     
     @FXML
