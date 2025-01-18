@@ -80,7 +80,7 @@
             <Font name="Press Start 2P Regular" size="40.0" />
          </font>
       </Text>
-      <Text fx:id="pressspacetext" fill="#581fc4" layoutX="216.0" layoutY="585.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Press space to start" textAlignment="CENTER" wrappingWidth="234.9830722808838">
+      <Text fx:id="pressspacetext" fill="#cccccc" layoutX="216.0" layoutY="585.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PRESS SPACE TO START" textAlignment="CENTER" wrappingWidth="234.9830722808838">
          <font>
             <Font name="Press Start 2P Regular" size="20.0" />
          </font>
