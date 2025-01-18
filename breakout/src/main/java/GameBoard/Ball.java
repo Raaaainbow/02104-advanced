@@ -13,7 +13,7 @@ public class Ball {
     private double speed = 3.5, comboBlockAmount = 5, comboSpeed = 1.5, combo = 0, normalSpeed = speed;   // change value to increase or decrease ball speed
     private Random rand = new Random();
     private double hue = rand.nextInt(256);
-    private boolean star = false, explosive = false;
+    private boolean star = false;
     private Rectangle rect;
     private boolean moving = false;
     private Paddle pad;
@@ -118,7 +118,7 @@ public class Ball {
             rect.setFill(Color.hsb(hue, 0.7f, 1.0f));
         } else {
             rect.setFill(Color.rgb(158, 158, 158));
-        }
+        } 
     }
 
     public void setStar(boolean star) {
@@ -146,7 +146,14 @@ public class Ball {
     }
 
     public boolean collidesRoof() {
-        return (minHeight <= getYPos() )? false: true;
+        if (minHeight <= getYPos()) {
+            if (pos[1] < minHeight-1) {
+                pos[1]+=2;
+            }
+            return false;
+        } else {
+            return true;
+        }
     }
 
     public boolean collidesBlockHorizontal() {
@@ -158,9 +165,6 @@ public class Ball {
                 blockGrid.removeBlock(b);
                 controller.Addscore(b.getScoren());
                 combo++;
-                if (explosive) {
-                    explosiveBall();
-                }
                 return !star && true;
             }
         }
@@ -176,36 +180,10 @@ public class Ball {
                 blockGrid.removeBlock(b);
                 controller.Addscore(b.getScoren());
                 combo++;
-                if (explosive) {
-                    explosiveBall();
-                }
                 return !star && true;
             }
         }
         return false;
-    }
-
-    public void setExplosive(boolean explosive) {
-        this.explosive = explosive;
-        rect.setFill(Color.ORANGERED);
-    }
-    
-    public void explosiveBall() {
-        int explodeRadius = 100;
-        Iterator<Block> iterator = blocks.iterator();
-        while (iterator.hasNext()) {
-            Block b = iterator.next();
-            double distance = Math.sqrt((pos[0] - b.getPos()[0]) * (pos[0] - b.getPos()[0]) + 
-                                        (pos[1] - b.getPos()[1]) * (pos[1] - b.getPos()[1]));
-            if (distance < explodeRadius) {
-                iterator.remove(); // Use iterator to remove the block safely
-                blockGrid.removeBlock(b);
-                controller.Addscore(b.getScoren());
-                combo++;
-            }
-        }
-        rect.setFill(Color.rgb(158, 158, 158));
-        explosive = false;
     }
 
     public boolean collidesTopPaddle() {

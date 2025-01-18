@@ -63,7 +63,6 @@ public class Paddle {
                 }
                     bigpad.play();
                     bigpad.setOnFinished(e -> this.paddleGoalLength = 109);
-                
                 break;
 
             case 1: // Shield
@@ -72,15 +71,7 @@ public class Paddle {
                 }
                 break;
 
-            case 2: // 1Up
-                controller.Addlivtal(1);
-                break;
-
-            case 3: // Explosive Ball!
-                controller.getBall().setExplosive(true);
-                break;
-
-            case 4: // Small Paddle
+            case 2: // Small Paddle
                 this.paddleGoalLength = 109; 
                 smallpad = new Timeline(
                     new KeyFrame(Duration.millis(10), event -> {
@@ -96,21 +87,17 @@ public class Paddle {
                 smallpad.setOnFinished(e -> this.paddleGoalLength = 109); 
                 break;
 
-            case 5: // 1Down
-                controller.Addlivtal(-1);
-                break;
-
-            case 6: // Slowball
+            case 3: // Slowball
                 Timeline slowball = new Timeline(
                 new KeyFrame(Duration.millis(10), event -> {
                     controller.getBall().setSpeed(controller.getBall().getNormalSpeed()/2);
                 }));
                 slowball.setCycleCount(1000/10*10); 
                 slowball.play();
-                slowball.setOnFinished(e -> {paddleGoalLength = 109;});
+                slowball.setOnFinished(e -> {controller.getBall().setSpeed(controller.getBall().getNormalSpeed());});
                 break;
 
-            case 7: // laser pad
+            case 4: // laser pad
                 double firerate = 1000; //ms
                 Timeline laser = new Timeline(
                 new KeyFrame(Duration.millis(firerate), event -> {
@@ -120,7 +107,7 @@ public class Paddle {
                 laser.play();
                 break;
             
-            case 8: // Speedy paddle
+            case 5: // Speedy paddle
                 Timeline speedy = new Timeline(
                 new KeyFrame(Duration.millis(10), event -> {
                     controller.setVelocityInterpolation(1);
@@ -131,7 +118,7 @@ public class Paddle {
                 speedy.setOnFinished(e -> {controller.setVelocityInterpolation(0.25);controller.sethSpeed(5);});
                 break;
 
-            case 9: // Slippery pad
+            case 6: // Slippery pad
                 Timeline slippery = new Timeline(
                     new KeyFrame(Duration.millis(10), event -> {
                         controller.setVelocityInterpolation(0.025);
@@ -141,7 +128,7 @@ public class Paddle {
                     slippery.setOnFinished(e -> {controller.setVelocityInterpolation(0.25);});
                 break;
 
-            case 10: // Mario Star
+            case 7: // Mario Star
                 Timeline star = new Timeline(
                 new KeyFrame(Duration.millis(10), event -> {
                     controller.getBall().setStar(true);
