@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
@@ -8,22 +7,22 @@
 
 <AnchorPane maxHeight="970.0" maxWidth="672.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="970.0" prefWidth="672.0" style="-fx-background-color: #333333;" stylesheets="styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.MenuController">
    <children>
-      <Text fill="#cccccc" layoutX="136.0" layoutY="236.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 50px" text="BREAKOUT">
+      <Text fill="#cccccc" layoutY="236.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 50px" text="BREAKOUT" textAlignment="CENTER" wrappingWidth="672.0">
       </Text>
-      <Text fill="#cccccc" layoutX="274.0" layoutY="550.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 25px" text="START">
-      </Text>
+      <Text fx:id="start" fill="#cccccc" layoutX="12.0" layoutY="520.0" onMouseClicked="#onStartButtonClicked" onMouseEntered="#handleMouseOver" onMouseExited="#handleMouseExit" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 25px" text="START" textAlignment="CENTER" wrappingWidth="664.0">
+         <font>
+            <Font name="Press Start 2P Regular" size="25.0" />
+         </font></Text>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#cccccc" height="972.0" stroke="BLACK" strokeType="INSIDE" width="11.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#cccccc" height="972.0" layoutX="665.0" stroke="BLACK" strokeType="INSIDE" width="11.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#cccccc" height="34.0" layoutX="4.0" layoutY="92.0" stroke="TRANSPARENT" strokeType="INSIDE" width="664.0" />
-      <Text fill="#cccccc" layoutX="199.0" layoutY="700.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 25px" text="Keybindings">
-      </Text>
-      <Text fill="#cccccc" layoutX="199.0" layoutY="625.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 25px" text="Leaderboard">
-      </Text>
-      <Button fx:id="StartButton" layoutX="271.0" layoutY="517.0" mnemonicParsing="false" onAction="#onStartButtonClicked" prefHeight="34.0" prefWidth="125.0" style="-fx-background-color: transparent;" />
-      <Button fx:id="LeaderBoardButton" layoutX="199.0" layoutY="592.0" mnemonicParsing="false" onAction="#onLeaderboardButtonClick" prefHeight="34.0" prefWidth="275.0" style="-fx-background-color: transparent;" />
-      <Button fx:id="SettingsButton" layoutX="178.0" layoutY="669.0" mnemonicParsing="false" onAction="#onSettingsButtonClick" prefHeight="58.0" prefWidth="274.0" style="-fx-background-color: transparent;" textAlignment="CENTER">
+      <Text fx:id="settings" fill="#cccccc" layoutY="720.0" onMouseClicked="#onSettingsButtonClick" onMouseEntered="#handleMouseOver" onMouseExited="#handleMouseExit" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 25px" text="KEYBINDINGS" textAlignment="CENTER" wrappingWidth="672.0">
          <font>
             <Font name="Press Start 2P Regular" size="25.0" />
-         </font></Button>
+         </font></Text>
+      <Text fx:id="leaderboard" fill="#cccccc" layoutX="2.0" layoutY="620.0" onMouseClicked="#onLeaderboardButtonClick" onMouseEntered="#handleMouseOver" onMouseExited="#handleMouseExit" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 25px" text="LEADERBOARD" textAlignment="CENTER" wrappingWidth="672.0">
+         <font>
+            <Font name="Press Start 2P Regular" size="25.0" />
+         </font></Text>
    </children>
 </AnchorPane>

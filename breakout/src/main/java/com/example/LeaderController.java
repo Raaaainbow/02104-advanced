@@ -22,7 +22,7 @@ public class LeaderController {
     @FXML   
     private Text score1, score2, score3, score4, score5, score6, score7, score8, score9, score10;
     @FXML
-    private Text myscore, myplacement, myname;
+    private Text myscore, myplacement, myname, goBack;
     private Text[] nameTexts;
     private Text[] scoreTexts;
     private Text[] userTexts;
@@ -180,5 +180,15 @@ public class LeaderController {
         FXMLLoader menuLoader = new FXMLLoader(App.class.getResource("menu.fxml"));
         Parent menuPane = menuLoader.load();
         App.setRoot(menuPane);
+    }
+
+    @FXML
+    public void handleMouseOver() {
+        goBack.setStyle("-fx-fill: white;");
+    }
+
+    @FXML
+    public void handleMouseExit() {
+        goBack.setStyle("");
     }
 }

@@ -14,7 +14,7 @@ import javafx.scene.text.Text;
 public class LevelSelectController {
 
     @FXML
-    private Text ez, mid, hardcore;
+    private Text ez, mid, hardcore, goBack;
     @FXML
     private Button backButton, playButton, ezButton, hardcoreButton, midButton;
     private int difficulty = 0;
@@ -78,6 +78,16 @@ public void onPlayButtonClicked() throws IOException {
         FXMLLoader menuLoader = new FXMLLoader(App.class.getResource("menu.fxml"));
         Parent menuPane = menuLoader.load();
         App.setRoot(menuPane);
+    }
+    
+    @FXML
+    public void handleMouseOver() {
+        goBack.setStyle("-fx-fill: white;");
+    }
+
+    @FXML
+    public void handleMouseExit() {
+        goBack.setStyle("");
     }
 }
 

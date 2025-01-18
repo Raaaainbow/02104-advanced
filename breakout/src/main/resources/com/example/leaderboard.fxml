@@ -81,12 +81,11 @@
             <Font name="Press Start 2P Regular" size="25.0" />
          </font>
       </Text>
-      <Text fill="#cccccc" layoutX="196.0" layoutY="907.0" strokeType="OUTSIDE" strokeWidth="0.0" text="GO BACK">
+        <Text fx:id="goBack" fill="#cccccc" layoutX="196.0" layoutY="907.0" onMouseEntered="#handleMouseOver" onMouseExited="#handleMouseExit" onMouseClicked="#onBackButtonClicked" strokeType="OUTSIDE" strokeWidth="0.0" text="GO BACK">
          <font>
             <Font name="Press Start 2P Regular" size="40.0" />
          </font>
       </Text>
-      <Button fx:id="backButton" layoutX="195.0" layoutY="859.0" mnemonicParsing="false" onAction="#onBackButtonClicked" prefHeight="50.0" prefWidth="280.0" style="-fx-background-color: transparent;" />
       <Text fx:id="name1" fill="#cccccc" layoutX="186.0" layoutY="368.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" ">
          <font>
             <Font name="Press Start 2P Regular" size="25.0" />

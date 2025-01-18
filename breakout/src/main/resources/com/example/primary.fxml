@@ -59,17 +59,17 @@
             <Font name="Press Start 2P Regular" size="25.0" />
          </font>
       </Text>
-      <Text fx:id="gameOver" fill="#cc241d" layoutX="111.0" layoutY="388.0" strokeType="OUTSIDE" strokeWidth="0.0" text="GAME OVER" visible="false">
+      <Text fx:id="gameOver" fill="#cc241d" layoutX="111.0" layoutY="388.0" stroke="#000000" strokeType="OUTSIDE" strokeWidth="1" text="GAME OVER" visible="false">
          <font>
             <Font name="Press Start 2P Regular" size="50.0" />
          </font>
       </Text>
-      <Text fx:id="returnTo" fill="#cccccc" layoutX="223.0" layoutY="701.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RETURN TO" visible="false" AnchorPane.leftAnchor="201.0" AnchorPane.rightAnchor="179.0">
+      <Text fx:id="returnTo" fill="#cccccc" layoutX="223.0" layoutY="701.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RETURN TO" onMouseEntered="#handleMouseOver" onMouseExited="#handleMouseExit" onMouseClicked="#onBackButtonClicked" visible="false" AnchorPane.leftAnchor="201.0" AnchorPane.rightAnchor="179.0">
          <font>
             <Font name="Press Start 2P Regular" size="30.0" />
          </font>
       </Text>
-      <Text fx:id="mainMenu" fill="#cccccc" layoutX="223.0" layoutY="741.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MAIN MENU" visible="false" AnchorPane.leftAnchor="201.0" AnchorPane.rightAnchor="179.0">
+      <Text fx:id="mainMenu" fill="#cccccc" layoutX="223.0" layoutY="741.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MAIN MENU" onMouseEntered="#handleMouseOver" onMouseExited="#handleMouseExit" onMouseClicked="#onBackButtonClicked" visible="false" AnchorPane.leftAnchor="201.0" AnchorPane.rightAnchor="179.0">
          <font>
             <Font name="Press Start 2P Regular" size="30.0" />
          </font>
@@ -79,6 +79,5 @@
             <Font name="Press Start 2P Regular" size="40.0" />
          </font>
       </Text>
-      <Button fx:id="backButton" layoutX="197.0" layoutY="667.0" mnemonicParsing="false" onAction="#onBackButtonClicked" prefHeight="78.0" prefWidth="272.0" style="-fx-background-color: transparent;" text="Button" />
    </children>
 </AnchorPane>

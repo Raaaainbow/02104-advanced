@@ -5,11 +5,11 @@ import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
+import javafx.scene.text.Text;
 
 public class MenuController {
     @FXML
-    private Button startButton, LeaderBoardButton, Settings; 
+    private Text start, settings, leaderboard;
 
     @FXML
     public void onStartButtonClicked() throws IOException {
@@ -18,6 +18,7 @@ public class MenuController {
         App.setRoot(levelselectPane);
     }
 
+    @FXML
     public void onLeaderboardButtonClick() throws IOException {
         FXMLLoader leaderLoader = new FXMLLoader(App.class.getResource("leaderboard.fxml"));
         Parent leaderboardPane = leaderLoader.load();
@@ -26,11 +27,30 @@ public class MenuController {
         App.setRoot(leaderboardPane);
    }
 
+   @FXML
    public void onSettingsButtonClick() throws IOException {
        FXMLLoader settingsLoader = new FXMLLoader(App.class.getResource("settings.fxml"));
        Parent settingsPane = settingsLoader.load();
        SettingsController settingsController = settingsLoader.getController();
 
        App.setRoot(settingsPane);
+   }
+
+   @FXML
+   public void handleMouseOver() {
+        if (start.isHover()) {
+            start.setStyle("-fx-fill: white;");
+        } else if (settings.isHover()) {
+            settings.setStyle("-fx-fill: white;");
+        } else if (leaderboard.isHover()) {
+            leaderboard.setStyle("-fx-fill: white;");
+        }
+   }
+
+   @FXML
+   public void handleMouseExit() {
+       start.setStyle("");
+       settings.setStyle("");
+       leaderboard.setStyle("");
    }
 }

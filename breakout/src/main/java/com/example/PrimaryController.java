@@ -12,10 +12,8 @@ import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
-import javafx.scene.control.Button;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
-import java.util.Scanner;
 import java.util.HashMap;
 import java.util.List;
 import java.io.File;
@@ -38,8 +36,6 @@ public class PrimaryController {
     private Text gamePause, pressEscape, gameOver, returnTo, mainMenu, winLoseScore, score, highscore, livesnumber, livesdisplay;
     @FXML
     private Timeline timeline;
-    @FXML 
-    private Button backButton;
     @FXML
     private Rectangle paddle, gamePauseBackground; 
 
@@ -48,8 +44,6 @@ public class PrimaryController {
         pad = new Paddle(paddle);
         livesnumber.setText(lives + " lives");
         startTimeline(); 
-
-        backButton.setDisable(true);
 
         App.getScene().addEventFilter(KeyEvent.KEY_PRESSED, this::inputHandling);
         App.getScene().addEventFilter(KeyEvent.KEY_RELEASED, this::stopHandling);
@@ -345,7 +339,7 @@ public class PrimaryController {
     }
 
     private void toggleGameOverScreen() {
-        if (!(gameOver.isVisible() && returnTo.isVisible() && mainMenu.isVisible() && gamePauseBackground.isVisible() && winLoseScore.isVisible() && backButton.isVisible())) {
+        if (!(gameOver.isVisible() && returnTo.isVisible() && mainMenu.isVisible() && gamePauseBackground.isVisible() && winLoseScore.isVisible())) {
             gamePauseBackground.setVisible(true);
             gamePauseBackground.setManaged(true);
             gameOver.setVisible(true);
@@ -356,16 +350,13 @@ public class PrimaryController {
             mainMenu.setManaged(true);
             winLoseScore.setVisible(true);
             winLoseScore.setManaged(true);
-            backButton.setDisable(true);
 
             gamePauseBackground.toFront();
             gameOver.toFront();
+            winLoseScore.toFront();
             returnTo.toFront();
             mainMenu.toFront();
-            winLoseScore.toFront();
-            backButton.toFront();
 
-            backButton.setDisable(false);
         }
     }
     
@@ -374,5 +365,17 @@ public class PrimaryController {
         FXMLLoader menuLoader = new FXMLLoader(App.class.getResource("menu.fxml"));
         Parent menuPane = menuLoader.load();
         App.setRoot(menuPane);
+    }
+
+    @FXML
+    public void handleMouseOver() {
+        returnTo.setStyle("-fx-fill: white;");
+        mainMenu.setStyle("-fx-fill: white;");
+    }
+
+    @FXML
+    public void handleMouseExit() {
+        returnTo.setStyle("");
+        mainMenu.setStyle("");
     }
 }
