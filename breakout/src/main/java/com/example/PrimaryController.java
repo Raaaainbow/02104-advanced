@@ -180,6 +180,8 @@ public class PrimaryController {
             lives--; 
             livesnumber.setText(lives + " lives");
             ball = new Ball(pad.getX() + pad.getLength()/2-13/2, pad.getY() - 30,pad,blocks, this);
+            backgroundpress.setVisible(true);
+            pressspacetext.setVisible(true);
         }
 
         if (lives <= 0) {
