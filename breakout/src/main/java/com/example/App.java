@@ -34,7 +34,7 @@ public class App extends Application {
         // Set the initial scene to menuPane
         scene = new Scene(menuPane, width, height);
         if (menuPane instanceof Pane) {
-            rootPane = (Pane) menuPane;
+            rootPane = (Pane) menuPane; 
         }
         
         stage.setScene(scene);

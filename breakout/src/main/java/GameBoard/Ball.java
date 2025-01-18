@@ -10,7 +10,10 @@ import java.util.*;
 // Change int to double
 public class Ball {
     private double[] velo = new double[2], pos = new double[2];    //change inital velocity when program works
-    private double speed = 3.5, comboBlockAmount = 5, comboSpeed = 1.5, combo = 0;   // change value to increase or decrease ball speed
+    private double speed = 3.5, comboBlockAmount = 5, comboSpeed = 1.5, combo = 0, normalSpeed = speed;   // change value to increase or decrease ball speed
+    private Random rand = new Random();
+    private double hue = rand.nextInt(256);
+    private boolean star = false, explosive = false;
     private Rectangle rect;
     private boolean moving = false;
     private Paddle pad;
@@ -30,11 +33,21 @@ public class Ball {
         double dX = speed*.5*((Math.random()*2-1) > 0 ? 1 : -1);  // -1 < rand < 1
         double dY = -speed*.5;      // Ensures hypotenuse is always speed for any x
         setVelo(dX, dY);
-        rect = new Rectangle(0,0,13,10);
+        rect = new Rectangle(13,10);
         setPos(x,y);
+        rect.setLayoutX(x);
+        rect.setLayoutY(y);
         rect.setFill(Color.rgb(158, 158, 158));
         App.addElement(rect);
         this.controller = controller;
+    }
+
+    public void setSpeed(double speed) {
+        this.speed = speed;
+    }
+
+    public double getNormalSpeed() {
+        return normalSpeed;
     }
 
     public void setMoving(boolean input) {
@@ -90,7 +103,7 @@ public class Ball {
             pos = new double[] {pos[0]+velo[0]+comboMultiplierX,pos[1]+velo[1]+comboMultiplierY};
         if (collidesWall() || collidesBlockHorizontal() || collidesSidePaddle()) {
             wallBounce();
-        } else if (collidesRoof() || collidesBlockVertical() || collidesTopPaddle()) {
+        } else if (collidesRoof() || collidesBlockVertical() || collidesTopPaddle() || collidesTopShield()) {
             roofBounce();
         }
         rect.setLayoutX(pos[0]);
@@ -99,11 +112,17 @@ public class Ball {
             rect.setLayoutX(pos[0]);
             rect.setLayoutY(pos[1]);
         }
+
+        if (star) {
+            hue = hue > 255 ? hue-255 : hue+1;
+            rect.setFill(Color.hsb(hue, 0.7f, 1.0f));
+        } else {
+            rect.setFill(Color.rgb(158, 158, 158));
+        }
     }
 
-    public void resetPosition() { // When lost a life the ball will reset and you press space again to start 
-        this.setPos(pad.getX() + pad.getLength() / 2 - 13 / 2, pad.getY() - 30); 
-        this.setMoving(false); 
+    public void setStar(boolean star) {
+        this.star = star;
     }
 
     public void wallBounce() {
@@ -131,31 +150,64 @@ public class Ball {
     }
 
     public boolean collidesBlockHorizontal() {
-        for (Block b : blocks) {
-            if (b.getRect().intersects(pos[0]+velo[0],pos[1],rect.getWidth(),rect.getHeight())) {
-                blocks.remove(b);
+        Iterator<Block> iterator = blocks.iterator();
+        while (iterator.hasNext()) {
+            Block b = iterator.next();
+            if (b.getRect().intersects(pos[0] + velo[0], pos[1], rect.getWidth(), rect.getHeight())) {
+                iterator.remove(); // Use iterator to remove the block safely
                 blockGrid.removeBlock(b);
-                controller.Addscore(b.getScoren()); 
+                controller.Addscore(b.getScoren());
                 combo++;
-                return true;
+                if (explosive) {
+                    explosiveBall();
+                }
+                return !star && true;
             }
         }
         return false;
     }
 
     public boolean collidesBlockVertical() {
-        for (Block b : blocks) {
-            if (b.getRect().intersects(pos[0],pos[1]+velo[1],rect.getWidth(),rect.getHeight())) {
-                blocks.remove(b);
+        Iterator<Block> iterator = blocks.iterator();
+        while (iterator.hasNext()) {
+            Block b = iterator.next();
+            if (b.getRect().intersects(pos[0], pos[1] + velo[1], rect.getWidth(), rect.getHeight())) {
+                iterator.remove(); // Use iterator to remove the block safely
                 blockGrid.removeBlock(b);
                 controller.Addscore(b.getScoren());
                 combo++;
-                return true;
+                if (explosive) {
+                    explosiveBall();
+                }
+                return !star && true;
             }
         }
         return false;
     }
+
+    public void setExplosive(boolean explosive) {
+        this.explosive = explosive;
+        rect.setFill(Color.ORANGERED);
+    }
     
+    public void explosiveBall() {
+        int explodeRadius = 100;
+        Iterator<Block> iterator = blocks.iterator();
+        while (iterator.hasNext()) {
+            Block b = iterator.next();
+            double distance = Math.sqrt((pos[0] - b.getPos()[0]) * (pos[0] - b.getPos()[0]) + 
+                                        (pos[1] - b.getPos()[1]) * (pos[1] - b.getPos()[1]));
+            if (distance < explodeRadius) {
+                iterator.remove(); // Use iterator to remove the block safely
+                blockGrid.removeBlock(b);
+                controller.Addscore(b.getScoren());
+                combo++;
+            }
+        }
+        rect.setFill(Color.rgb(158, 158, 158));
+        explosive = false;
+    }
+
     public boolean collidesTopPaddle() {
         double paddleX = pad.getX();
         double paddleY = pad.getY();
@@ -174,6 +226,31 @@ public class Ball {
             }
         }
         return collides;
+    }
+    
+    public boolean collidesTopShield() {
+        ShieldPaddle shield = pad.getShield();
+        if (shield != null) {
+            double shieldX = shield.getRect().getLayoutX();
+            double shieldY = shield.getRect().getLayoutY();
+            double shieldWidth = shield.getRect().getWidth();
+            double shieldHeight = shield.getRect().getHeight();
+            boolean collides = pos[0] + rect.getWidth() > shieldX && pos[0] < shieldX + shieldWidth &&
+                            pos[1] + rect.getHeight() > shieldY && pos[1] < shieldY + shieldHeight;
+            if (collides) {
+                combo = combo-3 >= 0 ? combo-3 : 0;
+                pos[1] = shieldY - rect.getHeight();
+                shield.kill();
+                if (pos[0] + rect.getWidth()/2 <= shieldX + shieldWidth/2) {
+                    velo[0] = velo[0] > 0 ? -velo[0] : velo[0];
+                } else {
+                    velo[0] = velo[0] < 0 ? -velo[0] : velo[0];
+                }
+            }
+            return collides;
+        } else {
+            return false;
+        }
     }
     
     public boolean collidesSidePaddle() {

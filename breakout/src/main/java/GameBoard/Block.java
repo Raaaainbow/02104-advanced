@@ -54,10 +54,12 @@ public class Block {
     public void setPos(double x, double y) {
         pos[0] = x;
         pos[1] = y;
+        rect.setLayoutX(x);
+        rect.setLayoutY(y);
     }
 
     public double[] getPos() {
-        return pos;
+        return new double[] {rect.getLayoutX(), rect.getLayoutY()};
     }
 
     public String toString() {
