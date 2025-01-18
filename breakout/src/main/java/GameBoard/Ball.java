@@ -101,7 +101,7 @@ public class Ball {
             pos = new double[] {pos[0]+velo[0]+comboMultiplierX,pos[1]+velo[1]+comboMultiplierY};
         if (collidesWall() || collidesBlockHorizontal() || collidesSidePaddle()) {
             wallBounce();
-        } else if (collidesRoof() || collidesBlockVertical() || collidesTopPaddle()) {
+        } else if (collidesRoof() || collidesBlockVertical() || collidesTopPaddle() || collidesTopShield()) {
             roofBounce();
         }
         rect.setLayoutX(pos[0]);
@@ -185,6 +185,31 @@ public class Ball {
             }
         }
         return collides;
+    }
+    
+    public boolean collidesTopShield() {
+        ShieldPaddle shield = pad.getShield();
+        if (shield != null) {
+            double shieldX = shield.getRect().getLayoutX();
+            double shieldY = shield.getRect().getLayoutY();
+            double shieldWidth = shield.getRect().getWidth();
+            double shieldHeight = shield.getRect().getHeight();
+            boolean collides = pos[0] + rect.getWidth() > shieldX && pos[0] < shieldX + shieldWidth &&
+                            pos[1] + rect.getHeight() > shieldY && pos[1] < shieldY + shieldHeight;
+            if (collides) {
+                combo = combo-3 >= 0 ? combo-3 : 0;
+                pos[1] = shieldY - rect.getHeight();
+                shield.kill();
+                if (pos[0] + rect.getWidth()/2 <= shieldX + shieldWidth/2) {
+                    velo[0] = velo[0] > 0 ? -velo[0] : velo[0];
+                } else {
+                    velo[0] = velo[0] < 0 ? -velo[0] : velo[0];
+                }
+            }
+            return collides;
+        } else {
+            return false;
+        }
     }
     
     public boolean collidesSidePaddle() {

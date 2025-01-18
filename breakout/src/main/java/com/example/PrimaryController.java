@@ -60,7 +60,7 @@ public class PrimaryController {
     private Text winLoseScore; 
 
     private boolean create = false;
-    public double velocity, velocityGoal, sppedMultiplier ;
+    public double velocity, velocityGoal, sppedMultiplier, velocityInterpolation = 0.25;
 
     public void initialize() throws Exception {
         pad = new Paddle(paddle,this);
@@ -129,7 +129,7 @@ public class PrimaryController {
 
         combocounter.setText(""+(int)ball.getCombo()+ " Combo");
 
-        velocity = lerp(velocity, velocityGoal, 0.25);
+        velocity = lerp(velocity, velocityGoal, velocityInterpolation);
         if (pad.getX() + velocity < 672 - 10 - pad.getLength() && pad.getX() + velocity > 10) {
             pad.move(velocity);
         } else {
@@ -165,6 +165,10 @@ public class PrimaryController {
 
     public Ball getBall() {
         return ball;
+    }
+
+    public void setVelocityInterpolation(double velocityInterpolation) {
+        this.velocityInterpolation = velocityInterpolation;
     }
 
     public boolean winCondition() {
@@ -325,6 +329,9 @@ public class PrimaryController {
         }
     }
     
+    public void sethSpeed(double hSpeed) {
+        this.hSpeed = hSpeed;
+    }
 
     private void processLine(String line, HashMap<Integer, String> scoresNamesHash, ArrayList<Integer> scoresList) {
         String[] parts = line.split(":");

@@ -13,8 +13,8 @@ public class SettingsController {
     public int getFPS() {
         // return slider int
     }
-    */
-
+    */ 
+    
     @FXML
     public void onBackButtonClicked() throws IOException {
         FXMLLoader menuLoader = new FXMLLoader(App.class.getResource("menu.fxml"));

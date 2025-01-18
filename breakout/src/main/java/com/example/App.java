@@ -34,14 +34,14 @@ public class App extends Application {
         // Set the initial scene to menuPane
         scene = new Scene(menuPane, width, height);
         if (menuPane instanceof Pane) {
-            rootPane = (Pane) menuPane;
+            rootPane = (Pane) menuPane; 
         }
         
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
 
-        scene.getRoot().requestFocus();
+        scene.getRoot().requestFocus(); 
     }
 
     static void setRoot(String fxml) throws IOException { // Loads root from fxml
