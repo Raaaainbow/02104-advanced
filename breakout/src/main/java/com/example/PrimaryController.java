@@ -37,12 +37,19 @@ public class PrimaryController {
     private Timeline timeline;
     @FXML
     private Rectangle paddle, gamePauseBackground; 
+    @FXML
+    private Rectangle backgroundpress;
+    @FXML 
+    private Text pressspacetext; 
 
 
     public void initialize() throws Exception {
         pad = new Paddle(paddle,this);
         livesnumber.setText(lives + " lives");
         startTimeline(); 
+
+        backgroundpress.setVisible(true);
+        pressspacetext.setVisible(true);
 
         App.getScene().addEventFilter(KeyEvent.KEY_PRESSED, this::inputHandling);
         App.getScene().addEventFilter(KeyEvent.KEY_RELEASED, this::stopHandling);
@@ -216,6 +223,8 @@ public class PrimaryController {
 
             case SPACE:
                 ball.setMoving(true);
+                backgroundpress.setVisible(false);
+                pressspacetext.setVisible(false);
                 break;
 
             default:
