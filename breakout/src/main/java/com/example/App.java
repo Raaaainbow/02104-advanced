@@ -42,6 +42,8 @@ public class App extends Application {
         stage.show();
 
         scene.getRoot().requestFocus();
+
+        menuController.setSplashText();
     }
 
     static void setRoot(String fxml) throws IOException { // Loads root from fxml
