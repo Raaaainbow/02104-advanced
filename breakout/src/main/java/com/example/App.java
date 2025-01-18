@@ -10,8 +10,12 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -23,6 +27,9 @@ public class App extends Application {
     private double width = 672;
     private double height = 970;
     public static String saveFilePath = "breakout/src/main/resources/save.dat";
+    private static InputStream inputStream = App.class.getResourceAsStream("/save.dat");
+    private static final String SAVE_FILE_PATH = "/save.dat";
+
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -92,77 +99,56 @@ public class App extends Application {
         launch(args);
     }
 
-    public static void makeSaveFile() {
-        File file = new File(saveFilePath);
-        try {
-            // Check if the file already exists
-            if (file.exists()) {
-                System.out.println(saveFilePath + " already exists.");
-            } else {
-                // Create a new file
-                if (file.createNewFile()) {
-                    System.out.println(saveFilePath + " has been created.");
-                } else {
-                    System.out.println("Failed to create " + saveFilePath);
-                }
-            }
-        } catch (IOException e) {
-            // Handle potential IOException
-            System.err.println("An error occurred while creating the file: " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
     // The save functions save a value by its keyword in the save.dat file
     // check again
-    public static void save(String keyword, int value) throws IOException {
-        makeSaveFile();
-        try {
-            FileWriter writer = new FileWriter(saveFilePath, true);
-            writer.append(keyword + ": " + value + "\n");
-            writer.close();
-        } catch (IOException e){
-            System.out.println("there was an error writing the the file \"save.dat\"");
-        }
-
-    }
-
-    public static void save(String keyword, String value) throws FileNotFoundException {
-        makeSaveFile();
-        try {
-            FileWriter writer = new FileWriter(saveFilePath);
-            writer.write(keyword + ": " + value);
-            writer.close();
-        } catch (IOException e){
-            System.out.println("there was an error writing the the file \"save.dat\"");
+      public static void save(String keyword, int value) {
+        try (FileWriter writer = new FileWriter(new File(App.class.getResource(SAVE_FILE_PATH).toURI()), true)) {
+            writer.write(keyword + ": " + value + "\n");
+            System.out.println("Saved " + keyword + ": " + value);
+            System.out.println(App.class.getResource(SAVE_FILE_PATH));
+        } catch (IOException | URISyntaxException e) {
+            System.out.println("There was an error writing to the file \"save.dat\"");
         }
     }
 
-    public static String[] loadName() throws FileNotFoundException {
-        makeSaveFile();
-        ArrayList<String> list = new ArrayList<String>();
-        Scanner saver = new Scanner(new File(saveFilePath));
-        while (saver.hasNextLine()) {
-            list.add(saver.nextLine());
+
+    public static void save(String keyword, String value) {
+        try (FileWriter writer = new FileWriter(new File(App.class.getResource(SAVE_FILE_PATH).toURI()))) {
+            writer.write(keyword + ": " + value + "\n");
+        } catch (IOException | URISyntaxException e) {
+            System.out.println("There was an error writing to the file \"save.dat\"");
         }
-        saver.close();
+    }
+
+    public static String[] loadName() {
+        ArrayList<String> list = new ArrayList<>();
+        try (InputStream inputStream = App.class.getResourceAsStream(SAVE_FILE_PATH);
+             Scanner saver = new Scanner(inputStream)) {
+            while (saver.hasNextLine()) {
+                list.add(saver.nextLine());
+            }
+        } catch (IOException e) {
+            System.out.println("There was an error reading the file \"save.dat\"");
+        }
         String[] result = new String[list.size()];
-        for (int i = 0 ; i < list.size() ; i++) {
+        for (int i = 0; i < list.size(); i++) {
             result[i] = list.get(i).split("[:\\s]")[0];
         }
         return result;
     }
 
-    public static int[] loadScore() throws FileNotFoundException {
-        makeSaveFile();
-        ArrayList<String> list = new ArrayList<String>();
-        Scanner saver = new Scanner(new File(saveFilePath));
-        while (saver.hasNextLine()) {
-            list.add(saver.nextLine());
+    public static int[] loadScore() {
+        ArrayList<String> list = new ArrayList<>();
+        try (InputStream inputStream = App.class.getResourceAsStream(SAVE_FILE_PATH);
+             Scanner saver = new Scanner(inputStream)) {
+            while (saver.hasNextLine()) {
+                list.add(saver.nextLine());
+            }
+        } catch (IOException e) {
+            System.out.println("There was an error reading the file \"save.dat\"");
         }
-        saver.close();
         int[] result = new int[list.size()];
-        for (int i = 0 ; i < list.size() ; i++) {
+        for (int i = 0; i < list.size(); i++) {
             try {
                 result[i] = Integer.parseInt(list.get(i).split("[:\\s]")[2]);
             } catch (NumberFormatException e) {
