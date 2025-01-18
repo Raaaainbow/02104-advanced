@@ -24,7 +24,7 @@ public class PowerupDrop {
     private double velocity = 0, speed = 4;
     private Paddle pad;
     private boolean dead = false; 
-    private int type = rand.nextInt(15);
+    private int type = rand.nextInt(11);
 
     @FXML
     private Timeline timeline;
@@ -43,9 +43,6 @@ public class PowerupDrop {
             case 3:
             case 7:
             case 8:
-            case 10:
-            case 11:
-            case 14:
                 rect.setFill(Color.LIME);
                 break;
 
@@ -53,7 +50,7 @@ public class PowerupDrop {
             case 5:
             case 6:
             case 9:
-            case 12:
+            case 11:
                 rect.setFill(Color.RED);
                 break;
             
@@ -68,7 +65,7 @@ public class PowerupDrop {
                 velocity = PrimaryController.lerp(velocity, speed, 0.005);
                 pos[1]+=speed;
                 rect.setLayoutY(pos[1]);
-                if (type == 13) {
+                if (type == 10) {
                     hue = hue > 255 ? hue-255 : hue+1;
                     rect.setFill(Color.hsb(hue, 0.7f, 1.0f));
                 } 
@@ -120,9 +117,8 @@ public class PowerupDrop {
 
     public void kill() {
         if (!dead) {
-            System.out.println("NOOOO");
             App.removeElement(rect);
-            pad.powerupEffect(8); // insert type here
+            pad.powerupEffect(type); // insert type here
             dead = true;
         }
     }
@@ -136,16 +132,5 @@ public class PowerupDrop {
         pos[1] = y;
     }
 
-// Større paddle 
-// stjerne fra mario 
-// Usynlig væg
-// Ekstra liv 
-// Ekstra bolde 
-
-
-// Power downs: 
-// Paddle bliver mindre
-// Mister et liv 
-// Langsommere bold
 }
 

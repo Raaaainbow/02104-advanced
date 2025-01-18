@@ -71,17 +71,5 @@ public class Powerup extends Block {
         pos[1] = y;
     }
 
-// Større paddle 
-// stjerne fra mario 
-// Usynlig væg
-// Ekstra liv 
-// Ekstra bolde 
-
-
-// Power downs: 
-// Score bliver nulstillet 
-// Paddle bliver mindre
-// Mister et liv 
-// Langsommere bold
 }
 

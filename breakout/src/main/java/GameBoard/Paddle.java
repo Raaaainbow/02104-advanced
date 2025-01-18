@@ -1,5 +1,10 @@
 package GameBoard;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Random;
+
 import com.example.App;
 import com.example.PrimaryController;
 
@@ -36,6 +41,7 @@ public class Paddle {
                     if (paddle.getLayoutX() < 11) {
                         paddle.setLayoutX(12);
                     }
+                    
                 })
             );
         stepTimeline.setCycleCount(Timeline.INDEFINITE); 
@@ -63,7 +69,6 @@ public class Paddle {
             case 1: // Shield
                 if (shield == null) {
                     shield = new ShieldPaddle(paddle.getLayoutX(), paddle.getLayoutY(), this);
-                    System.out.println(" IT HAS SPAWNED YES");
                 }
                 break;
 
@@ -71,8 +76,8 @@ public class Paddle {
                 controller.Addlivtal(1);
                 break;
 
-            case 3: // Ball spam
-                    
+            case 3: // Explosive Ball!
+                controller.getBall().setExplosive(true);
                 break;
 
             case 4: // Small Paddle
@@ -106,7 +111,13 @@ public class Paddle {
                 break;
 
             case 7: // laser pad
-
+                double firerate = 1000; //ms
+                Timeline laser = new Timeline(
+                new KeyFrame(Duration.millis(firerate), event -> {
+                    new Laser(controller,this);
+                }));
+                laser.setCycleCount((int)(1000/firerate*5)); 
+                laser.play();
                 break;
             
             case 8: // Speedy paddle
@@ -130,20 +141,17 @@ public class Paddle {
                     slippery.setOnFinished(e -> {controller.setVelocityInterpolation(0.25);});
                 break;
 
-            case 10: // Heat seek
-                break;
-
-            case 11: // More Power Ups
-                break;
-
-            case 12: // Shuffle Block Posititons
-                break;
-
-            case 13: // Mario Star
+            case 10: // Mario Star
+                Timeline star = new Timeline(
+                new KeyFrame(Duration.millis(10), event -> {
+                    controller.getBall().setStar(true);
+                }));
+                star.setCycleCount(1000/10*10); 
+                star.play();
+                star.setOnFinished(e -> {controller.getBall().setStar(false);});
+                
                 break;
             
-            case 14: // Explosive Ball!
-                break;
 
             default:
                 break;

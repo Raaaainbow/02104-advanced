@@ -81,7 +81,7 @@ public class BlockGrid {
             for (int j = 0; j < m; j++) {
                 double x = margin + offset * (j + 1) + blockWidth * j;
                 double y = 970 / 4 + offset * (i + 1) + blockHeight * i;
-                if (rand.nextInt(100) < 100) {
+                if (rand.nextInt(100) < 5) {
                     blockGrid.add(new Powerup(x, y, blockWidth, blockHeight, rand.nextInt(5),pad));
                 } else {
                     blockGrid.add(new Block(x, y, blockWidth, blockHeight, col));

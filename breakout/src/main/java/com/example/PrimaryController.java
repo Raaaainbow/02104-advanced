@@ -171,6 +171,10 @@ public class PrimaryController {
         this.velocityInterpolation = velocityInterpolation;
     }
 
+    public BlockGrid getBlockGrid() {
+        return blocks;
+    }
+
     public boolean winCondition() {
         if (blocks.getBlockGrid().size() == 0) {
             return true;
