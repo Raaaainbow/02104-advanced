@@ -33,7 +33,7 @@ public class Ball {
         double dX = speed*.5*((Math.random()*2-1) > 0 ? 1 : -1);  // -1 < rand < 1
         double dY = -speed*.5;      // Ensures hypotenuse is always speed for any x
         setVelo(dX, dY);
-        rect = new Rectangle(13,10);
+        rect = new Rectangle(13*1.25,10*1.25);
         setPos(x,y);
         rect.setLayoutX(x);
         rect.setLayoutY(y);

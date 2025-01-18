@@ -18,7 +18,8 @@ import javafx.util.Duration;
 public class Paddle {
     private Rectangle paddle;
     private double paddleCurrentLength = 109, paddleGoalLength = paddleCurrentLength;
-    private Timeline stepTimeline = new Timeline(), smallpad = new Timeline(), bigpad = new Timeline();
+    private Timeline stepTimeline = new Timeline(), smallpad = new Timeline(), bigpad = new Timeline(), 
+    laser = new Timeline(), speedy = new Timeline(), slippery = new Timeline(), star = new Timeline();
     private PrimaryController controller;
     private ShieldPaddle shield;
 
@@ -46,6 +47,10 @@ public class Paddle {
             );
         stepTimeline.setCycleCount(Timeline.INDEFINITE); 
         stepTimeline.play();
+    }
+
+    public Timeline[] getTimelines() {
+        return new Timeline[] {stepTimeline, smallpad, bigpad, laser, speedy, slippery, star};
     }
 
     public void powerupEffect(int type) {
