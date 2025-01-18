@@ -8,32 +8,25 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
+import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-
 public class App extends Application {
 
-    private static Scene scene;
+    private static final String SAVE_FILE_PATH = "save.dat";
     private static Pane rootPane;
+    private static Scene scene;
     private double width = 672;
     private double height = 970;
-    public static String saveFilePath = "breakout/src/main/resources/save.dat";
-    private static InputStream inputStream = App.class.getResourceAsStream("/save.dat");
-    private static final String SAVE_FILE_PATH = "/save.dat";
-
 
     @Override
-    public void start(Stage stage) throws IOException {
-        // Load menu.fxml and get its controller
+    public void start(Stage stage) throws Exception {
         FXMLLoader menuLoader = new FXMLLoader(App.class.getResource("menu.fxml"));
         Parent menuPane = menuLoader.load();
         MenuController menuController = menuLoader.getController();
@@ -41,9 +34,9 @@ public class App extends Application {
         // Set the initial scene to menuPane
         scene = new Scene(menuPane, width, height);
         if (menuPane instanceof Pane) {
-            rootPane = (Pane) menuPane; 
+            rootPane = (Pane) menuPane;
         }
-        
+
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
@@ -100,35 +93,42 @@ public class App extends Application {
     }
 
     // The save functions save a value by its keyword in the save.dat file
-    // check again
-      public static void save(String keyword, int value) {
-        try (FileWriter writer = new FileWriter(new File(App.class.getResource(SAVE_FILE_PATH).toURI()), true)) {
-            writer.write(keyword + ": " + value + "\n");
-            System.out.println("Saved " + keyword + ": " + value);
-            System.out.println(App.class.getResource(SAVE_FILE_PATH));
-        } catch (IOException | URISyntaxException e) {
+    public static void save(String keyword, int value) {
+        try {
+            Path path = Paths.get(SAVE_FILE_PATH);
+            try (BufferedWriter writer = Files.newBufferedWriter(path, StandardOpenOption.CREATE, StandardOpenOption.APPEND)) {
+                writer.write(keyword + ": " + value + "\n");
+                System.out.println("Saved " + keyword + ": " + value);
+            }
+        } catch (IOException e) {
             System.out.println("There was an error writing to the file \"save.dat\"");
         }
     }
 
-
     public static void save(String keyword, String value) {
-        try (FileWriter writer = new FileWriter(new File(App.class.getResource(SAVE_FILE_PATH).toURI()))) {
-            writer.write(keyword + ": " + value + "\n");
-        } catch (IOException | URISyntaxException e) {
+        try {
+            Path path = Paths.get(SAVE_FILE_PATH);
+            try (BufferedWriter writer = Files.newBufferedWriter(path, StandardOpenOption.CREATE, StandardOpenOption.APPEND)) {
+                writer.write(keyword + ": " + value + "\n");
+            }
+        } catch (IOException e) {
             System.out.println("There was an error writing to the file \"save.dat\"");
         }
     }
 
     public static String[] loadName() {
         ArrayList<String> list = new ArrayList<>();
-        try (InputStream inputStream = App.class.getResourceAsStream(SAVE_FILE_PATH);
-             Scanner saver = new Scanner(inputStream)) {
-            while (saver.hasNextLine()) {
-                list.add(saver.nextLine());
+        Path path = Paths.get(SAVE_FILE_PATH);
+        if (Files.exists(path)) {
+            try (Scanner saver = new Scanner(path)) {
+                while (saver.hasNextLine()) {
+                    list.add(saver.nextLine());
+                }
+            } catch (IOException e) {
+                System.out.println("There was an error reading the file \"save.dat\": " + e.getMessage());
             }
-        } catch (IOException e) {
-            System.out.println("There was an error reading the file \"save.dat\"");
+        } else {
+            System.out.println("The file \"save.dat\" does not exist.");
         }
         String[] result = new String[list.size()];
         for (int i = 0; i < list.size(); i++) {
@@ -139,13 +139,17 @@ public class App extends Application {
 
     public static int[] loadScore() {
         ArrayList<String> list = new ArrayList<>();
-        try (InputStream inputStream = App.class.getResourceAsStream(SAVE_FILE_PATH);
-             Scanner saver = new Scanner(inputStream)) {
-            while (saver.hasNextLine()) {
-                list.add(saver.nextLine());
+        Path path = Paths.get(SAVE_FILE_PATH);
+        if (Files.exists(path)) {
+            try (Scanner saver = new Scanner(path)) {
+                while (saver.hasNextLine()) {
+                    list.add(saver.nextLine());
+                }
+            } catch (IOException e) {
+                System.out.println("There was an error reading the file \"save.dat\": " + e.getMessage());
             }
-        } catch (IOException e) {
-            System.out.println("There was an error reading the file \"save.dat\"");
+        } else {
+            System.out.println("The file \"save.dat\" does not exist.");
         }
         int[] result = new int[list.size()];
         for (int i = 0; i < list.size(); i++) {
