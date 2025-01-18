@@ -24,7 +24,7 @@ public class PowerupDrop {
     private double velocity = 0, speed = 4;
     private Paddle pad;
     private boolean dead = false; 
-    private int type = rand.nextInt(8);
+    private int type = rand.nextInt(7);
 
     @FXML
     private Timeline timeline;
@@ -39,14 +39,14 @@ public class PowerupDrop {
         switch (type) {
             case 0:
             case 1:
+            case 3:
             case 4:
-            case 5:
+            
                 rect.setFill(Color.LIME);
                 break;
 
             case 2:
-            case 3:
-            case 6:
+            case 5:
                 rect.setFill(Color.RED);
                 break;
             
@@ -61,7 +61,7 @@ public class PowerupDrop {
                 velocity = PrimaryController.lerp(velocity, speed, 0.005);
                 pos[1]+=speed;
                 rect.setLayoutY(pos[1]);
-                if (type == 7) {
+                if (type == 6) {
                     hue = hue > 255 ? hue-255 : hue+1;
                     rect.setFill(Color.hsb(hue, 0.7f, 1.0f));
                 } 
@@ -114,7 +114,7 @@ public class PowerupDrop {
     public void kill() {
         if (!dead) {
             App.removeElement(rect);
-            pad.powerupEffect(3); // insert type here
+            pad.powerupEffect(type); // insert type here
             dead = true;
         }
     }

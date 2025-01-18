@@ -191,6 +191,18 @@ public class PrimaryController {
     public void inputHandling(KeyEvent event) {
         switch (event.getCode()) {
             case ESCAPE:
+            Timeline[] a = pad.getTimelines();
+            for (int i = 0 ; i < a.length ; i++) {
+                if (a[i].getStatus() == Timeline.Status.RUNNING) {
+                    a[i].pause();  
+                   
+                } else {
+                    a[i].play();
+                    
+                }
+            }
+
+            
                 if (timeline.getStatus() == Timeline.Status.RUNNING) {
                     timeline.pause();  
                     togglePauseScreen();
