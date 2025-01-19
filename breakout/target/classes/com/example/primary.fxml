@@ -6,7 +6,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="970.0" maxWidth="672.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="970.0" prefWidth="672.0" style="-fx-background-color: #333333;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.PrimaryController">
+<AnchorPane maxHeight="970.0" maxWidth="672.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="970.0" prefWidth="672.0" style="-fx-background-color: #333333;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.PrimaryController">
    <children>
       <Rectangle fill="#cccccc" height="859.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="11.0" />
       <Rectangle fill="#cccccc" height="865.0" layoutX="662.0" layoutY="-6.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="11.0" />
@@ -18,7 +18,7 @@
       <Rectangle arcWidth="5.0" fill="#cccccc" height="80.0" layoutX="662.0" layoutY="890.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="11.0" />
       <Rectangle arcWidth="5.0" fill="#cccccc" height="56.0" layoutX="41.0" layoutY="126.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="12.0" />
       <Rectangle arcWidth="5.0" fill="#cccccc" height="56.0" layoutX="418.0" layoutY="126.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="12.0" />
-      <Rectangle fx:id="backgroundpress" arcWidth="5.0" fill="#35bed0" height="108.0" layoutX="203.0" layoutY="539.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="261.0" />
+      <Rectangle arcWidth="5.0" fill="#35bed0" height="108.0" layoutX="203.0" layoutY="539.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="261.0" />
       <Text fx:id="score" fill="#cccccc" layoutX="53.0" layoutY="221.0" strokeType="OUTSIDE" strokeWidth="0.0" text="000" wrappingWidth="359.9830722808838">
          <font>
             <Font name="Press Start 2P Regular" size="35.0" />
@@ -60,29 +60,31 @@
             <Font name="Press Start 2P Regular" size="25.0" />
          </font>
       </Text>
-      <Text fx:id="gameOver" fill="#cc241d" layoutX="111.0" layoutY="388.0" stroke="#000000" strokeType="OUTSIDE" strokeWidth="1" text="GAME OVER" visible="false">
+      <Text fx:id="gameOver" fill="#cc241d" layoutX="111.0" layoutY="388.0" strokeType="OUTSIDE" strokeWidth="0.0" text="GAME OVER" visible="false">
          <font>
             <Font name="Press Start 2P Regular" size="50.0" />
          </font>
       </Text>
-      <Text fx:id="returnTo" fill="#cccccc" layoutX="223.0" layoutY="701.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RETURN TO" onMouseEntered="#handleMouseOver" onMouseExited="#handleMouseExit" onMouseClicked="#onBackButtonClicked" visible="false" AnchorPane.leftAnchor="201.0" AnchorPane.rightAnchor="179.0">
+      <Text fx:id="returnTo" fill="#cccccc" layoutX="223.0" layoutY="701.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RETURN TO" visible="false" AnchorPane.leftAnchor="201.0" AnchorPane.rightAnchor="179.0">
          <font>
             <Font name="Press Start 2P Regular" size="30.0" />
          </font>
       </Text>
-      <Text fx:id="mainMenu" fill="#cccccc" layoutX="223.0" layoutY="741.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MAIN MENU" onMouseEntered="#handleMouseOver" onMouseExited="#handleMouseExit" onMouseClicked="#onBackButtonClicked" visible="false" AnchorPane.leftAnchor="201.0" AnchorPane.rightAnchor="179.0">
+      <Text fx:id="mainMenu" fill="#cccccc" layoutX="223.0" layoutY="741.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MAIN MENU" visible="false" AnchorPane.leftAnchor="201.0" AnchorPane.rightAnchor="179.0">
          <font>
             <Font name="Press Start 2P Regular" size="30.0" />
          </font>
       </Text>
-      <Text fx:id="winLoseScore" fill="#cccccc" layoutY="456.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SCORE:" textAlignment="CENTER" visible="false" wrappingWidth="670.0">
+      <Text fx:id="winLoseScore" fill="#cccccc" layoutX="259.0" layoutY="496.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SCORE:" textAlignment="CENTER" visible="false" AnchorPane.leftAnchor="201.0" AnchorPane.rightAnchor="173.0">
          <font>
             <Font name="Press Start 2P Regular" size="40.0" />
          </font>
       </Text>
+      <Button fx:id="backButton" layoutX="197.0" layoutY="667.0" mnemonicParsing="false" onAction="#onBackButtonClicked" prefHeight="78.0" prefWidth="272.0" style="-fx-background-color: transparent;" text="Button" />
+      <Rectangle fx:id="backgroundpress" arcWidth="5.0" fill="#35bed0" height="108.0" layoutX="203.0" layoutY="539.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="261.0" />
       <Text fx:id="pressspacetext" fill="#581fc4" layoutX="216.0" layoutY="585.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Press space to start" textAlignment="CENTER" wrappingWidth="234.9830722808838">
          <font>
-            <Font name="Press Start 2P Regular" size="20.0" />
+            <Font name="Press Start 2P Regular" size="35.0" />
          </font>
       </Text>
    </children>
