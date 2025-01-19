@@ -1,4 +1,4 @@
-/// By Victor
+/// By Victor & Sophia 
 /// Model for the power ups
 package GameBoard;
 
