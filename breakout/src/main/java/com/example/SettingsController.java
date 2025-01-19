@@ -1,3 +1,5 @@
+/// By Sebastian
+/// 
 package com.example;
 
 import java.io.IOException;
@@ -12,6 +14,7 @@ public class SettingsController {
     @FXML
     private Text goBack;
 
+    // Goes back to the menu when pressing the back button
     @FXML
     public void onBackButtonClicked() throws IOException {
         FXMLLoader menuLoader = new FXMLLoader(App.class.getResource("menu.fxml"));
@@ -21,6 +24,7 @@ public class SettingsController {
         menuController.setSplashText();
     }
 
+    // Cool mouse over effect
     @FXML
     public void handleMouseOver() {
         goBack.setStyle("-fx-fill: white;");

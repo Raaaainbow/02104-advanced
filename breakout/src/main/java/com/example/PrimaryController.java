@@ -1,3 +1,5 @@
+/// By Sebastian, Victor & Sophia
+/// Controls data in the game itself
 package com.example;
 
 import java.io.IOException;
@@ -16,19 +18,17 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
 import java.util.HashMap;
 import java.util.List;
-import java.io.File;
-import java.io.FileNotFoundException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 
 public class PrimaryController {
-    private double hSpeed = 5, velocity, velocityGoal, velocityInterpolation =.25;
+    private double hSpeed = 5, velocity, velocityGoal, velocityInterpolation =.25; // Used to control the speed of the paddle
     private int scoreAmount, lives = 3, difficulty;
     private boolean create = false;
     private Paddle pad;
     private Ball ball;
     @FXML
-    private Text combocounter;
+    private Text combocounter; 
     private String username;
     private BlockGrid blocks;
     @FXML
@@ -38,7 +38,7 @@ public class PrimaryController {
     @FXML
     private Rectangle paddle, gamePauseBackground; 
 
-
+    // Used to create elements on the start of the game
     public void initialize() throws Exception {
         pad = new Paddle(paddle,this);
         livesnumber.setText(lives + " lives");
@@ -106,6 +106,7 @@ public class PrimaryController {
 
         combocounter.setText(""+(int)ball.getCombo()+ " Combo");
 
+        // Used to move the paddle
         velocity = lerp(velocity, velocityGoal, velocityInterpolation);
         if (pad.getX() + velocity < 672 - 10 - pad.getLength() && pad.getX() + velocity > 10) {
             pad.move(velocity);
@@ -118,7 +119,7 @@ public class PrimaryController {
             ball.setPos(pad.getX() + pad.getLength()/2 - 13/2 + velocity,ball.getPos()[1]);
         }
 
-        // remove winCondition and replace you died with GAME OVER
+        // Not actually a win condition, more like a reset method
         if (winCondition()) {
             blocks = new BlockGrid(difficulty,pad);
             App.removeElement(ball.getShape());
@@ -213,19 +214,21 @@ public class PrimaryController {
                 event.consume();
                 break;
 
+                // Go left with paddle
             case L:
             case D:
             case RIGHT:
                 velocityGoal = hSpeed;
                 break;
                 
+                // Go right with paddle
             case H:
             case A:
             case LEFT:
                 velocityGoal =-hSpeed;
                 break;
 
-            case SPACE:
+            case SPACE: // Launch the ball
                 ball.setMoving(true);
                 pressspacetext.setVisible(false);
                 break;
@@ -274,6 +277,7 @@ public class PrimaryController {
         this.lives += lives;
     }
 
+    // Used to POST to the database when a new score is made
     public void writeToDatabase(String user, int score) {
         int maxRetries = 15; // Set a limit for retries
         int attempt = 0;
@@ -312,7 +316,7 @@ public class PrimaryController {
     
                 connection.disconnect();
     
-            } catch (Exception e) {
+            } catch (Exception e) { // It needs to attempt 15 times, because it can sometimes get disconnected (a quirk from firebase)
                 System.err.println("Attempt " + attempt + " failed: " + e.getMessage());
             }
     
@@ -339,6 +343,7 @@ public class PrimaryController {
         scoresList.add(score);
     }
 
+    // Toggles the pause screen on and off
     private void togglePauseScreen () {
         System.out.println("TOGGLE PAUSE SCREEN CALLED");
         if (gamePauseBackground.isVisible() || pressEscape.isVisible() || gamePause.isVisible()) {
@@ -364,6 +369,7 @@ public class PrimaryController {
         }
     }
 
+    // Toggles the game over screen on and off
     private void toggleGameOverScreen() {
         if (!(gameOver.isVisible() && returnTo.isVisible() && mainMenu.isVisible() && gamePauseBackground.isVisible() && winLoseScore.isVisible())) {
             gamePauseBackground.setVisible(true);
@@ -385,7 +391,7 @@ public class PrimaryController {
 
         }
     }
-    
+    // Goes back to the menu when pressing the back button
     @FXML
     public void onBackButtonClicked() throws IOException {
         FXMLLoader menuLoader = new FXMLLoader(App.class.getResource("menu.fxml"));
@@ -395,6 +401,7 @@ public class PrimaryController {
         menuController.setSplashText();
     }
 
+    // Cool mouse over effect
     @FXML
     public void handleMouseOver() {
         returnTo.setStyle("-fx-fill: white;");

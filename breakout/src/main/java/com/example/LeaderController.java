@@ -1,3 +1,4 @@
+/// By Victor & Sebastian
 package com.example;
 
 import javafx.fxml.FXML;
@@ -27,6 +28,7 @@ public class LeaderController {
     private Text[] scoreTexts;
     private Text[] userTexts;
 
+    // Assigns the text and populates the leaderboard
     public void initialize() throws Exception {
         nameTexts = new Text[] {name1, name2, name3, name4, name5, name6, name7, name8, name9, name10};
         scoreTexts = new Text[] {score1, score2, score3, score4, score5, score6, score7, score8, score9, score10};
@@ -95,6 +97,7 @@ public class LeaderController {
         }
     }
 
+    // Bubble sort
     public static void sortLeaderboard(String[] names, int[] scores) {
         boolean swapped;
         int tempScore;
@@ -120,6 +123,7 @@ public class LeaderController {
         }
     }
 
+    // GET the data from the database to then put it on the leaderboard view in a later method
     public String[] readDatabase() throws Exception {
         URL url = new URL(databaseUrl + path);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -175,6 +179,7 @@ public class LeaderController {
         return scores.toArray(new String[0]);
     }
 
+    // Back to menu on back button click
     @FXML
     public void onBackButtonClicked() throws IOException {
         FXMLLoader menuLoader = new FXMLLoader(App.class.getResource("menu.fxml"));
@@ -184,6 +189,7 @@ public class LeaderController {
         menuController.setSplashText();
     }
 
+    // Cool mouse over effect
     @FXML
     public void handleMouseOver() {
         goBack.setStyle("-fx-fill: white;");

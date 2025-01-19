@@ -1,3 +1,5 @@
+/// By Victor
+/// 
 package com.example;
 
 import java.io.IOException;
@@ -27,6 +29,7 @@ public class LevelSelectController {
     }
 
 
+    // Change difficulty to Ez mode
     @FXML
     public void onEzButtonClicked() {
         difficulty = 0;
@@ -35,6 +38,7 @@ public class LevelSelectController {
         mid.setFill(Color.rgb(204, 204, 204));
     }
 
+    // Change difficulty to mid mode
     @FXML
     public void onMidButtonClicked() {
         difficulty = 1;
@@ -43,6 +47,7 @@ public class LevelSelectController {
         hardcore.setFill(Color.rgb(204, 204, 204));
     }
 
+    // Change difficulty to Hardcore mode
     @FXML
     public void onHardcoreButtonClicked() {
         difficulty = 2;

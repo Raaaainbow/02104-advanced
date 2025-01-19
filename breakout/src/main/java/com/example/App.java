@@ -1,3 +1,5 @@
+/// By Victor & Sebastian
+/// 
 package com.example;
 
 import javafx.application.Application;
@@ -25,6 +27,7 @@ public class App extends Application {
     private double width = 672;
     private double height = 970;
 
+    // Starts the application on the menu screen
     @Override
     public void start(Stage stage) throws Exception {
         FXMLLoader menuLoader = new FXMLLoader(App.class.getResource("menu.fxml"));
@@ -46,22 +49,17 @@ public class App extends Application {
         menuController.setSplashText();
     }
 
-    static void setRoot(String fxml) throws IOException { // Loads root from fxml
+    // To set a fxml file as the new root
+    static void setRoot(String fxml) throws IOException { 
         scene.setRoot(loadFXML(fxml));
     }
 
-    public double getHeight() {
-        return height;
-    }
-
-    public double getWidth() {
-        return width;
-    }
-
+    // Used to add to the scene in other files
     public static Scene getScene() {
         return scene;
     }
 
+    // Set a new root from a Parent and sets the rootpane
     static void setRoot(Parent root) {
         scene.setRoot(root);
         if (root instanceof Pane) {
@@ -71,6 +69,7 @@ public class App extends Application {
         }
     }
 
+    // Important method to add elements to the screen
     public static void addElement(Shape shape) {
         if (rootPane != null) {
             rootPane.getChildren().add(shape); // Add shape to rootPane
@@ -78,7 +77,7 @@ public class App extends Application {
             System.err.println("Error: Root pane is not initialized!");
         }
     }
-
+    // Important method to remove elements from the screen
     public static void removeElement(Shape shape) {
         rootPane.getChildren().remove(shape);
     }
@@ -105,6 +104,7 @@ public class App extends Application {
         }
     }
 
+    // The save functions save a value by its keyword in the save.dat file
     public static void save(String keyword, String value) {
         try {
             Path path = Paths.get(SAVE_FILE_PATH);
@@ -116,6 +116,7 @@ public class App extends Application {
         }
     }
 
+    // Loads a array of keywords in the save.dat file
     public static String[] loadName() {
         ArrayList<String> list = new ArrayList<>();
         Path path = Paths.get(SAVE_FILE_PATH);
@@ -137,6 +138,7 @@ public class App extends Application {
         return result;
     }
 
+    // Loads a array of scores in the save.dat file
     public static int[] loadScore() {
         ArrayList<String> list = new ArrayList<>();
         Path path = Paths.get(SAVE_FILE_PATH);
