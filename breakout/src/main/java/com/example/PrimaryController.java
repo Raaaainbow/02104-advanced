@@ -32,15 +32,11 @@ public class PrimaryController {
     private String username;
     private BlockGrid blocks;
     @FXML
-    private Text gamePause, pressEscape, gameOver, returnTo, mainMenu, winLoseScore, score, highscore, livesnumber, livesdisplay;
+    private Text gamePause, pressEscape, gameOver, returnTo, mainMenu, winLoseScore, score, highscore, livesnumber, livesdisplay, pressspacetext;
     @FXML
     private Timeline timeline;
     @FXML
     private Rectangle paddle, gamePauseBackground; 
-    @FXML
-    private Rectangle backgroundpress;
-    @FXML 
-    private Text pressspacetext; 
 
 
     public void initialize() throws Exception {
@@ -48,7 +44,6 @@ public class PrimaryController {
         livesnumber.setText(lives + " lives");
         startTimeline(); 
 
-        backgroundpress.setVisible(true);
         pressspacetext.setVisible(true);
 
         App.getScene().addEventFilter(KeyEvent.KEY_PRESSED, this::inputHandling);
@@ -180,8 +175,6 @@ public class PrimaryController {
             lives--; 
             livesnumber.setText(lives + " lives");
             ball = new Ball(pad.getX() + pad.getLength()/2-13/2, pad.getY() - 30,pad,blocks, this);
-            backgroundpress.setVisible(true);
-            pressspacetext.setVisible(true);
         }
 
         if (lives <= 0) {
@@ -198,13 +191,22 @@ public class PrimaryController {
     public void inputHandling(KeyEvent event) {
         switch (event.getCode()) {
             case ESCAPE:
-                System.out.println("ESCAPE has been pressed");
+            Timeline[] a = pad.getTimelines();
+            for (int i = 0 ; i < a.length ; i++) {
+                if (a[i].getStatus() == Timeline.Status.RUNNING) {
+                    a[i].pause();  
+                   
+                } else {
+                    a[i].play();
+                    
+                }
+            }
+
+            
                 if (timeline.getStatus() == Timeline.Status.RUNNING) {
-                    System.out.println("TIMELINE IS RUNNING");
                     timeline.pause();  
                     togglePauseScreen();
                 } else {
-                    System.out.println("TIMELINE IS NOT RUNNING");
                     timeline.play();
                     togglePauseScreen();
                 }
@@ -225,7 +227,6 @@ public class PrimaryController {
 
             case SPACE:
                 ball.setMoving(true);
-                backgroundpress.setVisible(false);
                 pressspacetext.setVisible(false);
                 break;
 

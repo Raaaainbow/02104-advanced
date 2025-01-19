@@ -3,6 +3,7 @@ package com.example;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.Scanner;
@@ -78,18 +79,15 @@ public class MenuController {
     }
 
     public static void splashReader() throws FileNotFoundException {
-        String fileURL = "breakout/src/main/resources/splash.dat";
-        File file = new File(fileURL);
+        InputStream inputStream = MenuController.class.getResourceAsStream("/splash.dat");
         counter = 0;
-        if (file.exists() && file.canRead()) {
-            try (Scanner reader = new Scanner(file)) {
+        if (inputStream != null) {
+            try (Scanner reader = new Scanner(inputStream)) {
                 while (reader.hasNextLine()) {
                     String line = reader.nextLine();
                     splashHash.put(counter, line);
                     counter++;
                 }
-            } catch (FileNotFoundException e) {
-                throw new FileNotFoundException("File was not found");
             }
         } else {
             throw new FileNotFoundException("File was not found");
