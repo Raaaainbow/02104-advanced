@@ -1,3 +1,5 @@
+/// By Victor
+/// Model for the laser shots
 package GameBoard;
 
 import java.util.HashMap;
@@ -35,6 +37,7 @@ public class Laser {
         startTimeline();
     }
     
+    // Start timeline
     public void startTimeline() {
         timeline = new Timeline(
             new KeyFrame(Duration.millis(10), event -> {
@@ -49,6 +52,7 @@ public class Laser {
         timeline.play();
     }
 
+    // Collision check with block
     public boolean collidesBlockVertical() {
         HashSet<Block> blocks = controller.getBlockGrid().getBlockGrid();
         for (Block b : blocks) {
@@ -66,6 +70,7 @@ public class Laser {
         return rect;
     }
 
+    // Kill timeline and remove from game 
     public void kill() {
         timeline.stop();
         App.removeElement(rect);

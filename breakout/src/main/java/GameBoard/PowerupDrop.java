@@ -1,3 +1,5 @@
+/// By Victor
+/// Model for the power up droplet
 package GameBoard;
 
 import javafx.scene.shape.Rectangle;
@@ -37,6 +39,7 @@ public class PowerupDrop {
         rect.setLayoutY(y);
         App.addElement(rect);
         switch (type) {
+            // power ups
             case 0:
             case 1:
             case 3:
@@ -45,6 +48,7 @@ public class PowerupDrop {
                 rect.setFill(Color.LIME);
                 break;
 
+                // power downs
             case 2:
             case 5:
                 rect.setFill(Color.RED);
@@ -74,6 +78,7 @@ public class PowerupDrop {
         timeline.play();
     }
 
+    // collision with paddle to get picked up
     public boolean collidesTopPaddle() { 
         double paddleX = pad.getX();
         double paddleY = pad.getY();
@@ -88,6 +93,7 @@ public class PowerupDrop {
         return collides;
     }
 
+    // collision with shield to get picked up
     public boolean collidesTopShield() {
         ShieldPaddle shield = pad.getShield();
         if (shield != null) {
@@ -111,6 +117,7 @@ public class PowerupDrop {
         return rect;
     }
 
+    // Remove the power up droplet from the game
     public void kill() {
         if (!dead) {
             App.removeElement(rect);

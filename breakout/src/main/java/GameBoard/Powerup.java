@@ -1,3 +1,5 @@
+/// By Victor
+/// Model for the power ups
 package GameBoard;
 
 import javafx.scene.shape.Rectangle;

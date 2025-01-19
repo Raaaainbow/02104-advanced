@@ -1,3 +1,5 @@
+/// By Victor
+/// Model for the shield paddle
 package GameBoard;
 
 import java.util.Random;

@@ -1,5 +1,5 @@
 /// By Sebastian & Victor
-/// 
+/// Controls the main menu buttons and text
 package com.example;
 
 import java.io.File;
@@ -21,6 +21,7 @@ public class MenuController {
     private static HashMap<Integer, String> splashHash = new HashMap<>();
     private static int counter;
 
+    // Go to difficulty & username selection
     @FXML
     public void onStartButtonClicked() throws IOException {
         FXMLLoader levelSelectLoader = new FXMLLoader(App.class.getResource("levelselect.fxml"));
@@ -28,6 +29,7 @@ public class MenuController {
         App.setRoot(levelselectPane);
     }
 
+    // Go to leaderboard
     @FXML
     public void onLeaderboardButtonClick() throws IOException {
         FXMLLoader leaderLoader = new FXMLLoader(App.class.getResource("leaderboard.fxml"));
@@ -35,6 +37,7 @@ public class MenuController {
         App.setRoot(leaderboardPane);
     }
 
+    // Go to keybinds tab
     @FXML
     public void onSettingsButtonClick() throws IOException {
         FXMLLoader settingsLoader = new FXMLLoader(App.class.getResource("settings.fxml"));
@@ -42,11 +45,13 @@ public class MenuController {
         App.setRoot(settingsPane);
     }
 
+    // Quit the game
     @FXML
     public void onQuitButtonClick() throws IOException {
         System.exit(0);
     }
 
+    // cool mouse over effect
     @FXML
     public void handleMouseOver() {
         if (start.isHover()) {
@@ -69,6 +74,7 @@ public class MenuController {
     }
 
 
+    // Funny splash screen text
     @FXML
     public void setSplashText() throws FileNotFoundException {
         splash.setText(splashGiver());
@@ -80,6 +86,7 @@ public class MenuController {
         return splashHash.get(rand.nextInt(counter));
     }
 
+    // Read the splash screen data from file
     public static void splashReader() throws FileNotFoundException {
         InputStream inputStream = MenuController.class.getResourceAsStream("/splash.dat");
         counter = 0;

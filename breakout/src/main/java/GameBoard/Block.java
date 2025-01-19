@@ -1,3 +1,5 @@
+/// By Victor, Sebastian & Sophia
+/// Model for each Block
 package GameBoard;
 
 import java.util.Arrays;
@@ -9,9 +11,9 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.paint.Color;
 
 public class Block {
-    private double[] pos;
-    private double[] scale; 
-    private Rectangle rect;
+    private double[] pos; // Initialize position
+    private double[] scale; // Initialize scale
+    private Rectangle rect;// Create a visual representation of the block
     private int scoren; 
 
 
@@ -21,6 +23,7 @@ public class Block {
         rect = new Rectangle(x, y, width, height);
         rect.setFill(color);
         App.addElement(rect);
+        // Assign score based on the block's color
         if (color.equals(Color.rgb(231, 100, 154))) {
             scoren = 10;
         } else if (color.equals(Color.rgb(252, 79, 81))) {
@@ -42,6 +45,7 @@ public class Block {
         }
     }
 
+    //The Rectangle object representing the block in the GUI.
     public Rectangle getRect() {
         return rect;
     }
@@ -51,6 +55,7 @@ public class Block {
         App.removeElement(rect);
     }
 
+    //Updates the position of the block.
     public void setPos(double x, double y) {
         pos[0] = x;
         pos[1] = y;
@@ -58,6 +63,7 @@ public class Block {
         rect.setLayoutY(y);
     }
 
+    // The current position of the block as a double array [x, y].
     public double[] getPos() {
         return new double[] {rect.getLayoutX(), rect.getLayoutY()};
     }
@@ -66,6 +72,7 @@ public class Block {
         return " " + Arrays.toString(getPos());
     }
 
+    //The score value associated with the block's color.
     public int getScoren() {
         return scoren;
     }

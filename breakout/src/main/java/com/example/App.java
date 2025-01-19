@@ -1,5 +1,5 @@
 /// By Victor & Sebastian
-/// 
+/// Controls the view
 package com.example;
 
 import javafx.application.Application;

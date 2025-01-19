@@ -1,5 +1,5 @@
 /// By Sebastian
-/// 
+/// Controls the buttons in the keybinds menu
 package com.example;
 
 import java.io.IOException;

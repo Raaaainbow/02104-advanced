@@ -1,4 +1,5 @@
 /// By Victor & Sebastian
+/// controls, populates and api calls leaderboard
 package com.example;
 
 import javafx.fxml.FXML;
@@ -47,7 +48,7 @@ public class LeaderController {
             scores[i] = Integer.parseInt(leaderboard[i].split("[:\\s]")[2]);
         }
 
-        // Sort the leaderboard by scores (descending)
+        // Sort the leaderboard by scores
         sortLeaderboard(names, scores);
 
         // Populate the Text arrays with top 10 entries

@@ -1,3 +1,5 @@
+/// By Victor & Sebastian
+/// Model for the grid made of blocks
 package GameBoard;
 
 import javafx.scene.paint.Color;
@@ -6,11 +8,11 @@ import java.util.*;
 import com.example.App;
 
 public class BlockGrid {
-    private HashSet<Block> blockGrid = new HashSet<Block>();
-    private int m; // width
-    private int n; // height
-    private Random rand = new Random();
-    private Paddle pad;
+    private HashSet<Block> blockGrid = new HashSet<Block>(); // Set containing all blocks on the grid
+    private int m; // Width of the grid (number of blocks horizontally)
+    private int n; // Height of the grid (number of blocks vertically)
+    private Random rand = new Random(); // Random number generator for block generation
+    private Paddle pad; // Paddle object interacting with blocks
 
     public BlockGrid(int difficulty,Paddle pad) {
         switch(difficulty) {
@@ -32,10 +34,10 @@ public class BlockGrid {
         this.pad = pad;
         createField();
     }
-
+    /// Creates the block grid with random power-ups and color patterns
     private void createField() {
-        double margin = 10;
-        double offset = 5; 
+        double margin = 10; // Margin around the grid
+        double offset = 5;  // Spacing between blocks
 
         double blockWidth = (672 - 2 * margin - offset * (m + 1)) / m;
         double blockHeight = ((970 / 4) - offset * (n + 1)) / n;
@@ -104,9 +106,9 @@ public class BlockGrid {
     }
 
     public void removeBlock(Block block) {
-        block.kill();
-        blockGrid.remove(block);
-        block = null; // For garbage collection purposes, cause then we can actually get rid of the object from our memory ;)
+        block.kill(); // Perform any necessary cleanup on the block
+        blockGrid.remove(block); // Remove block from the set
+        block = null; // Nullify reference for garbage collection
     }
     
 }

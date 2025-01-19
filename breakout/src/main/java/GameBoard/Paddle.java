@@ -1,3 +1,5 @@
+/// By Victor & Sebastian
+/// Model for the paddle
 package GameBoard;
 
 import java.util.ArrayList;

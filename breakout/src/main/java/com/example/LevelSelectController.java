@@ -1,5 +1,5 @@
 /// By Victor
-/// 
+/// Controls the difficulty and username and buttons in this screen
 package com.example;
 
 import java.io.IOException;
@@ -56,28 +56,30 @@ public class LevelSelectController {
         mid.setFill(Color.rgb(204, 204, 204));
     }
 
+    // Press play and get booted to the primary fxml
     @FXML
-public void onPlayButtonClicked() throws IOException {
-    if (userInput.getText().length() > 0 && userInput.getText().length() <= 10) {
-        FXMLLoader primaryLoader = new FXMLLoader(App.class.getResource("primary.fxml"));
-        Parent primaryPane = primaryLoader.load();
-        PrimaryController primaryController = primaryLoader.getController();
-        // Set key event handlers for the primary controller
-        App.getScene().setOnKeyPressed(primaryController::inputHandling);
-        App.getScene().setOnKeyReleased(primaryController::stopHandling);
-        primaryController.setUsername(userInput.getText());
-        primaryController.setDifficulty(difficulty);
+    public void onPlayButtonClicked() throws IOException {
+        if (userInput.getText().length() > 0 && userInput.getText().length() <= 10) {
+            FXMLLoader primaryLoader = new FXMLLoader(App.class.getResource("primary.fxml"));
+            Parent primaryPane = primaryLoader.load();
+            PrimaryController primaryController = primaryLoader.getController();
+            // Set key event handlers for the primary controller
+            App.getScene().setOnKeyPressed(primaryController::inputHandling);
+            App.getScene().setOnKeyReleased(primaryController::stopHandling);
+            primaryController.setUsername(userInput.getText());
+            primaryController.setDifficulty(difficulty);
 
-        App.setRoot(primaryPane);
-    } else if (userInput.getText().length() == 0) {
-        userInput.setText("");
-        userInput.setPromptText("least 1 char");
-    } else {
-        userInput.setText("");
-        userInput.setPromptText("max 10 chars");
+            App.setRoot(primaryPane);
+        } else if (userInput.getText().length() == 0) {
+            userInput.setText("");
+            userInput.setPromptText("least 1 char");
+        } else {
+            userInput.setText("");
+            userInput.setPromptText("max 10 chars");
+        }
     }
-}
 
+    // Go back to menu when back button clicked
     @FXML
     public void onBackButtonClicked() throws IOException {
         FXMLLoader menuLoader = new FXMLLoader(App.class.getResource("menu.fxml"));
@@ -87,6 +89,7 @@ public void onPlayButtonClicked() throws IOException {
         menuController.setSplashText();
     }
     
+    // Cool mouse over effect
     @FXML
     public void handleMouseOver() {
         goBack.setStyle("-fx-fill: white;");

@@ -1,3 +1,5 @@
+/// By Sebastian, Victor & Sophia
+/// Model for the ball
 package GameBoard;
 
 import com.example.App;
