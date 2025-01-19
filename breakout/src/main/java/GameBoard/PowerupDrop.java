@@ -1,4 +1,4 @@
-/// By Victor
+/// By Victor & Sophia
 /// Model for the power up droplet
 package GameBoard;
 
