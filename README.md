@@ -8,10 +8,10 @@ git clone https://github.com/Raaaainbow/02104-advanced
 ```
 
 ## Dependencies
-1. Java 21 LTS
-2. JavaFX (compatible with Java 21) - Used for GUI components
+1. Java 21 LTS ([link](https://www.azul.com/downloads/?version=java-21-lts&package=jdk-fx#zulu))
+2. JavaFX (compatible with Java 21) - Used for GUI components ([link](https://www.azul.com/downloads/?version=java-21-lts&package=jdk-fx#zulu))
 3. Git - for installation
-4. Press Start 2P font ([link](https://fonts.google.com/specimen/Press+Start+2P)
+4. Press Start 2P font ([link](https://fonts.google.com/specimen/Press+Start+2P))
 
 ## Usage
 To run the program, simply double click the .jar file. If that does not work, you can run the following command from the terminal in your directory
